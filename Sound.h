@@ -1,7 +1,16 @@
 #pragma once
 #include <math.h>
+#include <vector>
+#include <string>
+#include <string>
+#include <bitset>
+#include <iostream>
+
+
+
 
 namespace sound {
+
 #define TWOPI 6.283185307
 
 	short SineWave(double time, double freq1, double freq2, double amp) {
@@ -24,6 +33,7 @@ namespace sound {
 
 	}
 	
-
 }
+
+	
 

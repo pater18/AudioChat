@@ -1,29 +1,47 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
-#include <vector>
+#include "StringToBit.h"
 #include "Sound.h"
+#include "Tone.h"
+
+#include <vector>
 #include <iostream>
+#include <fstream>
+#include <bitset>
+#include <string> 
+
+
+
+
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-	sf::CircleShape shape(100.f);
-	shape.setFillColor(sf::Color::Green);
+	std::vector<int> test_a_streng;				//En vektor der skal indeholde den binære sekvens for en streng
+	StrToBit(test_a_streng, "Hello World");		//Beskeden der skal sendes og den vektor den skal ligge i som 1 og 0. 
+
 
 	sf::SoundBuffer buffer;
-	std::vector<sf::Int16> samples;
-
-	for (int i = 0; i < 44100; i++)			// 44100 giver lyden i 1 sekund
-	{
-		samples.push_back(sound::SineWave(i, 697, 1209, 0.9));
-	}
-
-	buffer.loadFromSamples(&samples[0], samples.size(), 1, 44100);
-
 	sf::Sound sound;
+	std::vector<sf::Int16> test;				
+
+	message(test, 11025, test_a_streng);		//Tager besked vektoren med 1 og 0 og lægger det i en ny vektor, som kan læses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
+
+
+	buffer.loadFromSamples(&test[0], test.size(), 1, 44100);
 	sound.setBuffer(buffer);
 	sound.play();
+	
 
+
+
+
+
+	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+	//sf::CircleShape shape(100.f);
+	//shape.setFillColor(sf::Color::Green);
+
+	
+	
 
 
 	while (window.isOpen())
@@ -36,9 +54,13 @@ int main()
 		}
 
 		window.clear();
-		window.draw(shape);
-		window.display();
+	//	window.draw(shape);
+	//	window.display();
 	}
 
 	return 0;
 }
+
+
+
+
