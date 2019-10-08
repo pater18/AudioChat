@@ -13,12 +13,12 @@ int main()
 	sf::SoundBuffer buffer;
 	std::vector<sf::Int16> samples;
 
-	for (int i = 0; i < 44100; i++)
+	for (int i = 0; i < 44100; i++)			// 44100 giver lyden i 1 sekund
 	{
-		samples.push_back(sound::SineWave(i, 440, 0.9));
+		samples.push_back(sound::SineWave(i, 697, 1209, 0.9));
 	}
 
-	buffer.loadFromSamples(&samples[0], samples.size(), 1, 441000);
+	buffer.loadFromSamples(&samples[0], samples.size(), 1, 44100);
 
 	sf::Sound sound;
 	sound.setBuffer(buffer);
