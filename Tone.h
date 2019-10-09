@@ -16,6 +16,28 @@ std::vector<sf::Int16> message(std::vector<sf::Int16>& samples, int tid, std::ve
 	sf::Sound sound;
 	int freq1, freq2;
 
+	freq1 = 1209;
+	freq2 = 697;
+	for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	{
+		samples.push_back(sound::SineWave(i, freq1, freq2, 0.5));
+	}
+
+	freq1 = 0;
+	freq2 = 0;
+	for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	{
+		samples.push_back(sound::SineWave(i, freq1, freq2, 0.5));
+	}
+	freq1 = 1209;
+	freq2 = 697;
+	for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	{
+		samples.push_back(sound::SineWave(i, freq1, freq2, 0.5));
+	}
+
+
+
 	for (int i = 0; i < bitstreng.size(); i += 4) // 0, 4, 8
 	{
 		if (((bitstreng[i] == 0)) && (bitstreng[i + 1] == 0) && (bitstreng[i + 2]) == 0 && (bitstreng[i + 3] == 0))				//Bit 0000 = 0
