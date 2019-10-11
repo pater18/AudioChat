@@ -25,15 +25,17 @@ for (int i = 0; i < input.length(); i++)
 		{
 			binaryString.push_back(1);
 		}
-
 	}
-
 }
+
+std::cout << "Strengen skrevet i bit: ";
 
 for (size_t i = 0; i < binaryString.size(); i++)			//Tjek til at se der sker det rigtige 
 {
 	std::cout << binaryString[i];
 }
+
+std::cout << std::endl; 
 
 return binaryString;
 }
