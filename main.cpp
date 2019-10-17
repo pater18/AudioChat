@@ -20,18 +20,19 @@ int main()
 	std::vector<int> test_a_streng;				//En vektor der skal indeholde den binære sekvens for en streng
 	
 
-	StrToBit(test_a_streng, "H");		//Beskeden der skal sendes og den vektor den skal ligge i som 1 og 0. 
+	StrToBit(test_a_streng, "Hej med di");		//Beskeden der skal sendes og den vektor den skal ligge i som 1 og 0. 
 
 
 	std::vector<sf::Int16> CRC_8;
-	CRC(test_a_streng, CRC_8);
+	CRC(test_a_streng, CRC_8, 32);			// Skal have lavet padding så det er ligegyldigt hvor mange karakter men vælger at skrive. 
+											// Der skal kigges på om der kan fjernes nogle nuller fra paddingen!!!!!!!!!!!!!!!!!!!!
 	
 
 	sf::SoundBuffer buffer;
 	sf::Sound sound;
 	
 	std::vector<sf::Int16> sinusAmplituder;		
-	message(sinusAmplituder, 44100, CRC_8);		//Tager besked vektoren med 1 og 0 og lægger det i en ny vektor, som kan læses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
+	message(sinusAmplituder, 11025, CRC_8);		//Tager besked vektoren med 1 og 0 og lægger det i en ny vektor, som kan læses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
 
 
 	buffer.loadFromSamples(&sinusAmplituder[0], sinusAmplituder.size(), 1, 44100);

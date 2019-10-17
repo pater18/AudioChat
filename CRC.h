@@ -6,26 +6,50 @@
 #include <vector>
 
 
-std::vector<sf::Int16> CRC(std::vector<int> streng, std::vector<sf::Int16>& ud) 
+
+std::vector<sf::Int16> CRC(std::vector<int> streng, std::vector<sf::Int16>& ud, int antal_bit)
 {
-	for (size_t k = 0; k < streng.size(); k += 8)
+	
+	// Skal have lavet padding så det er ligegyldigt hvor mange karakter men vælger at skrive. 
+
+	int indSize = streng.size();
+	int paddingCoeff = 0;
+
+	while (indSize > (paddingCoeff * antal_bit))
+		paddingCoeff++;
+
+	int numPadding = paddingCoeff * antal_bit - indSize;
+
+	std::cout << numPadding << std::endl;
+
+	
+	for (int i = 0; i < numPadding; i++)
+	{
+		streng.insert(streng.begin(), 0);
+	}
+
+
+
+	int DataInsert = antal_bit + 8 - 1;
+
+	for (size_t k = 0; k < streng.size(); k += antal_bit) //k=8
 	{
 
-		std::bitset<16> generator(0b0000000100000111);  // CRC_8 check generator polynomie 
+		std::bitset<128> generator(0b0000000100000111);  // CRC_8 check generator polynomie 
 
-		std::bitset<16> data(0b0);						// Vektor til at lave udregninger på.
+		std::bitset<128> data(0b0);						// Vektor til at lave udregninger på.
 
-		for (int i = 0; i < 8; i++) 					// I dette loop indsættes data fra strengen ind i et bitset, så det senere kan manipuleres med. 
+		for (int i = 0; i < antal_bit ; i++) //=8					// I dette loop indsættes data fra strengen ind i et bitset, så det senere kan manipuleres med. 
 		{												// Det er 8 da vi laver tjek på hver 8 bit. Samtidig lægges de 8 bit i en ny vektor. 
 
 			if (streng[i + k] == 1)
 			{
-				data.set(15 - i, 1);
+				data.set(DataInsert - i, 1); //15
 				ud.push_back(1);
 			}
 			else
 			{
-				data.set(15 - i, 0);
+				data.set(DataInsert - i, 0); //15
 				ud.push_back(0);
 			}
 
@@ -33,22 +57,22 @@ std::vector<sf::Int16> CRC(std::vector<int> streng, std::vector<sf::Int16>& ud)
 
 		std::cout << "Data: " << data << std::endl;
 
-		for (int i = 0; i < 8; i++)
+		for (int i = 0; i < antal_bit; i++) //8
 		{
-			if (data[15 - i] == 1)
+			if (data[DataInsert - i] == 1)
 			{
-
-				data[15 - i] = data[15 - i] xor generator[8];
-				data[14 - i] = data[14 - i] xor generator[7];
-				data[13 - i] = data[13 - i] xor generator[6];
-				data[12 - i] = data[12 - i] xor generator[5];
-				data[11 - i] = data[11 - i] xor generator[4];
-				data[10 - i] = data[10 - i] xor generator[3];
-				data[9 - i] = data[9 - i] xor generator[2];
-				data[8 - i] = data[8 - i] xor generator[1];
-				data[7 - i] = data[7 - i] xor generator[0];
+				data[DataInsert - i] = data[DataInsert - i] xor generator[8];
+				data[DataInsert - 1 - i] = data[DataInsert - 1 - i] xor generator[7];
+				data[DataInsert - 2 - i] = data[DataInsert - 2 - i] xor generator[6];
+				data[DataInsert - 3 - i] = data[DataInsert - 3 - i] xor generator[5];
+				data[DataInsert - 4 - i] = data[DataInsert - 4 - i] xor generator[4];
+				data[DataInsert - 5 - i] = data[DataInsert - 5 - i] xor generator[3];
+				data[DataInsert - 6 - i] = data[DataInsert - 6 - i] xor generator[2];
+				data[DataInsert - 7 - i] = data[DataInsert - 7 - i] xor generator[1];
+				data[DataInsert - 8 - i] = data[DataInsert - 8 - i] xor generator[0];
 			}
 		}
+
 
 
 		std::cout << "Rest efter division: ";
@@ -74,32 +98,41 @@ std::vector<sf::Int16> CRC(std::vector<int> streng, std::vector<sf::Int16>& ud)
 	//--------------------------------------------------------
 	//CRC beregning tilbage til data for at tjekke at den giver nul
 
-	/*std::bitset<16> generator2(0b00100000111);
+	std::bitset<128> generator2(0b00100000111);
 
-	std::bitset<16> data2(0b0101011110100010);
-	
+	std::bitset<128> data2(0b0);
 
 
-	std::cout << "Data start: " << data2 << std::endl;
 
-	for (int i = 0; i < 8; i++) 
-	{
-		if (data2[15 - i] == 1)
+	for (int i = 0; i < ud.size(); i++) 					 
+	{												
+		if (ud[i] == 1)
 		{
-
-			data2[15 - i] = data2[15 - i] xor generator2[8];
-			data2[14 - i] = data2[14 - i] xor generator2[7];
-			data2[13 - i] = data2[13 - i] xor generator2[6];
-			data2[12 - i] = data2[12 - i] xor generator2[5];
-			data2[11 - i] = data2[11 - i] xor generator2[4];
-			data2[10 - i] = data2[10 - i] xor generator2[3];
-			data2[9 - i] = data2[9 - i] xor generator2[2];
-			data2[8 - i] = data2[8 - i] xor generator2[1];
-			data2[7 - i] = data2[7 - i] xor generator2[0];
+			data2.set(ud.size() - 1- i, 1); 
 		}
 	}
 
-	std::cout << "Data: " << data2 << std::endl;*/
+	std::cout << "Data2 start: " << data2 << std::endl;
+
+	for (int i = 0; i < antal_bit; i++) 
+	{
+		if (data2[DataInsert - i] == 1)
+		{
+			data2[DataInsert - i] = data2[DataInsert - i] xor generator2[8];
+			data2[DataInsert - 1 - i] = data2[DataInsert - 1 - i] xor generator2[7];
+			data2[DataInsert - 2 - i] = data2[DataInsert - 2 - i] xor generator2[6];
+			data2[DataInsert - 3 - i] = data2[DataInsert - 3 - i] xor generator2[5];
+			data2[DataInsert - 4 - i] = data2[DataInsert - 4 - i] xor generator2[4];
+			data2[DataInsert - 5 - i] = data2[DataInsert - 5 - i] xor generator2[3];
+			data2[DataInsert - 6 - i] = data2[DataInsert - 6 - i] xor generator2[2];
+			data2[DataInsert - 7 - i] = data2[DataInsert - 7 - i] xor generator2[1];
+			data2[DataInsert - 8 - i] = data2[DataInsert - 8 - i] xor generator2[0];
+		}
+	}
+
+	std::cout << "Data2 efter udregning: " << data2 << std::endl;
+	
+
 
 	return ud;
 }
