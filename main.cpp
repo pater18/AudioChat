@@ -3,6 +3,7 @@
 #include "StringToBit.h"
 #include "Sound.h"
 #include "Tone.h"
+#include "CustomRecorder.h"
 
 #include <vector>
 #include <iostream>
@@ -56,19 +57,11 @@ int main()
 			std::cout << "Error";
 		}
 
-		sf::SoundBufferRecorder recorder;
+		CustomRecorder recorder;
+
 		recorder.start();
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-		const sf::SoundBuffer& buffer = recorder.getBuffer();
 		recorder.stop();
-
-
-
-		const sf::Int16* samples = buffer.getSamples();
-		std::size_t count = buffer.getSampleCount();
-
-		for (std::size_t i = 30000; i < 30500; i++)
-			std::cout << samples[i] << " ";
 		
 		break;
 	}
