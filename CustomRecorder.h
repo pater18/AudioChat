@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <vector>
+#include <fstream>
 
 class CustomRecorder : public sf::SoundRecorder
 {
@@ -12,8 +13,10 @@ public:
 	~CustomRecorder() { stop(); }
 	bool onStart();
 	bool onProcessSamples(const sf::Int16* samples, std::size_t sampleCount);
-	void onStop() { };
+	void onStop();
+	void setSaveRecording() { saveRecording = true;  };
+
 private:
 	sf::Int16 m_samples;
-
+	bool saveRecording = false;
 };
