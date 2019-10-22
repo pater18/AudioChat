@@ -9,9 +9,14 @@ bool CustomRecorder::onStart()
 bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t sampleCount)
 {
 	SoundChunk currentSoundChunk(samples, sampleCount);
-	currentSoundChunk.goertzelAlgorithm();
+	for (std::size_t i = 0; i < 8; i++)
+	{
+		std::cout << currentSoundChunk.goertzelAlgorithm(this->getSampleRate())[i] << " ";
+	}
+	std::cout << std::endl;
+	
 
-	if (saveRecording = true)
+	if (m_saveRecording == true)
 	{
 		std::ofstream recording;
 		recording.open("Recording.txt");
@@ -24,5 +29,5 @@ bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t samp
 
 void CustomRecorder::onStop()
 {
-	//stop recording
+	//If saveRecording - close
 }

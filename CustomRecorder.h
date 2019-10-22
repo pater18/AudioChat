@@ -9,14 +9,12 @@
 class CustomRecorder : public sf::SoundRecorder
 {
 public:
-	CustomRecorder() { };
-	~CustomRecorder() { stop(); }
 	bool onStart();
 	bool onProcessSamples(const sf::Int16* samples, std::size_t sampleCount);
 	void onStop();
-	void setSaveRecording() { saveRecording = true;  };
+	void setSaveRecording() { m_saveRecording = true;  };
 
 private:
 	sf::Int16 m_samples;
-	bool saveRecording = false;
+	bool m_saveRecording = false;
 };
