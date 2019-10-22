@@ -20,11 +20,11 @@ int main()
 	std::vector<int> test_a_streng;				//En vektor der skal indeholde den binære sekvens for en streng
 	
 
-	StrToBit(test_a_streng, "Hej med di");		//Beskeden der skal sendes og den vektor den skal ligge i som 1 og 0. 
+	StrToBit(test_a_streng, "W");		//Beskeden der skal sendes og den vektor den skal ligge i som 1 og 0. 
 
 
 	std::vector<sf::Int16> CRC_8;
-	CRC(test_a_streng, CRC_8, 32);			// Skal have lavet padding så det er ligegyldigt hvor mange karakter men vælger at skrive. 
+	CRC(test_a_streng, CRC_8, 16);			// Skal have lavet padding så det er ligegyldigt hvor mange karakter men vælger at skrive. 
 											// Der skal kigges på om der kan fjernes nogle nuller fra paddingen!!!!!!!!!!!!!!!!!!!!
 	
 
