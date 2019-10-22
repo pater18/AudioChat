@@ -35,9 +35,9 @@ std::vector<sf::Int16> CRC(std::vector<int> streng, std::vector<sf::Int16>& ud, 
 	for (size_t k = 0; k < streng.size(); k += antal_bit) //k=8
 	{
 
-		std::bitset<128> generator(0b0000000100000111);  // CRC_8 check generator polynomie 
+		std::bitset<64> generator(0b0000000100000111);  // CRC_8 check generator polynomie 
 
-		std::bitset<128> data(0b0);						// Vektor til at lave udregninger på.
+		std::bitset<64> data(0b0);						// Vektor til at lave udregninger på.
 
 		for (int i = 0; i < antal_bit ; i++) //=8					// I dette loop indsættes data fra strengen ind i et bitset, så det senere kan manipuleres med. 
 		{												// Det er 8 da vi laver tjek på hver 8 bit. Samtidig lægges de 8 bit i en ny vektor. 
@@ -83,34 +83,45 @@ std::vector<sf::Int16> CRC(std::vector<int> streng, std::vector<sf::Int16>& ud, 
 		}
 		std::cout << std::endl;
 
-		//ud.erase(ud.begin(), ud.begin() + numPadding);
 
-		std::cout << "Binary streng der skal sendes: ";
-		for (size_t i = 0; i < ud.size(); i++)
-		{
-			std::cout << ud[i];
-		}
-		std::cout << std::endl << std::endl;
+		
 		
 
 	}
 
+	ud.erase(ud.begin(), ud.begin() + numPadding);
+	std::cout << "Binary streng der skal sendes: ";
+	for (size_t i = 0; i < ud.size(); i++)
+	{
+		std::cout << ud[i];
+	}
+
+	std::cout << std::endl << std::endl;
 
 
 	//--------------------------------------------------------
 	//CRC beregning tilbage til data for at tjekke at den giver nul
 
-	std::bitset<128> generator2(0b00100000111);
+	std::bitset<64> generator2(0b00100000111);
 
 	int indSize2 = ud.size();    //80   64  24 // beskeden + 8 * antal gange der sættes redudante bit på
+	std::cout << indSize2 << std::endl; 
+
 	int paddingCoeff2 = 0;
-
-	while (indSize2 > (paddingCoeff2 * antal_bit))		//80 > (0 * 32) , 80 > (1 * 32), 80 > (2 * 32)
+	int tjek = indSize2 % (antal_bit + 8) ;
+	
+	
+	while (tjek != 0)
 	{
-		paddingCoeff2++;
+		indSize2 += 8;
+		tjek = indSize2 % (antal_bit + 8);
+		paddingCoeff2++; 
 	}
+	
+	int numPadding2 = paddingCoeff2 * 8;
 
-	int numPadding2 = paddingCoeff2 * antal_bit - indSize2 + 8;  //1 * 16 - 8 = 8
+
+	
 
 	std::cout << "Antal nuller der puttes i som padding2: " << numPadding2 << std::endl;
 
@@ -122,7 +133,7 @@ std::vector<sf::Int16> CRC(std::vector<int> streng, std::vector<sf::Int16>& ud, 
 
 	for (size_t k = 0; k < ud.size(); k += antal_bit + 8) //k=8    ud = 64
 	{
-		std::bitset<128> data2(0b0);
+		std::bitset<64> data2(0b0);
 
 		for (int i = 0; i < (antal_bit + 8); i++)
 		{

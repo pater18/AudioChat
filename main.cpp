@@ -20,7 +20,7 @@ int main()
 	std::vector<int> test_a_streng;				//En vektor der skal indeholde den binære sekvens for en streng
 	
 
-	StrToBit(test_a_streng, "12345");		//Beskeden der skal sendes og den vektor den skal ligge i som 1 og 0. 
+	StrToBit(test_a_streng, "123456789012345678901");		//Beskeden der skal sendes og den vektor den skal ligge i som 1 og 0. 
 
 
 	std::vector<sf::Int16> CRC_8;
@@ -32,7 +32,7 @@ int main()
 	sf::Sound sound;
 	
 	std::vector<sf::Int16> sinusAmplituder;		
-	message(sinusAmplituder, 44100, CRC_8);		//Tager besked vektoren med 1 og 0 og lægger det i en ny vektor, som kan læses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
+	message(sinusAmplituder,88200, CRC_8);		//Tager besked vektoren med 1 og 0 og lægger det i en ny vektor, som kan læses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
 
 
 	buffer.loadFromSamples(&sinusAmplituder[0], sinusAmplituder.size(), 1, 44100);
