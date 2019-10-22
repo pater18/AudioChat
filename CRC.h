@@ -104,7 +104,7 @@ std::vector<sf::Int16> CRC(std::vector<int> streng, std::vector<sf::Int16>& ud, 
 
 	std::bitset<64> generator2(0b00100000111);
 
-	int indSize2 = ud.size();    //80   64  24 // beskeden + 8 * antal gange der sættes redudante bit på
+	int indSize2 = ud.size();    
 	std::cout << indSize2 << std::endl; 
 
 	int paddingCoeff2 = 0;
@@ -119,9 +119,6 @@ std::vector<sf::Int16> CRC(std::vector<int> streng, std::vector<sf::Int16>& ud, 
 	}
 	
 	int numPadding2 = paddingCoeff2 * 8;
-
-
-	
 
 	std::cout << "Antal nuller der puttes i som padding2: " << numPadding2 << std::endl;
 
@@ -149,7 +146,6 @@ std::vector<sf::Int16> CRC(std::vector<int> streng, std::vector<sf::Int16>& ud, 
 
 		std::cout << "Data2 start: ";
 		std::cout << data2;
-
 		std::cout << std::endl;
 
 		for (int i = 0; i < antal_bit; i++)
@@ -168,7 +164,11 @@ std::vector<sf::Int16> CRC(std::vector<int> streng, std::vector<sf::Int16>& ud, 
 			}
 		}
 
-		std::cout << "Data2 efter udregning: " << data2 << std::endl;
+
+		if (data2 == false)
+			std::cout << "Data der blev sendt var det rigtige" << std::endl;
+		else
+			std::cout << "Der er fejl i beregningen til CRC tjek." << std::endl; 
 
 	}
 
