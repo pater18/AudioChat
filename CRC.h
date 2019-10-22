@@ -83,7 +83,7 @@ std::vector<sf::Int16> CRC(std::vector<int> streng, std::vector<sf::Int16>& ud, 
 		}
 		std::cout << std::endl;
 
-		ud.erase(ud.begin(), ud.begin() + numPadding);
+		//ud.erase(ud.begin(), ud.begin() + numPadding);
 
 		std::cout << "Binary streng der skal sendes: ";
 		for (size_t i = 0; i < ud.size(); i++)
@@ -102,10 +102,10 @@ std::vector<sf::Int16> CRC(std::vector<int> streng, std::vector<sf::Int16>& ud, 
 
 	std::bitset<128> generator2(0b00100000111);
 
-	int indSize2 = ud.size();    //16
+	int indSize2 = ud.size();    //80   64  24 // beskeden + 8 * antal gange der sættes redudante bit på
 	int paddingCoeff2 = 0;
 
-	while (indSize2 > (paddingCoeff2 * antal_bit))		//8 > (0 * 16) , 8 > (1 * 16)
+	while (indSize2 > (paddingCoeff2 * antal_bit))		//80 > (0 * 32) , 80 > (1 * 32), 80 > (2 * 32)
 	{
 		paddingCoeff2++;
 	}
@@ -120,7 +120,7 @@ std::vector<sf::Int16> CRC(std::vector<int> streng, std::vector<sf::Int16>& ud, 
 		ud.insert(ud.begin(), 0);
 	}
 
-	for (size_t k = 0; k < ud.size(); k += antal_bit + 8) //k=8
+	for (size_t k = 0; k < ud.size(); k += antal_bit + 8) //k=8    ud = 64
 	{
 		std::bitset<128> data2(0b0);
 
