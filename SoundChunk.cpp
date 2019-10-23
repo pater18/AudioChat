@@ -63,6 +63,14 @@ int SoundChunk::determineDTMF(std::vector<float> freqComponents)
 		}
 	}
 
+	for (std::size_t i = 0; i < vect.size(); i++)
+	{	
+		if (vect[i].second == secondLargest || vect[i].second == largest)
+			continue;
+		if (secondLargest / vect[i].second < 4)
+			return 20;
+	}
+
 	int temp;
 	if (pos1 > 3)
 	{
