@@ -43,12 +43,13 @@ std::vector<sf::Int16> Encoder::StrToBit(std::string input)
 
 	std::cout << "Strengen skrevet i bit: ";
 
-	std::cout << std::endl;
 
 	for (size_t i = 0; i < _Encoded.size(); i++)			//Tjek til at se der sker det rigtige 
 	{
 		std::cout << _Encoded[i];
 	}
+
+	std::cout << std::endl << std::endl;
 
 	return _Encoded;
 }
@@ -100,7 +101,7 @@ std::vector<sf::Int16> Encoder::CRC(int antal_bit)
 
 		}
 
-		std::cout << "Data: " << data << std::endl;
+		std::cout << "Data, med 8 nuller: " << data << std::endl;
 
 		for (int i = 0; i < antal_bit; i++) //8
 		{
@@ -149,8 +150,15 @@ std::vector<sf::Int16> Encoder::CRC(int antal_bit)
 
 	std::bitset<64> generator2(0b00100000111);
 
+	std::cout << "Binary streng der er modtaget: ";
+
+	for (size_t i = 0; i < ud.size(); i++)
+	{
+		std::cout << ud[i];
+	}
+	std::cout << std::endl;
+
 	int indSize2 = ud.size();
-	std::cout << indSize2 << std::endl;
 
 	int paddingCoeff2 = 0;
 	int tjek = indSize2 % (antal_bit + 8);
@@ -189,9 +197,7 @@ std::vector<sf::Int16> Encoder::CRC(int antal_bit)
 			}
 		}
 
-		std::cout << "Data2 start: ";
-		std::cout << data2;
-		std::cout << std::endl;
+		
 
 		for (int i = 0; i < antal_bit; i++)
 		{

@@ -31,7 +31,7 @@ int main()
 
 
 	customSound koder; 
-	koder.StrToBit("hej ");
+	koder.StrToBit("hej f");
 	koder.CRC(32);
 	koder.message(44100);
 
