@@ -13,7 +13,7 @@ public:
 	bool onProcessSamples(const sf::Int16* samples, std::size_t sampleCount);
 	void onStop();
 	void setSaveRecording() { m_saveRecording = true;  };
-
+	void saveRecording(const sf::Int16* samples, std::size_t sampleCount);
 private:
 	sf::Int16 m_samples;
 	bool m_saveRecording = false;
