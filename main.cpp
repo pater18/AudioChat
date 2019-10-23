@@ -33,7 +33,7 @@ int main()
 	customSound koder; 
 	koder.StrToBit("hej ");
 	koder.CRC(32);
-	koder.message(41000);
+	koder.message(44100);
 
 	/*std::vector<sf::Int16> sinusAmplituder;
 	Sound::message (sinusAmplituder, 88200, CRC_8);*/		//Tager besked vektoren med 1 og 0 og lægger det i en ny vektor, som kan læses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
@@ -43,11 +43,13 @@ int main()
 	sf::SoundBuffer buffer;
 	sf::Sound sound;
 	
+
+	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
 	
 
-	/*buffer.loadFromSamples(&sinusAmplituder[0], sinusAmplituder.size(), 1, 44100);
+	/*buffer.loadFromSamples(&sinusAmplituder[0], sinusAmplituder.size(), 1, 44100);*/
 	sound.setBuffer(buffer);
-	sound.play();*/
+	sound.play();
 	
 	
 

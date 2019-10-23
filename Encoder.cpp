@@ -41,6 +41,10 @@ std::vector<sf::Int16> Encoder::StrToBit(std::string input)
 
 	}
 
+	std::cout << "Strengen skrevet i bit: ";
+
+	std::cout << std::endl;
+
 	for (size_t i = 0; i < _Encoded.size(); i++)			//Tjek til at se der sker det rigtige 
 	{
 		std::cout << _Encoded[i];
@@ -51,8 +55,7 @@ std::vector<sf::Int16> Encoder::StrToBit(std::string input)
 
 
 std::vector<sf::Int16> Encoder::CRC(int antal_bit)
-{
-	// Skal have lavet padding så det er ligegyldigt hvor mange karakter men vælger at skrive. 
+{ 
 
 	int indSize = _Encoded.size();
 	int paddingCoeff = 0;
