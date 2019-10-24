@@ -19,9 +19,6 @@ int main()
 {
 
 
-
-	customSound koder;
-
 	sf::Event event;
 
 	//koder.StrToBit("hej med dig ");
@@ -69,23 +66,24 @@ int main()
 				break;
 			case sf::Event::KeyPressed:
 				if (event.key.code == sf::Keyboard::Enter) {
+					customSound koder;
 					koder.StrToBit(test);
 					koder.CRC(32);
 					koder.message(10000);
 				buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
 				sound.setBuffer(buffer);
 				sound.play();
+				
+				koder.slet();
+				test.clear();
 			}
 			break;
 			case sf::Event::TextEntered:
 				if (event.type == sf::Event::TextEntered)
 				{
-					if (event.text.unicode < 128)
+					if (event.text.unicode < 128 && (event.text.unicode != 13))
 						test += (char)event.text.unicode;
 					
-
-
-
 					text.setString(test);
 					break;
 				}
