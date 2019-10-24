@@ -34,8 +34,8 @@ std::vector<sf::Int16> customSound::message(int tid)
 
 	int freq1, freq2;
 
-	freq1 = 1209;
-	freq2 = 697;
+	//freq1 = 1209;
+	//freq2 = 697;
 	//for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 	//{
 	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));

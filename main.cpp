@@ -3,7 +3,6 @@
 
 #include "Encoder.h"
 #include "Sound.h"
-
 #include <vector>
 #include <iostream>
 #include <fstream>
@@ -14,14 +13,9 @@
 
 int main()
 {
-	
 
-	customSound koder; 
 
-	
-
-	/*std::vector<sf::Int16> sinusAmplituder;
-	Sound::message (sinusAmplituder, 88200, CRC_8);*/		//Tager besked vektoren med 1 og 0 og lægger det i en ny vektor, som kan læses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
+	customSound koder;
 
 	sf::Event event;
 
@@ -34,7 +28,7 @@ int main()
 	sf::Sound sound;
 
 
-	
+
 
 	sf::RenderWindow window(sf::VideoMode(600, 600), "SFML works!");
 	std::string test;
@@ -48,19 +42,19 @@ int main()
 	text.setFont(font);
 	text.setCharacterSize(24);
 	text.setFillColor(sf::Color::Red);
-	
-	
-	
+
+
+
 
 	/*buffer.loadFromSamples(&sinusAmplituder[0], sinusAmplituder.size(), 1, 44100);
 	sound.setBuffer(buffer);
 	sound.play();*/
-	
-	
 
 
-	
-	
+
+
+
+
 
 	while (window.isOpen())
 	{
@@ -73,9 +67,12 @@ int main()
 				window.close();
 				break;
 			case sf::Event::KeyPressed:
-				if (event.key.code == sf::Keyboard::Escape)
-				window.close();
-				break;
+				if (event.key.code == sf::Keyboard::Enter) {
+				buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
+				sound.setBuffer(buffer);
+				sound.play();
+			}
+			break;
 			case sf::Event::TextEntered:
 				if (event.type == sf::Event::TextEntered)
 				{
@@ -83,26 +80,24 @@ int main()
 						test += (char)event.text.unicode;
 					koder.StrToBit(test);
 					koder.CRC(32);
-					koder.message(5000);
+					koder.message(10000);
 
-					buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
-					sound.setBuffer(buffer);
-					sound.play();
+
 
 					text.setString(test);
 					break;
 				}
-			}
-	window.clear();
-	window.draw(text);
-	
-	window.display();
-	
 		}
-		
-		
+		window.clear();
+		window.draw(text);
+
+		window.display();
+
 	}
-	
+
+
+
+}
 	
 	
 
