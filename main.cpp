@@ -55,7 +55,7 @@ int main()
 	sound.setBuffer(buffer);
 	sound.play();*/
 
-
+	//
 
 
 	while (window.isOpen())
@@ -94,6 +94,7 @@ int main()
 		window.draw(text);
 		window.display();
 	}
+
 
 }
 	
