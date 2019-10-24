@@ -3,13 +3,19 @@
 #include "StringToBit.h"
 #include "Sound.h"
 #include "Tone.h"
+
+#include "CustomRecorder.h"
+=======
 #include "CRC.h"
+
 
 #include <vector>
 #include <iostream>
 #include <fstream>
 #include <bitset>
 #include <string> 
+#include <thread>
+#include <chrono>
 
 
 
@@ -17,6 +23,8 @@
 
 int main()
 {
+
+
 	
 
 	sf::SoundBuffer buffer;
@@ -29,6 +37,7 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
 
 	
+
 	
 
 
@@ -41,7 +50,11 @@ int main()
 				window.close();
 		}
 
+
+		
+
 		window.clear();
+
 	}
 
 	return 0;
