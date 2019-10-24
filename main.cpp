@@ -4,6 +4,7 @@
 #include "Encoder.h"
 #include "Sound.h"
 #include "CustomRecorder.h"
+#include "Decoder.h"
 
 #include <vector>
 #include <iostream>
@@ -12,6 +13,7 @@
 #include <string> 
 #include <thread>
 #include <chrono>
+
 
 
 
@@ -107,7 +109,11 @@ int main()
 
 	recorder.start();
 	std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+	Decoder temp;
+	temp.intToBit();
 	recorder.stop();
+
+
 	
 	
 

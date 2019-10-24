@@ -2,6 +2,10 @@
 
 #define PI 3.14159265359
 
+SoundChunk::SoundChunk()
+{
+}
+
 std::vector<float> SoundChunk::goertzelAlgorithm(int samplingFreq)
 {
 	std::vector<float> result;
@@ -82,6 +86,8 @@ int SoundChunk::determineDTMF(std::vector<float> freqComponents)
 	}
 	if (pos2 > 3)
 		pos2 = pos2 - 4;
+
+	sendToDecoder.push_back(m_dtmfLookup[pos1][pos2]);
 
 	return m_dtmfLookup[pos1][pos2];
 	//std::sort(vect.begin(), vect.end(), sortinrev);
