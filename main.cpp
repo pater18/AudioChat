@@ -24,8 +24,6 @@ int main()
 	
 	
 
-	//std::cout << testCRC[0] << std::endl; 
-
 
 
 	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
