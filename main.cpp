@@ -3,16 +3,21 @@
 
 #include "Encoder.h"
 #include "Sound.h"
+#include "CustomRecorder.h"
+
 #include <vector>
 #include <iostream>
 #include <fstream>
 #include <bitset>
 #include <string> 
+#include <thread>
+#include <chrono>
 
 
 
 int main()
 {
+
 
 
 	customSound koder;
@@ -21,7 +26,7 @@ int main()
 
 	//koder.StrToBit("hej med dig ");
 	//koder.CRC(32);
-	//koder.message(5000);					//Tager besked vektoren med 1 og 0 og lægger det i en ny vektor, som kan læses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
+	//koder.message(5000);					//Tager besked vektoren med 1 og 0 og lï¿½gger det i en ny vektor, som kan lï¿½ses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
 
 
 	sf::SoundBuffer buffer;
@@ -49,9 +54,6 @@ int main()
 	/*buffer.loadFromSamples(&sinusAmplituder[0], sinusAmplituder.size(), 1, 44100);
 	sound.setBuffer(buffer);
 	sound.play();*/
-
-
-
 
 
 
@@ -90,12 +92,8 @@ int main()
 		}
 		window.clear();
 		window.draw(text);
-
 		window.display();
-
 	}
-
-
 
 }
 	
