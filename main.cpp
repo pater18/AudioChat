@@ -55,7 +55,6 @@ int main()
 	sound.setBuffer(buffer);
 	sound.play();*/
 
-	//
 
 
 	while (window.isOpen())
@@ -70,6 +69,9 @@ int main()
 				break;
 			case sf::Event::KeyPressed:
 				if (event.key.code == sf::Keyboard::Enter) {
+					koder.StrToBit(test);
+					koder.CRC(32);
+					koder.message(10000);
 				buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
 				sound.setBuffer(buffer);
 				sound.play();
@@ -80,9 +82,7 @@ int main()
 				{
 					if (event.text.unicode < 128)
 						test += (char)event.text.unicode;
-					koder.StrToBit(test);
-					koder.CRC(32);
-					koder.message(10000);
+					
 
 
 
