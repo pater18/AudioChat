@@ -2,10 +2,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Encoder.h"
-//#include "StringToBit.h"
 #include "Sound.h"
-//#include "Tone.h"
-//#include "CRC.h"
 
 #include <vector>
 #include <iostream>
@@ -15,22 +12,12 @@
 
 
 
-
-
 int main()
 {
-	//std::vector<int> test_a_streng;				//En vektor der skal indeholde den binære sekvens for en streng
-	//
-
-	//StrToBit(test_a_streng, "123456789012345678901");		//Beskeden der skal sendes og den vektor den skal ligge i som 1 og 0. 
-
-
-	std::vector<sf::Int16> CRC_8;
-	//CRC(test_a_streng, CRC_8, 32);			// Skal have lavet padding så det er ligegyldigt hvor mange karakter men vælger at skrive.
-	//
-
+	
 
 	customSound koder; 
+
 	
 
 	/*std::vector<sf::Int16> sinusAmplituder;
@@ -38,8 +25,14 @@ int main()
 
 	sf::Event event;
 
+	//koder.StrToBit("hej med dig ");
+	//koder.CRC(32);
+	//koder.message(5000);					//Tager besked vektoren med 1 og 0 og lægger det i en ny vektor, som kan læses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
+
+
 	sf::SoundBuffer buffer;
 	sf::Sound sound;
+
 
 	
 
@@ -63,6 +56,11 @@ int main()
 	sound.setBuffer(buffer);
 	sound.play();*/
 	
+	
+
+
+	
+	
 
 	while (window.isOpen())
 	{
@@ -85,6 +83,12 @@ int main()
 						test += (char)event.text.unicode;
 					koder.StrToBit(test);
 					koder.CRC(32);
+					koder.message(5000);
+
+					buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
+					sound.setBuffer(buffer);
+					sound.play();
+
 					text.setString(test);
 					break;
 				}
@@ -99,7 +103,7 @@ int main()
 		
 	}
 	
-	koder.message(41000);
+	
 	
 
 	return 0;

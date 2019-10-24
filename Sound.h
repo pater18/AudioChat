@@ -17,10 +17,10 @@ public:
 	customSound();
 	short Sinewave(double time, double freq1, double freq2, double amp);
 	std::vector<sf::Int16> message(int tid);
-
+	 
 
 private:
-	std::vector<sf::Int16> _customSound; 
+	std::vector<sf::Int16> _customSound;
 	short _result; 
 };
 
