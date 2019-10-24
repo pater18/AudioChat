@@ -109,9 +109,9 @@ int main()
 
 	recorder.start();
 	std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+	recorder.stop();
 	Decoder temp;
 	temp.intToBit();
-	recorder.stop();
 
 
 	
