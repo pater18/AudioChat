@@ -2,7 +2,7 @@
 
 bool CustomRecorder::onStart()
 {
-	setProcessingInterval(sf::milliseconds(1000));
+	setProcessingInterval(sf::milliseconds(10));
 	return true;
 }
 
