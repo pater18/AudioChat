@@ -21,10 +21,6 @@ int main()
 {
 
 	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-	//sf::CircleShape shape(100.f);
-	//shape.setFillColor(sf::Color::Green);
-
-	
 	
 
 
@@ -42,12 +38,6 @@ int main()
 			std::cout << "Error";
 		}
 
-		CustomRecorder recorder;
-		recorder.setSaveRecording();
-
-		recorder.start();
-		std::this_thread::sleep_for(std::chrono::milliseconds(10000));
-		recorder.stop();
 		
 		break;
 	}
