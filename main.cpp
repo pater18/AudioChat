@@ -3,7 +3,11 @@
 #include "StringToBit.h"
 #include "Sound.h"
 #include "Tone.h"
+
 #include "CustomRecorder.h"
+=======
+#include "CRC.h"
+
 
 #include <vector>
 #include <iostream>
@@ -20,7 +24,20 @@
 int main()
 {
 
+
+	
+
+	sf::SoundBuffer buffer;
+	sf::Sound sound;
+	
+	
+
+
+
 	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+
+	
+
 	
 
 
@@ -33,13 +50,11 @@ int main()
 				window.close();
 		}
 
-		if (!sf::SoundBufferRecorder::isAvailable())
-		{
-			std::cout << "Error";
-		}
 
 		
-		break;
+
+		window.clear();
+
 	}
 
 	return 0;
