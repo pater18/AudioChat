@@ -68,27 +68,27 @@ int main()
 			case sf::Event::Closed:
 				window.close();
 				break;
-			case sf::Event::KeyPressed:
-				if (event.key.code == sf::Keyboard::Enter) {
-				buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
-				sound.setBuffer(buffer);
-				sound.play();
-			}
-			break;
-			case sf::Event::TextEntered:
-				if (event.type == sf::Event::TextEntered)
-				{
-					if (event.text.unicode < 128)
-						test += (char)event.text.unicode;
-					koder.StrToBit(test);
-					koder.CRC(32);
-					koder.message(10000);
+			//case sf::Event::KeyPressed:
+			//	if (event.key.code == sf::Keyboard::Enter) {
+			//	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
+			//	sound.setBuffer(buffer);
+			//	sound.play();
+			//}
+			//break;
+			//case sf::Event::TextEntered:
+			//	if (event.type == sf::Event::TextEntered)
+			//	{
+			//		if (event.text.unicode < 128)
+			//			test += (char)event.text.unicode;
+			//		koder.StrToBit(test);
+			//		koder.CRC(32);
+			//		koder.message(10000);
 
 
 
-					text.setString(test);
-					break;
-				}
+			//		text.setString(test);
+			//		break;
+			//	}
 		}
 		window.clear();
 		window.draw(text);
@@ -96,6 +96,18 @@ int main()
 	}
 
 }
+
+	if (!sf::SoundBufferRecorder::isAvailable())
+	{
+		std::cout << "Error";
+	}
+
+	CustomRecorder recorder;
+	recorder.setSaveRecording();
+
+	recorder.start();
+	std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+	recorder.stop();
 	
 	
 
