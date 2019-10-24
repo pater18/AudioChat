@@ -7,7 +7,7 @@ class Encoder
 public:
 	 Encoder();
 
-	std::vector<sf::Int16> StrToBit(std::string input);
+	std::vector<sf::Int16> StrToBit(sf::String input);
 	std::vector<sf::Int16> CRC(int antal_bit);
 
 

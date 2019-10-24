@@ -11,13 +11,13 @@ Encoder::Encoder()
 {
 }
 
-std::vector<sf::Int16> Encoder::StrToBit(std::string input)
+std::vector<sf::Int16> Encoder::StrToBit(sf::String input)
 {
 
 	std::vector<int> binString;
-	int StrLenght = input.length();
+	int StrLenght = input.getSize();
 
-	for (int i = 0; i < input.length(); i++)
+	for (int i = 0; i < input.getSize(); i++)
 	{
 		binString.push_back(input[i]);					//Put hvert bogstav i en vektor 
 

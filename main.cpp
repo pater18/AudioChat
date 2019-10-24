@@ -31,17 +31,31 @@ int main()
 
 
 	customSound koder; 
-	koder.StrToBit("hej ");
-	koder.CRC(32);
-	koder.message(41000);
+	
 
 	/*std::vector<sf::Int16> sinusAmplituder;
 	Sound::message (sinusAmplituder, 88200, CRC_8);*/		//Tager besked vektoren med 1 og 0 og lægger det i en ny vektor, som kan læses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
 
-
+	sf::Event event;
 
 	sf::SoundBuffer buffer;
 	sf::Sound sound;
+
+	
+
+	sf::RenderWindow window(sf::VideoMode(600, 600), "SFML works!");
+	std::string test;
+	sf::Font font;
+
+	if (!font.loadFromFile("blue.ttf")) {
+
+	}
+
+	sf::Text text;
+	text.setFont(font);
+	text.setCharacterSize(24);
+	text.setFillColor(sf::Color::Red);
+	
 	
 	
 
@@ -49,27 +63,44 @@ int main()
 	sound.setBuffer(buffer);
 	sound.play();*/
 	
-	
-
-
-
-	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-
-	
-	
-
 
 	while (window.isOpen())
 	{
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
-			if (event.type == sf::Event::Closed)
+			switch (event.type)
+			{
+			case sf::Event::Closed:
 				window.close();
+				break;
+			case sf::Event::KeyPressed:
+				if (event.key.code == sf::Keyboard::Escape)
+				window.close();
+				break;
+			case sf::Event::TextEntered:
+				if (event.type == sf::Event::TextEntered)
+				{
+					if (event.text.unicode < 128)
+						test += (char)event.text.unicode;
+					koder.StrToBit(test);
+					koder.CRC(32);
+					text.setString(test);
+					break;
+				}
+			}
+	window.clear();
+	window.draw(text);
+	
+	window.display();
+	
 		}
-
-		window.clear();
+		
+		
 	}
+	
+	koder.message(41000);
+	
 
 	return 0;
 }
