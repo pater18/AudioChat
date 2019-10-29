@@ -38,7 +38,11 @@ int main()
 	rectangle.setFillColor(sf::Color(128, 128, 128));
 	rectangle.setPosition(50, 700);
 
-	int moveText = 50;
+	sf::RectangleShape rectangleSend(sf::Vector2f(100, 75));
+	rectangleSend.setFillColor(sf::Color(128, 128, 128));
+	rectangleSend.setPosition(850, 700);
+
+	int moveText = 80;
 
 	std::string test;
 	sf::Font font;
@@ -46,12 +50,22 @@ int main()
 	if (!font.loadFromFile("blue.ttf")) {
 
 	}
-
 	sf::Text text;
-	text.setPosition(60, 710);
 	text.setFont(font);
 	text.setCharacterSize(20);
 	text.setFillColor(sf::Color::Black);
+
+	sf::Text text2;
+	text2.setFont(font);
+	text2.setCharacterSize(20);
+	text2.setFillColor(sf::Color::Black);
+
+
+	sf::Text send;
+	send.setFont(font);
+	send.setString("Send");
+	send.setCharacterSize(20);
+	send.setFillColor(sf::Color::Black);
 
 	sf::Text newline;
 	newline.setFont(font);
@@ -62,10 +76,13 @@ int main()
 	sound.setBuffer(buffer);
 	sound.play();*/
 
-
+	std::vector<sf::Text> textVector;
 
 	while (window.isOpen())
 	{
+
+		text.setPosition(60, 710);
+		send.setPosition(880, 725);
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
@@ -85,29 +102,33 @@ int main()
 				sound.play();
 				koder.slet();
 
-				text.setPosition(60, 710-moveText);
+
+				textVector.insert(textVector.begin(), text);
+
+				for (size_t i = 0; i < textVector.size(); i++)
+				{
+					textVector[i].move(0, -moveText);
+					
+				}
+				test.clear();
 			}
 			break;
+
 			case sf::Event::TextEntered:
 				if (event.type == sf::Event::TextEntered)
 				{
 					if (event.text.unicode < 128 && (event.text.unicode != 13))
 						test += (char)event.text.unicode;
-
-
-					float widthOfText = text.getLocalBounds().width + 250;
-
+					
+					float widthOfText = text.getLocalBounds().width + 50;
 					sf::Vector2f vector;
-
 					vector = rectangle.getPosition();
-
 					float xRectangle = vector.x;
-
 					float widthRect = xRectangle + rectangle.getSize().x;
 
-					if (widthOfText >= widthRect) {
+					if (widthOfText + 40 >= widthRect) {
 						test += "\n";
-						widthOfText = 250;
+						widthOfText = 50;
 					}
 
 					text.setString(test);
@@ -116,7 +137,12 @@ int main()
 		}
 		window.clear(sf::Color::White);
 		window.draw(rectangle);
+		window.draw(rectangleSend);
 		window.draw(text);
+		
+			for (auto obj : textVector)
+				window.draw(obj);
+		window.draw(send);
 		window.display();
 
 			}
