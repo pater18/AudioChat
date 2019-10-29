@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "SoundChunk.h"
 #include <vector>
+#include <string>
 
 class Decoder : public SoundChunk
 {
@@ -14,6 +15,7 @@ public:
 
 
 private:
-	std::vector<int> _CRC;
+	std::vector<int> _CRCok;
 	std::vector<int> vecForCRC;
+	std::string besked;
 };

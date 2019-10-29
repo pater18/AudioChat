@@ -1,5 +1,7 @@
 #include "Decoder.h"
 #include <bitset>
+#include <algorithm>
+
 
 
 
@@ -75,6 +77,14 @@ std::vector<int> Decoder::CRC(int antal_bit)
 		std::cout << "Data2 start: ";
 		std::cout << data2;
 		std::cout << std::endl;
+		
+
+		std::vector<int> temp;
+		for (size_t i = 0; i < antal_bit; i++)
+		{
+			temp.push_back(data2[i+8]);
+		}
+		std::reverse(std::begin(temp), std::end(temp));
 
 		for (int i = 0; i < antal_bit; i++)
 		{
@@ -94,20 +104,44 @@ std::vector<int> Decoder::CRC(int antal_bit)
 
 
 		if (data2 == false)
+		{
 			std::cout << "Data der blev sendt var det rigtige" << std::endl;
+			for (size_t i = 0; i < temp.size(); i++)
+			{
+				_CRCok.push_back(temp[i]);
+			}
+		}
 		else
 			std::cout << "Der er fejl i beregningen til CRC tjek." << std::endl;
 
 	}
 
-	return std::vector<int>();
+	return _CRCok;
 }
 
 
-//void Decoder::bitToString()
-//{
-//	for (size_t i = 0; i < vecForCRC; i++)
-//	{
-//
-//	}
-//}
+void Decoder::bitToString()
+{
+	for (size_t i = 0; i < _CRCok.size(); i++)
+	{
+		std::bitset<8> temp;
+		for (size_t i = 0; i < 8; i++)
+		{
+			if (_CRCok[i] == 1)
+				temp.set(7 - i, 1);
+			else
+				temp.set(7 - i, 0);
+		}
+		
+		
+		int tempi = temp.to_ulong();
+		
+		char tempc = (char)tempi; 
+		
+		std::cout << tempc << std::endl;
+		
+		besked.push_back(tempc); 
+	}
+
+
+}

@@ -52,10 +52,9 @@ int main()
 
 
 
-
-	/*buffer.loadFromSamples(&sinusAmplituder[0], sinusAmplituder.size(), 1, 44100);
+	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
 	sound.setBuffer(buffer);
-	sound.play();*/
+	sound.play();
 
 
 
