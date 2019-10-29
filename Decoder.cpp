@@ -9,6 +9,8 @@ Decoder::Decoder()
 
 void Decoder::intToBit()
 {
+
+	std::cout << " Den er her " << std::endl; 
 	for (size_t i = 0; i < sendToDecoder.size(); i++)
 	{
 		std::bitset<4> temp(sendToDecoder[i]);
