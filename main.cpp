@@ -33,6 +33,12 @@ int main()
 
 
 	sf::RenderWindow window(sf::VideoMode(600, 600), "SFML works!");
+	sf::RectangleShape rectangle(sf::Vector2f(100, 50));
+	rectangle.setFillColor(sf::Color::Yellow);
+	rectangle.setPosition(250, 275);
+
+
+
 	std::string test;
 	sf::Font font;
 
@@ -45,7 +51,9 @@ int main()
 	text.setCharacterSize(24);
 	text.setFillColor(sf::Color::Red);
 
-
+	sf::Text newline;
+	newline.setFont(font);
+	newline.setCharacterSize(24);
 
 
 	/*buffer.loadFromSamples(&sinusAmplituder[0], sinusAmplituder.size(), 1, 44100);
@@ -84,18 +92,37 @@ int main()
 					if (event.text.unicode < 128 && (event.text.unicode != 13))
 						test += (char)event.text.unicode;
 					
+					text.setPosition(250, 275);
+
+
+					float widthOfText = text.getLocalBounds().width + 250;
+
+					sf::Vector2f vector;
+
+					vector = rectangle.getPosition();
+
+					float xRectangle = vector.x;
+
+					float widthRect = xRectangle + rectangle.getSize().x;
+
+					if (widthOfText >= widthRect) {
+						test += "\n";
+						widthOfText = 250;
+					}
+
 					text.setString(test);
 					break;
 				}
 		}
 		window.clear();
+		window.draw(rectangle);
 		window.draw(text);
 		window.display();
-	}
+
+			}
 
 
 }
-	
 	
 
 	return 0;
