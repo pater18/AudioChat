@@ -26,9 +26,9 @@ int main()
 
 	sf::Event event;
 
-	//koder.StrToBit("hej med dig ");
-	//koder.CRC(32);
-	//koder.message(5000);					//Tager besked vektoren med 1 og 0 og l�gger det i en ny vektor, som kan l�ses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
+	koder.StrToBit("hej med dig ");
+	koder.CRC(32);
+	koder.message(5000);					//Tager besked vektoren med 1 og 0 og l�gger det i en ny vektor, som kan l�ses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
 
 
 	sf::SoundBuffer buffer;
