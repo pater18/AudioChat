@@ -32,12 +32,13 @@ int main()
 
 
 
-	sf::RenderWindow window(sf::VideoMode(600, 600), "SFML works!");
-	sf::RectangleShape rectangle(sf::Vector2f(100, 50));
-	rectangle.setFillColor(sf::Color::Yellow);
-	rectangle.setPosition(250, 275);
+	sf::RenderWindow window(sf::VideoMode(1000, 800), "SFML works!");
 
+	sf::RectangleShape rectangle(sf::Vector2f(750, 75));
+	rectangle.setFillColor(sf::Color(128, 128, 128));
+	rectangle.setPosition(50, 700);
 
+	int moveText = 50;
 
 	std::string test;
 	sf::Font font;
@@ -47,9 +48,10 @@ int main()
 	}
 
 	sf::Text text;
+	text.setPosition(60, 710);
 	text.setFont(font);
-	text.setCharacterSize(24);
-	text.setFillColor(sf::Color::Red);
+	text.setCharacterSize(20);
+	text.setFillColor(sf::Color::Black);
 
 	sf::Text newline;
 	newline.setFont(font);
@@ -81,9 +83,9 @@ int main()
 				buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
 				sound.setBuffer(buffer);
 				sound.play();
-				
 				koder.slet();
-				test.clear();
+
+				text.setPosition(60, 710-moveText);
 			}
 			break;
 			case sf::Event::TextEntered:
@@ -91,8 +93,6 @@ int main()
 				{
 					if (event.text.unicode < 128 && (event.text.unicode != 13))
 						test += (char)event.text.unicode;
-					
-					text.setPosition(250, 275);
 
 
 					float widthOfText = text.getLocalBounds().width + 250;
@@ -114,7 +114,7 @@ int main()
 					break;
 				}
 		}
-		window.clear();
+		window.clear(sf::Color::White);
 		window.draw(rectangle);
 		window.draw(text);
 		window.display();
