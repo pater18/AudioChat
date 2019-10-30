@@ -22,7 +22,7 @@ int main()
 
 
 
-	//customSound koder;
+	customSound koder;
 
 
 	sf::Event event;
@@ -71,32 +71,27 @@ int main()
 				window.close();
 				break;
 
-			//case sf::Event::KeyPressed:
-			//	if (event.key.code == sf::Keyboard::Enter) {
-			//	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
-			//	sound.setBuffer(buffer);
-			//	sound.play();
-			//}
-			//break;
-			//case sf::Event::TextEntered:
-			//	if (event.type == sf::Event::TextEntered)
-			//	{
-			//		if (event.text.unicode < 128)
-			//			test += (char)event.text.unicode;
-			//		koder.StrToBit(test);
-			//		koder.CRC(32);
-			//		koder.message(10000);
+			case sf::Event::KeyPressed:
 
+				if (event.key.code == sf::Keyboard::Enter)
+				{
+					koder.StrToBit("");
+					koder.CRC(32);
+					koder.message(4410);					//Tager besked vektoren med 1 og 0 og l�gger det i en ny vektor, som kan l�ses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
+					buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
+					sound.setBuffer(buffer);
+					sound.play();
+				}
+				break;
 
+			}
 
-			//		text.setString(test);
-			//		break;
-			//	}
-		}
 			if (!sf::SoundBufferRecorder::isAvailable())
 			{
 				std::cout << "Error";
 			}
+
+
 
 			CustomRecorder recorder;
 			//recorder.setSaveRecording();
@@ -106,42 +101,14 @@ int main()
 			recorder.stop();
 
 
-			case sf::Event::KeyPressed:
-
-				if (event.key.code == sf::Keyboard::Enter) 
-				{
-					koder.StrToBit("");
-					koder.CRC(32);
-					koder.message(4410);					//Tager besked vektoren med 1 og 0 og l�gger det i en ny vektor, som kan l�ses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
-					buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
-					sound.setBuffer(buffer);
-					sound.play();
-				}
-			break;
-			//case sf::Event::TextEntered:
-			//	if (event.type == sf::Event::TextEntered)
-			//	{
-			//		if (event.text.unicode < 128)
-			//			test += (char)event.text.unicode;
-			//		koder.StrToBit(test);
-			//		koder.CRC(32);
-			//		koder.message(10000);
-
-
-
-			//		text.setString(test);
-			//		break;
-			//	}
+		
+		
 
 		}
 		window.clear();
 		window.draw(text);
 		window.display();
 	}
-
-
-}
-
 
 	if (!sf::SoundBufferRecorder::isAvailable())
 	{
@@ -158,12 +125,15 @@ int main()
 	temp.intToBit();
 
 
-	
 
-	
+
+
 
 	return 0;
 }
+
+
+
 
 
 

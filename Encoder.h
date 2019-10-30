@@ -11,7 +11,6 @@ public:
 	std::vector<sf::Int16> CRC(int antal_bit);
 
 
-	//short SineWave(double time, double freq1, double freq2, double amp);
 
 	
 private:
@@ -19,6 +18,6 @@ private:
 protected:
 	std::vector<sf::Int16> _Encoded;
 
-	//std::vector<sf::Int16> _Encoded, ud;
+	
 
 };
