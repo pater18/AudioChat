@@ -21,9 +21,6 @@ int main()
 {
 
 
-
-	customSound koder;
-
 	sf::Event event;
 
 	//koder.StrToBit("");
@@ -59,7 +56,6 @@ int main()
 
 
 
-
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -71,6 +67,7 @@ int main()
 				window.close();
 				break;
 			case sf::Event::KeyPressed:
+
 				if (event.key.code == sf::Keyboard::Enter) 
 				{
 					koder.StrToBit("");
@@ -95,11 +92,13 @@ int main()
 			//		text.setString(test);
 			//		break;
 			//	}
+
 		}
 		window.clear();
 		window.draw(text);
 		window.display();
 	}
+
 
 }
 
