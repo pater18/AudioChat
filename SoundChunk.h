@@ -23,7 +23,6 @@ public:
 		const std::pair<int, float>& b) {
 		return (a.second > b.second);
 	};
-	int synchroniseDTMF(int DTMF, int lastDTMF);
 private:
 	const sf::Int16* m_samples;
 	std::size_t m_sampleCount;

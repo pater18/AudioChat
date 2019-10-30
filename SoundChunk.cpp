@@ -102,13 +102,3 @@ int SoundChunk::determineDTMF(std::vector<float> freqComponents)
 	
 }
 
-int SoundChunk::synchroniseDTMF(int DTMF, int lastDTMF)
-{
-	if (DTMF == -1)
-		return -1;
-	if (lastDTMF == DTMF)
-		return -1;
-	
-	lastDTMF = DTMF;
-	return DTMF;
-}
