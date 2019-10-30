@@ -19,6 +19,10 @@ int main()
 {
 
 
+
+	//customSound koder;
+
+
 	sf::Event event;
 
 	//koder.StrToBit("hej med dig ");
@@ -36,9 +40,9 @@ int main()
 	std::string test;
 	sf::Font font;
 
-	if (!font.loadFromFile("blue.ttf")) {
+	//if (!font.loadFromFile("blue.ttf")) {
 
-	}
+	//}
 
 	sf::Text text;
 	text.setFont(font);
@@ -64,6 +68,42 @@ int main()
 			case sf::Event::Closed:
 				window.close();
 				break;
+
+			//case sf::Event::KeyPressed:
+			//	if (event.key.code == sf::Keyboard::Enter) {
+			//	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
+			//	sound.setBuffer(buffer);
+			//	sound.play();
+			//}
+			//break;
+			//case sf::Event::TextEntered:
+			//	if (event.type == sf::Event::TextEntered)
+			//	{
+			//		if (event.text.unicode < 128)
+			//			test += (char)event.text.unicode;
+			//		koder.StrToBit(test);
+			//		koder.CRC(32);
+			//		koder.message(10000);
+
+
+
+			//		text.setString(test);
+			//		break;
+			//	}
+		}
+			if (!sf::SoundBufferRecorder::isAvailable())
+			{
+				std::cout << "Error";
+			}
+
+			CustomRecorder recorder;
+			//recorder.setSaveRecording();
+
+			recorder.start(10000);
+			std::this_thread::sleep_for(std::chrono::milliseconds(100000));
+			recorder.stop();
+
+
 			case sf::Event::KeyPressed:
 				if (event.key.code == sf::Keyboard::Enter) {
 					customSound koder;
@@ -95,7 +135,7 @@ int main()
 
 
 }
-	
+
 	
 
 	return 0;

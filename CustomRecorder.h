@@ -17,4 +17,5 @@ public:
 private:
 	sf::Int16 m_samples;
 	bool m_saveRecording = false;
+	int m_lastDTMF = -1;
 };
