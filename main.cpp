@@ -20,7 +20,7 @@ int main()
 
 
 
-	customSound koder;
+	//customSound koder;
 
 	sf::Event event;
 
@@ -39,9 +39,9 @@ int main()
 	std::string test;
 	sf::Font font;
 
-	if (!font.loadFromFile("blue.ttf")) {
+	//if (!font.loadFromFile("blue.ttf")) {
 
-	}
+	//}
 
 	sf::Text text;
 	text.setFont(font);
@@ -90,25 +90,22 @@ int main()
 			//		break;
 			//	}
 		}
-		window.clear();
-		window.draw(text);
-		window.display();
+			if (!sf::SoundBufferRecorder::isAvailable())
+			{
+				std::cout << "Error";
+			}
+
+			CustomRecorder recorder;
+			//recorder.setSaveRecording();
+
+			recorder.start(10000);
+			std::this_thread::sleep_for(std::chrono::milliseconds(100000));
+			recorder.stop();
+
 	}
 
 }
 
-	if (!sf::SoundBufferRecorder::isAvailable())
-	{
-		std::cout << "Error";
-	}
-
-	CustomRecorder recorder;
-	recorder.setSaveRecording();
-
-	recorder.start();
-	std::this_thread::sleep_for(std::chrono::milliseconds(10000));
-	recorder.stop();
-	
 	
 
 	return 0;

@@ -17,6 +17,7 @@ public:
 	int determineDTMF(std::vector<float> freqComponents);
 	bool sortinrev(const std::pair<int, float>& a,
 		const std::pair<int, float>& b) { return (a.second > b.second); };
+	int synchroniseDTMF(int DTMF, int lastDTMF);
 private:
 	const sf::Int16* m_samples;
 	std::size_t m_sampleCount;
