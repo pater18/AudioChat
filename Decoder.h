@@ -4,6 +4,7 @@
 #include "SoundChunk.h"
 #include <vector>
 #include <string>
+#include "Sound.h"
 
 class Decoder : public SoundChunk
 {
