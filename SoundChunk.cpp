@@ -67,12 +67,15 @@ int SoundChunk::determineDTMF(std::vector<float> freqComponents)
 		}
 	}
 
+	if (secondLargest < 750)
+		return -1;
+
 	for (std::size_t i = 0; i < vect.size(); i++)
 	{	
 		if (vect[i].second == secondLargest || vect[i].second == largest)
 			continue;
-		if (secondLargest / vect[i].second < 4)
-			return 20;
+		if (secondLargest / vect[i].second < 2)
+			return -1;
 	}
 
 	int temp;
@@ -97,4 +100,15 @@ int SoundChunk::determineDTMF(std::vector<float> freqComponents)
 	//	std::cout << vect[i].first << " " << vect[i].second << std::endl;
 	//}
 	
+}
+
+int SoundChunk::synchroniseDTMF(int DTMF, int lastDTMF)
+{
+	if (DTMF == -1)
+		return -1;
+	if (lastDTMF == DTMF)
+		return -1;
+	
+	lastDTMF = DTMF;
+	return DTMF;
 }

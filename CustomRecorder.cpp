@@ -2,20 +2,31 @@
 
 bool CustomRecorder::onStart()
 {
-	setProcessingInterval(sf::milliseconds(10));
+	std::cout << "Recording started" << std::endl;
+	setProcessingInterval(sf::milliseconds(30));
 	return true;
 }
 
 bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t sampleCount)
 {
 	SoundChunk currentSoundChunk(samples, sampleCount);
-	//for (std::size_t i = 0; i < 8; i++)
-	//{
-	//	std::cout << currentSoundChunk.goertzelAlgorithm(this->getSampleRate())[i] << " ";
-	//}
 	std::vector<float> goertzelResult = currentSoundChunk.goertzelAlgorithm(this->getSampleRate());
-	std::cout << currentSoundChunk.determineDTMF(goertzelResult) << " ";
+	//for (std::size_t i = 0; i < goertzelResult.size(); i++)
+	//{
+	//	std::cout << goertzelResult[i] << " ";
+	//}
 
+	//std::cout << std::endl;
+	
+	int rawGoertzel = currentSoundChunk.determineDTMF(goertzelResult);
+	int syncGoertzel = currentSoundChunk.synchroniseDTMF(rawGoertzel, m_lastDTMF);
+	if (syncGoertzel != -1) {
+		std::cout << std::endl;
+		std::cout << syncGoertzel << std::endl;
+		m_lastDTMF = syncGoertzel;
+	}
+ 
+	
 	if (m_saveRecording == true)
 	{
 		saveRecording(samples, sampleCount);
@@ -27,6 +38,7 @@ bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t samp
 void CustomRecorder::onStop()
 {
 	//If saveRecording - close
+	std::cout << std::endl << "Recording stopped" << std::endl;
 }
 
 void CustomRecorder::saveRecording(const sf::Int16* samples, std::size_t sampleCount)

@@ -20,3 +20,4 @@ private:
 	std::vector<int> vecForCRC;
 	std::string besked;
 };
+
