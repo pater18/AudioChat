@@ -45,7 +45,7 @@ int main()
 	float widthOfText = 0;
 	sf::RectangleShape rectangleBesked(sf::Vector2f(100, 35));
 
-	vector<sf::RectangleShape> rectangleBesked;
+	
 
 
 
@@ -85,6 +85,7 @@ int main()
 	sound.play();*/
 
 	std::vector<sf::Text> textVector;
+	std::vector<sf::RectangleShape> rectangleVec;
 
 	while (window.isOpen())
 	{
@@ -183,8 +184,8 @@ int main()
 				sf::Vector2f xyvec;
 				xyvec = textVector[i].getPosition();
 				widthOfText = textVector[i].getLocalBounds().width;
-
-				rectangleBesked.setPosition(xyvec.x, xyvec.y);
+				//rectangleVec.insert(rectangleVec.begin(), sf::Vector2f(widthOfText + 5, 35));
+				rectangleVec[i].setPosition(xyvec.x, xyvec.y);
 				rectangleBesked.setSize(sf::Vector2f(widthOfText + 5, 35));
 				rectangleBesked.setFillColor(sf::Color(128, 128, 128));
 				
