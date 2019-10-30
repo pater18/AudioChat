@@ -11,6 +11,10 @@ Encoder::Encoder()
 {
 }
 
+void Encoder::slet() {
+	ud.clear();
+}
+
 std::vector<sf::Int16> Encoder::StrToBit(sf::String input)
 {
 
