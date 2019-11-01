@@ -27,9 +27,11 @@ int main()
 
 	sf::Event event;
 
-	koder.StrToBit("");
+	koder.StrToBit("Hej med dig ");
 	koder.CRC(32);
-	koder.message(4410);					//Tager besked vektoren med 1 og 0 og l�gger det i en ny vektor, som kan l�ses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
+	//koder.tjekDouble();						//Virker kun hvis der er noget i strengen ovenover.
+	koder.message(22050);					//Tager besked vektoren med 1 og 0 og l�gger det i en ny vektor, som kan l�ses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
+	 
 
 
 	sf::SoundBuffer buffer;
@@ -75,12 +77,12 @@ int main()
 
 				if (event.key.code == sf::Keyboard::Enter)
 				{
-					koder.StrToBit("");
-					koder.CRC(32);
-					koder.message(4410);					//Tager besked vektoren med 1 og 0 og l�gger det i en ny vektor, som kan l�ses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
-					buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
-					sound.setBuffer(buffer);
-					sound.play();
+					//koder.StrToBit("");
+					//koder.CRC(32);
+					//koder.message(4410);					//Tager besked vektoren med 1 og 0 og l�gger det i en ny vektor, som kan l�ses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
+					//buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
+					//sound.setBuffer(buffer);
+					//sound.play();
 				}
 				break;
 

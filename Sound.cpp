@@ -34,103 +34,134 @@ std::vector<sf::Int16> customSound::message(int tid)
 
 	int freq1, freq2;
 
-	freq1 = 697;
-	freq2 = 1209;
-	for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	{
-		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	}
+	//freq1 = 697;
+	//freq2 = 1209;
+	//for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.4));
+	//}
+	//for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.4));
+	//}
+	//for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.4));
+	//}
+	//for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.4));
+	//}
+	//for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.4));
+	//}
+	//for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.4));
+	//}
+	//for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.4));
+	//}
+	//  
+	//freq1 = 697;
+	//freq2 = 1209;
+	//for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+	//}
 
-	freq1 = 697;
-	freq2 = 1336;
-	for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	{
-		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	}
-	freq1 = 697;
-	freq2 = 1477;
-	for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	{
-		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	}
-	freq1 = 697;
-	freq2 = 1633;
-	for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	{
-		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	}
-	freq1 = 770;
-	freq2 = 1209;
-	for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	{
-		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	}
-	freq1 = 770;
-	freq2 = 1336;
-	for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	{
-		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	}
-	freq1 = 770;
-	freq2 = 1477;
-	for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	{
-		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	}
-	freq1 = 770;
-	freq2 = 1633;
-	for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	{
-		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	}
+	//freq1 = 697;
+	//freq2 = 1336;
+	//for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+	//}
+	//freq1 = 697;
+	//freq2 = 1477;
+	//for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+	//}
+	//freq1 = 697;
+	//freq2 = 1633;
+	//for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+	//}
+	//freq1 = 770;
+	//freq2 = 1209;
+	//for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+	//}
+	//freq1 = 770;
+	//freq2 = 1336;
+	//for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+	//}
+	//freq1 = 770;
+	//freq2 = 1477;
+	//for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+	//}
+	//freq1 = 770;
+	//freq2 = 1633;
+	//for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+	//}
 
-	freq1 = 852;
-	freq2 = 1209;
-	for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	{
-		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	}freq1 = 852;
-	freq2 = 1336;
-	for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	{
-		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	}freq1 = 852;
-	freq2 = 1477;
-	for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	{
-		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	}freq1 = 852;
-	freq2 = 1633;
-	for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	{
-		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	}
+	//freq1 = 852;
+	//freq2 = 1209;
+	//for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+	//}freq1 = 852;
+	//freq2 = 1336;
+	//for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+	//}freq1 = 852;
+	//freq2 = 1477;
+	//for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+	//}freq1 = 852;
+	//freq2 = 1633;
+	//for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+	//}
 
-	freq1 = 941;
-	freq2 = 1209;
-	for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	{
-		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	}
-	freq1 = 941;
-	freq2 = 1336;
-	for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	{
-		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	}
-	freq1 = 941;
-	freq2 = 1477;
-	for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	{
-		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	}
+	//freq1 = 941;
+	//freq2 = 1209;
+	//for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+	//}
+	//freq1 = 941;
+	//freq2 = 1336;
+	//for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+	//}
+	//freq1 = 941;
+	//freq2 = 1477;
+	//for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+	//}
 
-	freq1 = 941;
-	freq2 = 1633;
-	for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	{
-		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	}
+	//freq1 = 941;
+	//freq2 = 1633;
+	//for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+	//}
 
 
 	for (int i = 0; i < _Encoded.size(); i += 4) // 0, 4, 8
