@@ -2,10 +2,10 @@
 
 bool CustomRecorder::onStart()
 {
-	std::cout << "Recording started" << std::endl;
-
-
+	std::cout << "Recording started with " << this->getSampleRate() << " sampling freq" << std::endl;
 	setProcessingInterval(sf::milliseconds(30));
+	m_ringBuffer.resize(flag1.size());
+	std::fill(m_ringBuffer.begin(), m_ringBuffer.end(), -1);
 	return true;
 }
 
@@ -23,8 +23,14 @@ bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t samp
 	m_curDTMF = currentSoundChunk.determineDTMF(goertzelResult);
 	int syncGoertzel = syncDTMF();
 	if (syncGoertzel != -1) {
-		std::cout << std::endl;
-		std::cout << syncGoertzel << std::endl;
+		//std::cout << std::endl;
+		//std::cout << syncGoertzel << std::endl;
+		updateRingBuffer(syncGoertzel);
+		if (m_ringBuffer == flag1 || m_ringBuffer == flag2)
+		{
+			std::cout << "FLAG" << " ";
+			m_ringBuffer = { -1, -1 };
+		}
 	}
 		
 	if (m_saveRecording == true)
@@ -72,4 +78,19 @@ int CustomRecorder::syncDTMF()
 	m_lastDTMF = m_curDTMF;
 	m_secondDetection = false;
 	return -1;
+}
+
+void CustomRecorder::updateRingBuffer(int DTMFTone)
+{
+	if (m_ringBrufferPointer == flag1.size())
+		m_ringBrufferPointer = 0;
+	m_ringBuffer.at(m_ringBrufferPointer) = DTMFTone;
+	m_ringBrufferPointer++;
+
+
+	for (std::size_t i = 0; i < m_ringBuffer.size(); i++)
+	{
+		std::cout << m_ringBuffer[i] << " ";
+	}
+	std::cout << std::endl;
 }
