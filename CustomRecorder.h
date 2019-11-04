@@ -32,5 +32,5 @@ private:
 	double duration;
 	bool m_secondDetection = false;
 	const std::vector<int> flag1 = { 15,0 }, flag2 = { 0,15 },
-		escCharacter = { 2,3,2,3,2,3,2,3 };
+		escCharacter = { 14,0 };
 };
