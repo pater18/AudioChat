@@ -38,186 +38,259 @@ std::vector<sf::Int16> customSound::message(int tid)
 
 	int freq1, freq2, count = 0;
 	double multipleEnd = 0.9, multipleStart = 0;
-	double faktor = tid / 10;
-	faktor = multipleEnd / faktor;
+	double faktor = tid / 2;
+	faktor = 0.9 * e^;
 
 
 	freq1 = 697;
 	freq2 = 1209;
-	//for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	//{
-	//	if (i < (tid - (tid / 10)))
-	//	{
-	//		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	//	}
-	//	else
-	//	{
-	//		_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5))*multipleEnd);
-	//		multipleEnd -= faktor;
-	//	}
-	//}
-	//multipleEnd = 0.5;
+
+	for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	{
+		if (i < (tid / 2))
+		{
+			_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
+			multipleStart += faktor;
+		}
+		else
+		{
+			_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+			multipleEnd -= faktor;
+		}
+	}
+	multipleStart = 0;
+	multipleEnd = 0.9;
+
+	for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	{
+		if (i < (tid / 2))
+		{
+			_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
+			multipleStart += faktor;
+		}
+		else
+		{
+			_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+			multipleEnd -= faktor;
+		}
+	}
+
+	multipleStart = 0;
+	multipleEnd = 0.9;
+
+	for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	{
+		if (i < (tid / 2))
+		{
+			_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
+			multipleStart += faktor;
+		}
+		else
+		{
+			_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+			multipleEnd -= faktor;
+		}
+	}
+
+	multipleStart = 0;
+	multipleEnd = 0.9;
 
 
-	//for (size_t i = 0; i < 500; i++)
-	//{
-	//	std::cout << _customSound[_customSound.size() - 500 + i] << " ";
-	//}
-	//std::cout << std::endl;
+	for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	{
+		if (i < (tid / 2))
+		{
+			_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
+			multipleStart += faktor;
+		}
+		else
+		{
+			_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+			multipleEnd -= faktor;
+		}
+	}
+
+	multipleStart = 0;
+	multipleEnd = 0.9;
 
 
-	//for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	//{
-	//	if (i < (tid - (tid * 0.9)))
-	//	{
-	//		_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5))*multipleStart);
-	//		multipleStart += faktor;
-	//	}
-	//	else if (i < (tid - (tid * 0.10)) && i > tid - (tid * 0.9))
-	//	{
-	//		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	//	}
-	//	else
-	//	{
-	//		_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
-	//		multipleEnd -= faktor;
-	//	}
-	//}
+	for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	{
+		if (i < (tid / 2))
+		{
+			_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
+			multipleStart += faktor;
+		}
+		else
+		{
+			_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+			multipleEnd -= faktor;
+		}
+	}
 
-	//multipleEnd = 0.5;
-	//multipleStart = 0;
-
-	//for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	//{
-	//	if (i < (tid - (tid * 0.9)))
-	//	{
-	//		_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
-	//		multipleStart += faktor;
-	//	}
-	//	else if (i < (tid - (tid * 0.10)) && i > tid - (tid * 0.9))
-	//	{
-	//		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	//	}
-	//	else
-	//	{
-	//		_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
-	//		multipleEnd -= faktor;
-	//	}
-	//}
-
-	//multipleEnd = 0.5;
-	//multipleStart = 0;
-
-	//for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	//{
-	//	if (i < (tid - (tid * 0.9)))
-	//	{
-	//		_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
-	//		multipleStart += faktor;
-	//	}
-	//	else if (i < (tid - (tid * 0.10)) && i > tid - (tid * 0.9))
-	//	{
-	//		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	//	}
-	//	else
-	//	{
-	//		_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
-	//		multipleEnd -= faktor;
-	//	}
-	//}
-
-	//multipleEnd = 0.5;
-	//multipleStart = 0;
-
-	//for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	//{
-	//	if (i < (tid - (tid * 0.9)))
-	//	{
-	//		_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
-	//		multipleStart += faktor;
-	//	}
-	//	else if (i < (tid - (tid * 0.10)) && i > tid - (tid * 0.9))
-	//	{
-	//		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	//	}
-	//	else
-	//	{
-	//		_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
-	//		multipleEnd -= faktor;
-	//	}
-	//}
-
-	//multipleEnd = 0.5;
-	//multipleStart = 0;
-
-	//for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	//{
-	//	if (i < (tid - (tid * 0.9)))
-	//	{
-	//		_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
-	//		multipleStart += faktor;
-	//	}
-	//	else if (i < (tid - (tid * 0.10)) && i > tid - (tid * 0.9))
-	//	{
-	//		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	//	}
-	//	else
-	//	{
-	//		_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
-	//		multipleEnd -= faktor;
-	//	}
-	//}
+	multipleStart = 0;
+	multipleEnd = 0.9;
 
 
-	//std::cout << std::endl;
-
-	//for (size_t i = 0; i < 500; i++)
-	//{
-	//	std::cout << _customSound[i + tid] << " ";
-	//}
-
+	for (size_t i = 0; i < 500; i++)
+	{
+		std::cout << _customSound[_customSound.size() - 500 + i] << " ";
+	}
+	std::cout << std::endl;
 
 
+	for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	{
+		if (i < (tid - (tid * 0.9)))
+		{
+			_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5))*multipleStart);
+			multipleStart += faktor;
+		}
+		else if (i < (tid - (tid * 0.10)) && i > tid - (tid * 0.9))
+		{
+			_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+		}
+		else
+		{
+			_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+			multipleEnd -= faktor;
+		}
+	}
+
+	multipleEnd = 0.9;
+	multipleStart = 0;
+
+	for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	{
+		if (i < (tid - (tid * 0.9)))
+		{
+			_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
+			multipleStart += faktor;
+		}
+		else if (i < (tid - (tid * 0.10)) && i > tid - (tid * 0.9))
+		{
+			_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+		}
+		else
+		{
+			_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+			multipleEnd -= faktor;
+		}
+	}
+
+	multipleEnd = 0.9;
+	multipleStart = 0;
+
+	for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	{
+		if (i < (tid - (tid * 0.9)))
+		{
+			_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
+			multipleStart += faktor;
+		}
+		else if (i < (tid - (tid * 0.10)) && i > tid - (tid * 0.9))
+		{
+			_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+		}
+		else
+		{
+			_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+			multipleEnd -= faktor;
+		}
+	}
+
+	multipleEnd = 0.9;
+	multipleStart = 0;
+
+	for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	{
+		if (i < (tid - (tid * 0.9)))
+		{
+			_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
+			multipleStart += faktor;
+		}
+		else if (i < (tid - (tid * 0.10)) && i > tid - (tid * 0.9))
+		{
+			_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+		}
+		else
+		{
+			_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+			multipleEnd -= faktor;
+		}
+	}
+
+	multipleEnd = 0.9;
+	multipleStart = 0;
+
+	for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	{
+		if (i < (tid - (tid * 0.9)))
+		{
+			_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
+			multipleStart += faktor;
+		}
+		else if (i < (tid - (tid * 0.10)) && i > tid - (tid * 0.9))
+		{
+			_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+		}
+		else
+		{
+			_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+			multipleEnd -= faktor;
+		}
+	}
 
 
-	//for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	//{
-	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	//}
-	//for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	//{
-	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	//}
-	//for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	//{
-	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	//}
-	//for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	//{
-	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	//}
-	//for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	//{
-	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	//}
-	//for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	//{
-	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-	//}
+	std::cout << std::endl;
+
+	for (size_t i = 0; i < 500; i++)
+	{
+		std::cout << _customSound[i + tid] << " ";
+	}
 
 
 
-	//for (size_t i = 0; i < 500; i++)
-	//{
-	//	std::cout << _customSound[i] << " ";
-	//}
 
-	//
-	//for (size_t i = 0; i < 500; i++)
-	//{
-	//	std::cout << _customSound[i] << " ";
-	//}
-	//std::cout << std::endl; 
+
+	for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	{
+		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+	}
+	for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	{
+		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+	}
+	for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	{
+		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+	}
+	for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	{
+		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+	}
+	for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	{
+		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+	}
+	for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	{
+		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+	}
+
+
+
+	for (size_t i = 0; i < 500; i++)
+	{
+		std::cout << _customSound[i] << " ";
+	}
+
+	
+	for (size_t i = 0; i < 500; i++)
+	{
+		std::cout << _customSound[i] << " ";
+	}
+	std::cout << std::endl; 
 	
 	  
 	//freq1 = 697;
@@ -275,18 +348,18 @@ std::vector<sf::Int16> customSound::message(int tid)
 	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 	//}
 
-	freq1 = 770;
-	freq2 = 1336;
-	for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	{
-		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-		dataSound << customSound::Sinewave(i, freq1, freq2, 0.5) << std::endl;
-	}
-	for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	{
-		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-		dataSound << customSound::Sinewave(i, freq1, freq2, 0.5) << std::endl;
-	}
+	//freq1 = 770;
+	//freq2 = 1336;
+	//for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+	//	dataSound << customSound::Sinewave(i, freq1, freq2, 0.5) << std::endl;
+	//}
+	//for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+	//	dataSound << customSound::Sinewave(i, freq1, freq2, 0.5) << std::endl;
+	//}
 
 	//freq1 = 770;
 	//freq2 = 1477;
@@ -321,18 +394,18 @@ std::vector<sf::Int16> customSound::message(int tid)
 	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 	//}
 
-	freq1 = 852;
-	freq2 = 1336;
-	for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	{
-		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-		dataSound << customSound::Sinewave(i, freq1, freq2, 0.5) << std::endl;
-	}
-	for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	{
-		_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-		dataSound << customSound::Sinewave(i, freq1, freq2, 0.5) << std::endl;
-	}
+	//freq1 = 852;
+	//freq2 = 1336;
+	//for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+	//	dataSound << customSound::Sinewave(i, freq1, freq2, 0.5) << std::endl;
+	//}
+	//for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
+	//{
+	//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+	//	dataSound << customSound::Sinewave(i, freq1, freq2, 0.5) << std::endl;
+	//}
 
 	//freq1 = 852;
 	//freq2 = 1477;
