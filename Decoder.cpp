@@ -9,6 +9,34 @@ Decoder::Decoder()
 {
 }
 
+void Decoder::setDTMFTone(int DTMF)
+{
+	if (m_character.size() == 2)
+		m_character.clear();
+	m_character.push_back(DTMF);
+	if (m_character.size() == 2)
+	{
+		if (m_listening)
+		{
+			if (m_character == flag)
+				m_listening = false;
+		}
+		else if (m_character == escChar && m_lastEsc == false)
+		{
+			m_lastEsc = true;
+		}
+		else if (m_character == flag)
+		{
+			if (m_lastEsc == false)
+				m_listening = true;
+		}
+		else
+		{
+			m_charVect.push_back(m_character);
+		}
+	}
+}
+
 void Decoder::intToBit()
 {
 

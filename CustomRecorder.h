@@ -19,6 +19,7 @@ public:
 	void onStop();
 	void setSaveRecording() { m_saveRecording = true;  };
 	void saveRecording(const sf::Int16* samples, std::size_t sampleCount);
+	void saveGoertzel(std::vector<float> goertzelData);
 	int syncDTMF();
 	void updateRingBuffer(int DTMFTone);
 
@@ -31,6 +32,7 @@ private:
 	int m_lastDTMF = -1, m_curDTMF = -1;
 	double duration;
 	bool m_secondDetection = false;
-	const std::vector<int> flag1 = { 15,0 }, flag2 = { 0,15 },
+	const std::vector<int> flag = { 15,0 },
 		escCharacter = { 14,0 };
+	std::ofstream goertzel;
 };
