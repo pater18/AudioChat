@@ -14,6 +14,18 @@ void Decoder::setDTMFTone(int DTMF)
 	if (m_character.size() == 2)
 		m_character.clear();
 	m_character.push_back(DTMF);
+
+	//Print hver karakter
+	if (m_character.size() == 2)
+	{
+		for (std::size_t i = 0; i < m_character.size(); i++)
+		{
+			std::cout << m_character[i] << " ";
+		}
+		std::cout << std::endl;
+	}
+	
+	
 	if (m_character.size() == 2)
 	{
 		if (m_listening)
@@ -21,20 +33,26 @@ void Decoder::setDTMFTone(int DTMF)
 			if (m_character == flag)
 				m_listening = false;
 		}
-		else if (m_character == escChar && m_lastEsc == false)
+		else if (m_lastEsc == true)
+		{
+			m_charVect.push_back(m_character);
+			m_lastEsc == false;
+		}
+		else if (m_character == escChar)
 		{
 			m_lastEsc = true;
 		}
 		else if (m_character == flag)
 		{
-			if (m_lastEsc == false)
-				m_listening = true;
+			m_listening = true;
 		}
 		else
 		{
 			m_charVect.push_back(m_character);
 		}
+
 	}
+
 }
 
 void Decoder::intToBit()

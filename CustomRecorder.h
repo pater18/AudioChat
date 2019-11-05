@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Audio.hpp>
 #include "SoundChunk.h"
+#include "Decoder.h"
 
 #include <thread>
 #include <chrono>
@@ -35,4 +36,5 @@ private:
 	const std::vector<int> flag = { 15,0 },
 		escCharacter = { 14,0 };
 	std::ofstream goertzel;
+	Decoder m_decoder;
 };

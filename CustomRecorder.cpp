@@ -28,14 +28,7 @@ bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t samp
 	m_curDTMF = currentSoundChunk.determineDTMF(goertzelResult);
 	int syncGoertzel = syncDTMF();
 	if (syncGoertzel != -1) {
-		//std::cout << std::endl;
-		//std::cout << syncGoertzel << std::endl;
-		updateRingBuffer(syncGoertzel);
-		if (m_ringBuffer == flag)
-		{
-			std::cout << "FLAG" << std::endl;
-			std::fill(m_ringBuffer.begin(), m_ringBuffer.end(), -1);
-		}
+		m_decoder.setDTMFTone(syncGoertzel);
 	}
 
 	saveGoertzel(goertzelResult);
@@ -51,6 +44,7 @@ bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t samp
 void CustomRecorder::onStop()
 {
 	//If saveRecording - close
+	goertzel.close();
 	std::cout << std::endl << "Recording stopped" << std::endl;
 }
 
@@ -81,7 +75,7 @@ int CustomRecorder::syncDTMF()
 		if (m_secondDetection == true) 
 		{
 			duration = (std::clock() - startClock) / (double)CLOCKS_PER_SEC;
-			if (duration > 1)
+			if (duration > 0.530)
 			{
 				startClock = std::clock();
 				return m_curDTMF;

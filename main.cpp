@@ -119,7 +119,7 @@ int main()
 	recorder.setSaveRecording();
 
 	recorder.start();
-	std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000000));
 	recorder.stop();
 	Decoder temp;
 	temp.intToBit();
