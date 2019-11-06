@@ -20,20 +20,24 @@ int main()
 
 
 
-	customSound koder;
+	//customSound koder;
 
 
-	sf::Event event;
+	//sf::Event event;
 
-	koder.StrToBit("");
-	koder.CRC(32);
-	//koder.tjekDouble();						//Virker kun hvis der er noget i strengen ovenover.
-	koder.message(8820);					//Tager besked vektoren med 1 og 0 og l�gger det i en ny vektor, som kan l�ses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
-	 
+	//koder.StrToBit("");
+	//koder.CRC(32);
+	////koder.tjekDouble();						//Virker kun hvis der er noget i strengen ovenover.
+	//koder.message(8820);					//Tager besked vektoren med 1 og 0 og l�gger det i en ny vektor, som kan l�ses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
+	// 
+	//sf::SoundBuffer buffer;
+	//sf::Sound sound;
+
+	//buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
+	//sound.setBuffer(buffer);
+	//sound.play();
 	sf::SoundBuffer buffer;
 	sf::Sound sound;
-
-
 
 	sf::RenderWindow window(sf::VideoMode(1000, 800), "SFML works!");
 
@@ -41,9 +45,6 @@ int main()
 	rectangle.setFillColor(sf::Color(128, 128, 128));
 	rectangle.setPosition(50, 700);
 
-	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
-	sound.setBuffer(buffer);
-	sound.play();
 
 	sf::RectangleShape rectangleSend(sf::Vector2f(100, 75));
 	rectangleSend.setFillColor(sf::Color(128, 128, 128));
@@ -101,15 +102,14 @@ int main()
 
 		sf::Event event;
 		while (window.pollEvent(event))
-		
-		if (!sf::SoundBufferRecorder::isAvailable())
-		{
+
 
 			switch (event.type)
 			{
 			case sf::Event::Closed:
 				window.close();
 				break;
+			
 
 			case sf::Event::MouseButtonPressed:
 
@@ -143,7 +143,7 @@ int main()
 
 
 			case sf::Event::KeyPressed:
-				if (event.key.code == sf::Keyboard::Enter) 
+				if (event.key.code == sf::Keyboard::Enter)
 				{
 					customSound koder;
 					koder.StrToBit(test);
@@ -184,7 +184,7 @@ int main()
 						}
 
 
-				}
+					}
 
 
 
@@ -221,11 +221,11 @@ int main()
 					float xRectangle = vector.x;
 					float widthRect = xRectangle + rectangle.getSize().x;
 
-					if (widthOfText + 40 >= widthRect) 
+					if (widthOfText + 40 >= widthRect)
 					{
 						test += "\n";
 						widthOfText = 50;
-						
+
 					}
 
 					text.setString(test);
@@ -234,38 +234,34 @@ int main()
 					break;
 
 				}
-			}
-
-			window.clear(sf::Color::White);
-			window.draw(rectangle);
-			window.draw(rectangleSend);
-			window.draw(rectangleBesked);
-
-			for (auto obj : rectangleVec)
-			{
-				window.draw(obj);
-			}
-
-			window.draw(text);
-			window.draw(text2);
-
-			for (auto obj : textVector)
-			{
-				window.draw(obj);
-			}
-
-			for (auto obj : textVector2)
-			{
-				window.draw(obj);
-			}
-
-			window.draw(send);
-			window.display();
-
-		}
-
-
 	}
+
+	window.clear(sf::Color::White);
+	window.draw(rectangle);
+	window.draw(rectangleSend);
+	window.draw(rectangleBesked);
+
+	for (auto obj : rectangleVec)
+	{
+		window.draw(obj);
+	}
+
+	window.draw(text);
+	window.draw(text2);
+
+	for (auto obj : textVector)
+	{
+		window.draw(obj);
+	}
+
+	for (auto obj : textVector2)
+	{
+		window.draw(obj);
+	}
+
+	window.draw(send);
+	window.display();
+}
 
 
 
