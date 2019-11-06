@@ -3,7 +3,7 @@
 bool CustomRecorder::onStart()
 {
 	std::cout << "Recording started with " << this->getSampleRate() << " sampling freq" << std::endl;
-	setProcessingInterval(sf::milliseconds(30));
+	setProcessingInterval(sf::milliseconds(m_processingInterval));
 	m_ringBuffer.resize(flag.size());
 	std::fill(m_ringBuffer.begin(), m_ringBuffer.end(), -1);
 	goertzel.open("GoertzelData.txt");
@@ -16,6 +16,7 @@ bool CustomRecorder::onStart()
 
 bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t sampleCount)
 {
+	m_processingCycles++;
 	SoundChunk currentSoundChunk(samples, sampleCount);
 	std::vector<float> goertzelResult = currentSoundChunk.goertzelAlgorithm(this->getSampleRate());
 	//for (std::size_t i = 0; i < goertzelResult.size(); i++)
@@ -31,7 +32,8 @@ bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t samp
 		m_decoder.setDTMFTone(syncGoertzel);
 	}
 
-	saveGoertzel(goertzelResult);
+	if (m_processingCycles > 1000/m_processingInterval)
+		saveGoertzel(goertzelResult);
 		
 	if (m_saveRecording == true)
 	{

@@ -27,6 +27,8 @@ public:
 	std::clock_t startClock;
 private:
 	sf::Int16 m_samples;
+	int m_processingCycles = 0;
+	const int m_processingInterval = 30;
 	bool m_saveRecording = false;
 	std::vector<int> m_ringBuffer;
 	int m_ringBrufferPointer = 0;

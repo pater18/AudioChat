@@ -15,7 +15,6 @@ public:
 
 	SoundChunk();
 	SoundChunk(const sf::Int16*  samples, std::size_t sampleCount)
-
 		: m_samples(samples), m_sampleCount(sampleCount) { };
 	std::vector<float> goertzelAlgorithm(int samplingFreq);
 	int determineDTMF(std::vector<float> freqComponents);
