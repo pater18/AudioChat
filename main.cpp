@@ -76,7 +76,7 @@ int main()
 	text.setPosition(60, 710);
 
 	double widthOfReceive;
-	std::string receive = "Hej med dig";
+	std::string receive;
 	sf::Text text2;
 	text2.setFont(font);
 	text2.setCharacterSize(20);
@@ -101,12 +101,12 @@ int main()
 	
 	{
 
-		CustomRecorder recorder;
-		recorder.start();
-		
-		std::this_thread::sleep_for(std::chrono::milliseconds(6000));
-		recorder.stop();
-		std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+		//CustomRecorder recorder;
+		//recorder.start();
+		//
+		//std::this_thread::sleep_for(std::chrono::milliseconds(6000));
+		//recorder.stop();
+		//std::this_thread::sleep_for(std::chrono::milliseconds(10000));
 
 	
 
@@ -146,9 +146,31 @@ int main()
 						}
 
 						test.clear();
-						break;
+						
 
 					}
+					break;
+				}
+
+				if (event.mouseButton.button == sf::Mouse::Right)
+				{
+					// receiver delen
+					std::cin >> receive;
+					text2.setString(receive);
+					widthOfReceive = text2.getLocalBounds().width;
+					text2.setPosition(1000 - widthOfReceive - 50, 710 - moveText);
+
+					textVector2.insert(textVector2.begin(), text2);
+
+					for (size_t i = 1; i < textVector2.size(); i++)
+					{
+						textVector2[i].move(0, -moveText);
+
+					}
+
+					receive.clear();
+									
+					break;
 				}
 
 
@@ -200,20 +222,6 @@ int main()
 
 					test.clear();
 
-					// receiver delen
-					text2.setString(receive);
-					widthOfReceive = text2.getLocalBounds().width;
-					text2.setPosition(1000 - widthOfReceive - 50, 710 - moveText);
-
-					textVector2.insert(textVector2.begin(), text2);
-
-					for (size_t i = 1; i < textVector2.size(); i++)
-					{
-						textVector2[i].move(0, -moveText);
-
-					}
-
-					receive.clear();
 
 					break;
 				}
