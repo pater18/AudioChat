@@ -137,11 +137,18 @@ int main()
 						sound.play();
 						koder.slet();
 
+						// move sendte tekst
 						textVector.insert(textVector.begin(), text);
 
 						for (size_t i = 0; i < textVector.size(); i++)
 						{
 							textVector[i].move(0, -moveText);
+
+						}
+
+						for (size_t i = 0; i < textVector2.size(); i++)
+						{
+							textVector2[i].move(0, -moveText);
 
 						}
 
@@ -161,8 +168,8 @@ int main()
 					text2.setPosition(1000 - widthOfReceive - 50, 710 - moveText);
 
 
+
 					// move sendte tekst
-					textVector.insert(textVector.begin(), text);
 
 					for (size_t i = 0; i < textVector.size(); i++)
 					{
@@ -179,7 +186,6 @@ int main()
 					}
 							
 					receive.clear();
-					test.clear();
 
 					break;
 				}
@@ -207,41 +213,37 @@ int main()
 						
 					}
 
-					textVector2.insert(textVector2.begin(), text2);
-
-					for (size_t i = 1; i < textVector2.size(); i++)
+					for (size_t i = 0; i < textVector2.size(); i++)
 					{
 						textVector2[i].move(0, -moveText);
-
+						
 					}
 
-					// move rectangle
-					for (size_t i = 0; i < textVector.size(); i++)
-					{
-						widthOfText = text.getLocalBounds().width;
+					//// move rectangle
+					//for (size_t i = 0; i < textVector.size(); i++)
+					//{
+					//	widthOfText = text.getLocalBounds().width;
 
-						xyvec = textVector[i].getPosition();
-						rectangleVec.insert(rectangleVec.begin(), sf::RectangleShape(sf::Vector2f(0, 0)));
-						rectangleVec[i].setPosition(xyvec.x, xyvec.y + moveText);
-						rectangleVec[i].setFillColor(sf::Color(128, 128, 128));
-						rectangleVec[i].setSize(sf::Vector2f(widthOfText + 5, 35));
-
-
-						for (size_t i = 0; i < rectangleVec.size(); i++)
-						{
-
-							rectangleVec[i].move(0, -moveText);
+					//	xyvec = textVector[i].getPosition();
+					//	rectangleVec.insert(rectangleVec.begin(), sf::RectangleShape(sf::Vector2f(0, 0)));
+					//	rectangleVec[i].setPosition(xyvec.x, xyvec.y + moveText);
+					//	rectangleVec[i].setFillColor(sf::Color(128, 128, 128));
+					//	rectangleVec[i].setSize(sf::Vector2f(widthOfText + 5, 35));
 
 
-						}
+					//	for (size_t i = 0; i < rectangleVec.size(); i++)
+					//	{
+
+					//		rectangleVec[i].move(0, -moveText);
 
 
-					}
+					//	}
 
 
-					receive.clear();
+					//}
+
+
 					test.clear();
-
 
 
 					break;
