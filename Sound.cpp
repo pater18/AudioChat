@@ -54,21 +54,21 @@ std::vector<sf::Int16> customSound::message(int tid)
 
 		for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
 		{
-			_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)));
-			//if (i < (tid - (tid *0.98)))
-			//{
-			//	_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
-			//	multipleStart += faktor;
-			//}
-			//else if (i < (tid - (tid *0.02)) && i > (tid - (tid * 0.98)))
-			//{
-			//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-			//}
-			//else
-			//{
-			//	_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
-			//	multipleEnd -= faktor;
-			//}
+			
+			if (i < (tid - (tid *0.98)))
+			{
+				_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
+				multipleStart += faktor;
+			}
+			else if (i < (tid - (tid *0.02)) && i > (tid - (tid * 0.98)))
+			{
+				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+			}
+			else
+			{
+				_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+				multipleEnd -= faktor;
+			}
 		}
 
 		multipleEnd = 1;
