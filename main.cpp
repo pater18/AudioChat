@@ -20,16 +20,16 @@ int main()
 
 
 
-	customSound koder;
+	//customSound koder;
 
 
-	sf::Event event;
+	//sf::Event event;
 
-	koder.StrToBit("");
-	koder.CRC(32);
-	//koder.tjekDouble();						//Virker kun hvis der er noget i strengen ovenover.
-	koder.message(8820);					//Tager besked vektoren med 1 og 0 og l�gger det i en ny vektor, som kan l�ses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
-	 
+	//koder.StrToBit("");
+	//koder.CRC(32);
+	////koder.tjekDouble();						//Virker kun hvis der er noget i strengen ovenover.
+	//koder.message(8820);					//Tager besked vektoren med 1 og 0 og l�gger det i en ny vektor, som kan l�ses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
+
 	sf::SoundBuffer buffer;
 	sf::Sound sound;
 
@@ -41,9 +41,9 @@ int main()
 	rectangle.setFillColor(sf::Color(128, 128, 128));
 	rectangle.setPosition(50, 700);
 
-	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
-	sound.setBuffer(buffer);
-	sound.play();
+	//buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
+	//sound.setBuffer(buffer);
+	//sound.play();
 
 	sf::RectangleShape rectangleSend(sf::Vector2f(100, 75));
 	rectangleSend.setFillColor(sf::Color(128, 128, 128));
@@ -75,7 +75,7 @@ int main()
 	text.setPosition(60, 710);
 
 	double widthOfReceive;
-	std::string receive = "Hej med dig";
+	std::string receive;
 	sf::Text text2;
 	text2.setFont(font);
 	text2.setCharacterSize(20);
@@ -101,9 +101,6 @@ int main()
 
 		sf::Event event;
 		while (window.pollEvent(event))
-		
-		if (!sf::SoundBufferRecorder::isAvailable())
-		{
 
 			switch (event.type)
 			{
@@ -136,14 +133,36 @@ int main()
 						}
 
 						test.clear();
-						break;
+						
 
 					}
+				break;	
+				}
+				
+				if (event.mouseButton.button == sf::Mouse::Right)
+				{
+					//receiver delen
+					std::cin >> receive;
+					text2.setString(receive);
+					widthOfReceive = text2.getLocalBounds().width;
+					text2.setPosition(1000 - widthOfReceive - 50, 710 - moveText);
+
+					textVector2.insert(textVector2.begin(), text2);
+
+					for (size_t i = 1; i < textVector2.size(); i++)
+					{
+					textVector2[i].move(0, -moveText);
+
+					}
+
+					receive.clear();
+									
+					break;
 				}
 
 
 			case sf::Event::KeyPressed:
-				if (event.key.code == sf::Keyboard::Enter) 
+				if (event.key.code == sf::Keyboard::Enter)
 				{
 					customSound koder;
 					koder.StrToBit(test);
@@ -184,26 +203,27 @@ int main()
 						}
 
 
-				}
+					}
 
 
 
 					test.clear();
 
 					// receiver delen
-					text2.setString(receive);
-					widthOfReceive = text2.getLocalBounds().width;
-					text2.setPosition(1000 - widthOfReceive - 50, 710 - moveText);
+					//std::cin >> receive;
+					//text2.setString(receive);
+					//widthOfReceive = text2.getLocalBounds().width;
+					//text2.setPosition(1000 - widthOfReceive - 50, 710 - moveText);
 
-					textVector2.insert(textVector2.begin(), text2);
+					//textVector2.insert(textVector2.begin(), text2);
 
-					for (size_t i = 1; i < textVector2.size(); i++)
-					{
-						textVector2[i].move(0, -moveText);
+					//for (size_t i = 1; i < textVector2.size(); i++)
+					//{
+					//	textVector2[i].move(0, -moveText);
 
-					}
+					//}
 
-					receive.clear();
+					//receive.clear();
 
 					break;
 				}
@@ -221,11 +241,11 @@ int main()
 					float xRectangle = vector.x;
 					float widthRect = xRectangle + rectangle.getSize().x;
 
-					if (widthOfText + 40 >= widthRect) 
+					if (widthOfText + 40 >= widthRect)
 					{
 						test += "\n";
 						widthOfText = 50;
-						
+
 					}
 
 					text.setString(test);
@@ -236,33 +256,33 @@ int main()
 				}
 			}
 
-			window.clear(sf::Color::White);
-			window.draw(rectangle);
-			window.draw(rectangleSend);
-			window.draw(rectangleBesked);
+		window.clear(sf::Color::White);
+		window.draw(rectangle);
+		window.draw(rectangleSend);
+		window.draw(rectangleBesked);
 
-			for (auto obj : rectangleVec)
-			{
-				window.draw(obj);
-			}
-
-			window.draw(text);
-			window.draw(text2);
-
-			for (auto obj : textVector)
-			{
-				window.draw(obj);
-			}
-
-			for (auto obj : textVector2)
-			{
-				window.draw(obj);
-			}
-
-			window.draw(send);
-			window.display();
-
+		for (auto obj : rectangleVec)
+		{
+			window.draw(obj);
 		}
+
+		window.draw(text);
+		window.draw(text2);
+
+		for (auto obj : textVector)
+		{
+			window.draw(obj);
+		}
+
+		for (auto obj : textVector2)
+		{
+			window.draw(obj);
+		}
+
+		window.draw(send);
+		window.display();
+
+
 
 
 	}
