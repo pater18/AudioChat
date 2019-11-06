@@ -160,6 +160,16 @@ int main()
 					widthOfReceive = text2.getLocalBounds().width;
 					text2.setPosition(1000 - widthOfReceive - 50, 710 - moveText);
 
+
+					// move sendte tekst
+					textVector.insert(textVector.begin(), text);
+
+					for (size_t i = 0; i < textVector.size(); i++)
+					{
+						textVector[i].move(0, -moveText);
+
+					}
+
 					textVector2.insert(textVector2.begin(), text2);
 
 					for (size_t i = 1; i < textVector2.size(); i++)
@@ -167,9 +177,10 @@ int main()
 						textVector2[i].move(0, -moveText);
 
 					}
-
+							
 					receive.clear();
-									
+					test.clear();
+
 					break;
 				}
 
@@ -186,12 +197,21 @@ int main()
 					sound.play();
 					koder.slet();
 
+
 					// move sendte tekst
 					textVector.insert(textVector.begin(), text);
 
 					for (size_t i = 0; i < textVector.size(); i++)
 					{
 						textVector[i].move(0, -moveText);
+						
+					}
+
+					textVector2.insert(textVector2.begin(), text2);
+
+					for (size_t i = 1; i < textVector2.size(); i++)
+					{
+						textVector2[i].move(0, -moveText);
 
 					}
 
@@ -219,8 +239,9 @@ int main()
 					}
 
 
-
+					receive.clear();
 					test.clear();
+
 
 
 					break;
