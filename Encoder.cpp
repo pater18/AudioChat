@@ -49,6 +49,7 @@ std::vector<sf::Int16> Encoder::StrToBit(sf::String input)
 	{
 		std::cout << _Encoded[i];
 	}
+	std::cout << std::endl; 
 
 	return _Encoded;
 }
@@ -128,11 +129,6 @@ std::vector<sf::Int16> Encoder::CRC(int antal_bit)
 			std::cout << data[7 - i];
 		}
 		std::cout << std::endl;
-
-
-
-
-
 	}
 
 	ud.erase(ud.begin(), ud.begin() + numPadding);
@@ -145,100 +141,148 @@ std::vector<sf::Int16> Encoder::CRC(int antal_bit)
 	std::cout << std::endl << std::endl;
 
 
-	//--------------------------------------------------------
-	//CRC beregning tilbage til data for at tjekke at den giver nul
-
-	std::bitset<64> generator2(0b00100000111);
-
-	int indSize2 = ud.size();
-	std::cout << indSize2 << std::endl;
-
-	int paddingCoeff2 = 0;
-	int tjek = indSize2 % (antal_bit + 8);
-
-
-	while (tjek != 0)
-	{
-		indSize2 += 8;
-		tjek = indSize2 % (antal_bit + 8);
-		paddingCoeff2++;
-	}
-
-	int numPadding2 = paddingCoeff2 * 8;
-
-	std::cout << "Antal nuller der puttes i som padding2: " << numPadding2 << std::endl;
-
-
-	for (int i = 0; i < numPadding2; i++)
-	{
-		ud.insert(ud.begin(), 0);
-	}
-
-	for (size_t k = 0; k < ud.size(); k += antal_bit + 8) //k=8    ud = 64
-	{
-		std::bitset<64> data2(0b0);
-
-		for (int i = 0; i < (antal_bit + 8); i++)
-		{
-			if (ud[i + k] == 1)
-			{
-				data2.set((antal_bit + 8) - 1 - i, 1);
-			}
-			else
-			{
-				data2.set((antal_bit + 8) - 1 - i, 0);
-			}
-		}
-
-		std::cout << "Data2 start: ";
-		std::cout << data2;
-		std::cout << std::endl;
-
-		for (int i = 0; i < antal_bit; i++)
-		{
-			if (data2[DataInsert - i] == 1)
-			{
-				data2[DataInsert - i] = data2[DataInsert - i] xor generator2[8];
-				data2[DataInsert - 1 - i] = data2[DataInsert - 1 - i] xor generator2[7];
-				data2[DataInsert - 2 - i] = data2[DataInsert - 2 - i] xor generator2[6];
-				data2[DataInsert - 3 - i] = data2[DataInsert - 3 - i] xor generator2[5];
-				data2[DataInsert - 4 - i] = data2[DataInsert - 4 - i] xor generator2[4];
-				data2[DataInsert - 5 - i] = data2[DataInsert - 5 - i] xor generator2[3];
-				data2[DataInsert - 6 - i] = data2[DataInsert - 6 - i] xor generator2[2];
-				data2[DataInsert - 7 - i] = data2[DataInsert - 7 - i] xor generator2[1];
-				data2[DataInsert - 8 - i] = data2[DataInsert - 8 - i] xor generator2[0];
-			}
-		}
-
-
-		if (data2 == false)
-			std::cout << "Data der blev sendt var det rigtige" << std::endl;
-		else
-			std::cout << "Der er fejl i beregningen til CRC tjek." << std::endl;
-
-	}
+	
 
 	return ud;
 }
 
-//short Encoder::SineWave(double time, double freq1, double freq2, double amp)
+//void Encoder::tjekDouble()
 //{
+//	bool temp1 = false;
+//	bool temp2 = false;
+//	bool temp3 = false;
+//	bool temp4 = false;
+//
+//	int count = 0; 
+//	int countAdd = 0;
+//	std::vector<int> tempD; 
+//
+//	std::cout << "Størrelse til start: " << ud.size() << std::endl; 
+//
+//	for (size_t i = 0; i < ud.size() - 4; i += 4)
+//	{
+//		temp1 = false;
+//		
+//		if ((ud[i] == ud[i + 4]) && ud[i + 1] == ud[i + 5] && ud[i + 2] == ud[i + 6] && ud[i + 3] == ud[i + 7])
+//			temp1 = true;
+//
+//		if (temp1  == true)
+//			count++;
+//	}
+//	std::cout << "count before: " << count << std::endl;
+//	count = 0; 
+//
+//	tempD.push_back(ud[0]);
+//	tempD.push_back(ud[1 + 1]);
+//	tempD.push_back(ud[2 + 2]);
+//	tempD.push_back(ud[3 + 3]);
+//
+//	for (size_t i = 0; i < ud.size() - 4; i+= 4)
+//	{
+//		
+//		if ((ud[i] == ud[i + 4]) && ud[i + 1] == ud[i + 5] && ud[i + 2] == ud[i + 6] && ud[i + 3] == ud[i + 7])
+//		{
+//
+//			if (ud[i] && ud[i + 1] && ud[i + 2] && ud[i + 3] == 1)
+//			{
+//				tempD.push_back(0);
+//				tempD.push_back(0);
+//				tempD.push_back(0);
+//				tempD.push_back(0);
+//
+//				tempD.push_back(ud[i + 4]);
+//				tempD.push_back(ud[i + 5]);
+//				tempD.push_back(ud[i + 6]);
+//				tempD.push_back(ud[i + 7]);
+//				countAdd++; 
+//				std::cout << "der er 8 1-tal" << std::endl;
+//			}
+//			else
+//			{
+//				tempD.push_back(1);
+//				tempD.push_back(1);
+//				tempD.push_back(1);
+//				tempD.push_back(1);
+//
+//				tempD.push_back(ud[i + 4]);
+//				tempD.push_back(ud[i + 5]);
+//				tempD.push_back(ud[i + 6]);
+//				tempD.push_back(ud[i + 7]);
+//			}
+//
+//			countAdd++;
+//
+//			std::cout << "der bliver tilføret 1111" << std::endl; 
+//		}
+//		else
+//		{
+//			tempD.push_back(ud[i + 4]);
+//			tempD.push_back(ud[i + 5]);
+//			tempD.push_back(ud[i + 6]);
+//			tempD.push_back(ud[i + 7]);
+//		}
+//
+//
+//
+//	}
+//
+//
+//	for (size_t i = 0; i < tempD.size() - 4; i += 4)
+//	{
+//		temp1 = false;
+//
+//		if ((tempD[i] == tempD[i + 4]) && tempD[i + 1] == tempD[i + 5] && tempD[i + 2] == tempD[i + 6] && tempD[i + 3] == tempD[i + 7])
+//			temp1 = true;
+//
+//		if (temp1 == true)
+//			count++;
+//	}	
+//
 //	
-//	double TWOPI = 6.283185307; 
-//	short result1;
-//	double tpc1 = 44100 / freq1;
-//	double cycles1 = time / tpc1;
-//	double rad1 = TWOPI * cycles1;
-//	short amplitude = 32767 * amp;
-//	result1 = amplitude * sin(rad1);
+//	std::cout << countAdd << std::endl;
+//	std::cout << count << std::endl; 
+//	//-------------------------------------------------------
 //
-//	short result2;
-//	double tpc2 = 44100 / freq2;
-//	double cycles2 = time / tpc2;
-//	double rad2 = TWOPI * cycles2;
-//	result2 = amplitude * sin(rad2);
+//	std::vector<int> rigtige;
 //
 //
+//	rigtige.push_back(tempD[0]);
+//	rigtige.push_back(tempD[1]);
+//	rigtige.push_back(tempD[2]);
+//	rigtige.push_back(tempD[3]);
 //
-//	return result1 + result2;
+//
+//	for (size_t i = 0; i < tempD.size() - 8; i += 4)
+//	{
+//		temp1 = false;
+//
+//		if ((tempD[i] == tempD[i + 8]) && tempD[i + 1] == tempD[i + 9] && tempD[i + 2] == tempD[i + 10] && tempD[i + 3] == tempD[i + 11])
+//		{
+//			if (tempD[i + 4] && tempD[i + 5] && tempD[i + 6] && tempD[i + 7] == 1)
+//			{
+//				rigtige.push_back(tempD[8]);
+//				rigtige.push_back(tempD[9]);
+//				rigtige.push_back(tempD[10]);
+//				rigtige.push_back(tempD[11]);
+//			}
+//			if (tempD[i] && tempD[i + 2] && tempD[i + 3] && tempD[i + 4] == 1)
+//			{
+//				rigtige.push_back(tempD[8]);
+//				rigtige.push_back(tempD[9]);
+//				rigtige.push_back(tempD[10]);
+//				rigtige.push_back(tempD[11]);
+//			}
+//		}
+//		else
+//		{
+//			rigtige.push_back(tempD[5]);
+//			rigtige.push_back(tempD[6]);
+//			rigtige.push_back(tempD[7]);
+//			rigtige.push_back(tempD[8]);
+//		}
+//
+//	}
+//	std::cout << "Størrelse af rigtige: " << rigtige.size() << std::endl;
+//
 //}
+

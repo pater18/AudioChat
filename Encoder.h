@@ -9,9 +9,9 @@ public:
 	void slet();
 	std::vector<sf::Int16> StrToBit(sf::String input);
 	std::vector<sf::Int16> CRC(int antal_bit);
+	//void tjekDouble();
 
 
-	//short SineWave(double time, double freq1, double freq2, double amp);
 
 	
 private:
@@ -19,6 +19,6 @@ private:
 protected:
 	std::vector<sf::Int16> _Encoded;
 
-	//std::vector<sf::Int16> _Encoded, ud;
+	
 
 };

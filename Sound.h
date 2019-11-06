@@ -7,6 +7,7 @@
 #include <string>
 #include <bitset>
 #include <iostream>
+#include <fstream>
 
 
 class customSound: public Encoder

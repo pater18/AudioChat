@@ -4,6 +4,7 @@
 #include "Encoder.h"
 #include "Sound.h"
 #include "CustomRecorder.h"
+#include "Decoder.h"
 
 #include <vector>
 #include <iostream>
@@ -17,11 +18,21 @@ int main()
 {
 
 
+
+
+	customSound koder;
+
+
 	sf::Event event;
 
-
+	koder.StrToBit("");
+	koder.CRC(32);
+	//koder.tjekDouble();						//Virker kun hvis der er noget i strengen ovenover.
+	koder.message(8820);					//Tager besked vektoren med 1 og 0 og l�gger det i en ny vektor, som kan l�ses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
+	 
 	sf::SoundBuffer buffer;
 	sf::Sound sound;
+
 
 
 	sf::RenderWindow window(sf::VideoMode(1000, 800), "SFML works!");
@@ -30,13 +41,17 @@ int main()
 	rectangle.setFillColor(sf::Color(128, 128, 128));
 	rectangle.setPosition(50, 700);
 
+	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
+	sound.setBuffer(buffer);
+	sound.play();
+
 	sf::RectangleShape rectangleSend(sf::Vector2f(100, 75));
 	rectangleSend.setFillColor(sf::Color(128, 128, 128));
 	rectangleSend.setPosition(850, 700);
 
+
 	double widthOfText = 0;
 	sf::RectangleShape rectangleBesked(sf::Vector2f(100, 35));
-
 
 	std::vector<sf::Text> textVector;
 	std::vector<sf::Text> textVector2;
@@ -86,7 +101,10 @@ int main()
 
 		sf::Event event;
 		while (window.pollEvent(event))
+		
+		if (!sf::SoundBufferRecorder::isAvailable())
 		{
+
 			switch (event.type)
 			{
 			case sf::Event::Closed:
@@ -250,8 +268,12 @@ int main()
 	}
 
 
+
 	return 0;
 }
+
+
+
 
 
 

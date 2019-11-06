@@ -2,12 +2,16 @@
 
 #define PI 3.14159265359
 
+SoundChunk::SoundChunk()
+{
+}
+
 std::vector<float> SoundChunk::goertzelAlgorithm(int samplingFreq)
 {
 	std::vector<float> result;
 	for (std::size_t i = 0; i < m_dtmfFreq.size(); i++)
 	{
-		int k = 0.5 + ((m_sampleCount * m_dtmfFreq[i]) / samplingFreq);
+		int k = (0.5 + ((m_sampleCount * m_dtmfFreq[i])) / samplingFreq);
 		float w = ((2 * PI) / m_sampleCount) * k;
 		float cosw = std::cos(w);
 		float sinw = std::sin(w);
@@ -22,6 +26,11 @@ std::vector<float> SoundChunk::goertzelAlgorithm(int samplingFreq)
 			Q1 = Q0;
 		}
 
+		//float realPart = (Q1 - Q2 * cosw) / (m_sampleCount / 2);
+		//float imagPart = (Q2 * sinw) / (m_sampleCount / 2);
+		
+		//float magnitude = std::sqrt(std::pow(realPart, 2) + std::pow(imagPart, 2));
+
 		float magnitude = std::sqrt(std::pow(Q1, 2) + std::pow(Q2, 2) - Q1 * Q2 * coeff);
 
 		result.push_back(magnitude);
@@ -30,6 +39,7 @@ std::vector<float> SoundChunk::goertzelAlgorithm(int samplingFreq)
 	return result;
 
 }
+
 
 int SoundChunk::determineDTMF(std::vector<float> freqComponents)
 {
@@ -63,12 +73,15 @@ int SoundChunk::determineDTMF(std::vector<float> freqComponents)
 		}
 	}
 
+	if (secondLargest < threshHold)
+		return -1;
+
 	for (std::size_t i = 0; i < vect.size(); i++)
 	{	
 		if (vect[i].second == secondLargest || vect[i].second == largest)
 			continue;
-		if (secondLargest / vect[i].second < 4)
-			return 20;
+		if (secondLargest / vect[i].second < threshHoldMultiple)
+			return -1;
 	}
 
 	int temp;
@@ -83,6 +96,8 @@ int SoundChunk::determineDTMF(std::vector<float> freqComponents)
 	if (pos2 > 3)
 		pos2 = pos2 - 4;
 
+	sendToDecoder.push_back(m_dtmfLookup[pos1][pos2]);
+
 	return m_dtmfLookup[pos1][pos2];
 	//std::sort(vect.begin(), vect.end(), sortinrev);
 
@@ -92,3 +107,4 @@ int SoundChunk::determineDTMF(std::vector<float> freqComponents)
 	//}
 	
 }
+
