@@ -22,6 +22,7 @@ int main()
 
 
 
+
 	customSound koder;
 
 
@@ -40,8 +41,6 @@ int main()
 	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
 	sound.setBuffer(buffer);
 	sound.play();
-
-
 
 	sf::RenderWindow window(sf::VideoMode(600, 600), "SFML works!");
 	std::string test;
@@ -64,9 +63,10 @@ int main()
 
 	while (window.isOpen())
 	{
-		sf::Event event;
-		while (window.pollEvent(event))
+		
+		if (!sf::SoundBufferRecorder::isAvailable())
 		{
+
 			switch (event.type)
 			{
 			case sf::Event::Closed:
@@ -90,45 +90,22 @@ int main()
 
 			if (!sf::SoundBufferRecorder::isAvailable())
 			{
+
 				std::cout << "Error";
-			}
-
-
-
-			CustomRecorder recorder;
-			//recorder.setSaveRecording();
-
-			recorder.start(10000);
-			std::this_thread::sleep_for(std::chrono::milliseconds(100000));
-			recorder.stop();
-
-
-		
-		
-
 		}
+
+		CustomRecorder recorder;
+		recorder.setSaveRecording();
+		
+		recorder.start(10000);
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+		recorder.stop();
+
+		std::this_thread::sleep_for(std::chrono::milliseconds(10000));
 		window.clear();
 		window.draw(text);
 		window.display();
 	}
-
-	if (!sf::SoundBufferRecorder::isAvailable())
-	{
-		std::cout << "Error";
-	}
-
-	CustomRecorder recorder;
-	recorder.setSaveRecording();
-
-	recorder.start();
-	std::this_thread::sleep_for(std::chrono::milliseconds(10000));
-	recorder.stop();
-	Decoder temp;
-	temp.intToBit();
-
-
-
-
 
 
 	return 0;
