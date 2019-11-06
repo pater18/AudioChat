@@ -98,7 +98,17 @@ int main()
 
 
 	while (window.isOpen())
+	
 	{
+
+		CustomRecorder recorder;
+		recorder.start();
+		
+		std::this_thread::sleep_for(std::chrono::milliseconds(6000));
+		recorder.stop();
+		std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+
+	
 
 		sf::Event event;
 		while (window.pollEvent(event))
