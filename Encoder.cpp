@@ -123,10 +123,10 @@ std::vector<sf::Int16> Encoder::CRC()
 
 		std::bitset<64> generator(0b0000000100000111);  // CRC_8 check generator polynomie 
 
-		std::bitset<64> data(0b0);						// Vektor til at lave udregninger på.
+		std::bitset<64> data(0b0);						// Vektor til at lave udregninger pÃ¥.
 
-		for (int i = 0; i < m_antalBit; i++) //=8					// I dette loop indsættes data fra strengen ind i et bitset, så det senere kan manipuleres med. 
-		{												// Det er 8 da vi laver tjek på hver 8 bit. Samtidig lægges de 8 bit i en ny vektor. 
+		for (int i = 0; i < m_antalBit; i++) //=8					// I dette loop indsÃ¦ttes data fra strengen ind i et bitset, sÃ¥ det senere kan manipuleres med. 
+		{												// Det er 8 da vi laver tjek pÃ¥ hver 8 bit. Samtidig lÃ¦gges de 8 bit i en ny vektor. 
 
 			if (opdeltBesked[i + k] == 1)
 			{
@@ -141,7 +141,7 @@ std::vector<sf::Int16> Encoder::CRC()
 
 		}
 
-		std::cout << "Det data bliver lavet CRC - tjek på: " << data << std::endl;
+		std::cout << "Det data bliver lavet CRC - tjek pÃ¥: " << data << std::endl;
 
 		for (int i = 0; i < m_antalBit; i++) //8
 		{
@@ -171,7 +171,7 @@ std::vector<sf::Int16> Encoder::CRC()
 	}
 
 	ud.erase(ud.begin(), ud.begin() + numPadding);
-	std::cout << "Binary streng der skal sendes: ";
+	std::cout << "Binary streng der skal laves protokol pÃ¥: ";
 	for (size_t i = 0; i < ud.size(); i++)
 	{
 		std::cout << ud[i];
@@ -179,8 +179,74 @@ std::vector<sf::Int16> Encoder::CRC()
 
 	std::cout << std::endl << std::endl;
 
+	//Stop and wait protokol for encoder
+	std::vector <sf::Int16> Protokol;
 
-	return ud;
+	for (size_t i = 0; i < ud.size(); i += 8)
+	{
+		if ((ud[i] == 1) && (ud[i + 1] == 1) && (ud[i + 2] == 1) && (ud[i + 3] == 1) && (ud[i + 4] == 0) && (ud[i + 5] == 0) && (ud[i + 6] == 0) && (ud[i + 7] == 0))
+		{
+			//std::cout << "flag fundet";
+			Protokol.push_back(1);
+			Protokol.push_back(1);
+			Protokol.push_back(1);
+			Protokol.push_back(1);
+			Protokol.push_back(1);
+			Protokol.push_back(1);
+			Protokol.push_back(1);
+			Protokol.push_back(0);
+			Protokol.push_back(ud[i]);
+			Protokol.push_back(ud[i + 1]);
+			Protokol.push_back(ud[i + 2]);
+			Protokol.push_back(ud[i + 3]);
+			Protokol.push_back(ud[i + 4]);
+			Protokol.push_back(ud[i + 5]);
+			Protokol.push_back(ud[i + 6]);
+			Protokol.push_back(ud[i + 7]);
+		}
+		else if ((ud[i] == 1) && (ud[i + 1] == 1) && (ud[i + 2] == 1) && (ud[i + 3] == 1) && (ud[i + 4] == 1) && (ud[i + 5] == 1) && (ud[i + 6] == 1) && (ud[i + 7] == 0))
+		{
+			//std::cout << "ESC char fundet";
+			Protokol.push_back(1);
+			Protokol.push_back(1);
+			Protokol.push_back(1);
+			Protokol.push_back(1);
+			Protokol.push_back(1);
+			Protokol.push_back(1);
+			Protokol.push_back(1);
+			Protokol.push_back(0);
+			Protokol.push_back(ud[i]);
+			Protokol.push_back(ud[i + 1]);
+			Protokol.push_back(ud[i + 2]);
+			Protokol.push_back(ud[i + 3]);
+			Protokol.push_back(ud[i + 4]);
+			Protokol.push_back(ud[i + 5]);
+			Protokol.push_back(ud[i + 6]);
+			Protokol.push_back(ud[i + 7]);
+		}
+		else
+		{
+			Protokol.push_back(ud[i]);
+			Protokol.push_back(ud[i + 1]);
+			Protokol.push_back(ud[i + 2]);
+			Protokol.push_back(ud[i + 3]);
+			Protokol.push_back(ud[i + 4]);
+			Protokol.push_back(ud[i + 5]);
+			Protokol.push_back(ud[i + 6]);
+			Protokol.push_back(ud[i + 7]);
+		}
+
+	}
+
+	for (size_t i = 0; i < Protokol.size(); i++)
+	{
+		std::cout << Protokol[i] << " ";
+	}
+
+
+	return Protokol;
+
+
 }
 int Encoder::getSize()
 {
