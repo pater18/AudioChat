@@ -206,7 +206,7 @@ std::vector<sf::Int16> Encoder::CRC(int antal_bit)
 	}
 
 
-	return ud;
+	return Protokol;
 
 }
 
