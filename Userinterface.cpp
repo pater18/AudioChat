@@ -12,7 +12,7 @@ void makeSound() {
 	std::cout << test << std::endl;
 	koder.StrToBit(test);
 	koder.CRC(32);
-	koder.message(22150);
+	koder.message(44150);
 	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
 	sound.setBuffer(buffer);
 	sound.play();
@@ -156,6 +156,10 @@ void setUI() {
 				if (event.key.code == sf::Keyboard::Enter)
 				{
 					recorder.stop();
+<<<<<<< HEAD
+=======
+
+>>>>>>> 476679fe97de33c86771da011a3a6bf363f62ef5
 					makeSound();
 
 					while (sound.getStatus() != 0)

@@ -40,7 +40,11 @@ std::vector<sf::Int16> customSound::message(int tid)
 	double faktor = tid * 0.02 ;
 	faktor = multipleEnd / faktor;
 
+<<<<<<< HEAD
 	std::vector<int> toner{ };
+=======
+	std::vector<int> toner{};
+>>>>>>> 476679fe97de33c86771da011a3a6bf363f62ef5
 	std::vector <std::vector<int>> freq{ {697, 1209},{697, 1336},{697, 1477},{697, 1633},{ 770, 1209},{ 770, 1336},{ 770, 1477},{ 770, 1633},{852, 1209},{852, 1336},{852, 1477},{852, 1633}, {941, 1209},{941, 1336},{941, 1477},{941, 1633} };
 
 	int freq1, freq2;
