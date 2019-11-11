@@ -11,7 +11,7 @@ void makeSound() {
 	customSound koder;
 	koder.StrToBit(test);
 	koder.CRC(32);
-	koder.message(22150);
+	koder.message(44150);
 	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
 	sound.setBuffer(buffer);
 	sound.play();
@@ -154,14 +154,7 @@ void setUI() {
 				{
 					recorder.stop();
 
-					customSound koder;
-					koder.StrToBit(test);
-					koder.CRC(32);
-					koder.message(10000);
-					buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
-					sound.setBuffer(buffer);
-					sound.play();
-					koder.slet();
+					makeSound();
 
 					while (sound.getStatus() != 0)
 					{
