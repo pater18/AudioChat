@@ -21,6 +21,7 @@ private:
 	std::vector<int> m_charVect;
 	const std::vector<int> flag = { 15,0 }, escChar = { 15,14 };
 	bool m_listening = true, m_lastEsc = false;
+	bool m_receivedMessage;
 
 	std::vector<int> _CRCok;
 	std::vector<int> vecForCRC;

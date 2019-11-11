@@ -4,8 +4,6 @@ bool CustomRecorder::onStart()
 {
 	std::cout << "Recording started with " << this->getSampleRate() << " sampling freq" << std::endl;
 	setProcessingInterval(sf::milliseconds(m_processingInterval));
-	m_ringBuffer.resize(flag.size());
-	std::fill(m_ringBuffer.begin(), m_ringBuffer.end(), -1);
 	goertzel.open("GoertzelData.txt");
 	recording.open("Recording.txt");
 	goertzel << "Hz697" << " " << "Hz770" << " ";
@@ -31,6 +29,7 @@ bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t samp
 	if (syncGoertzel != -1) {
 		m_decoder.setDTMFTone(syncGoertzel);
 	}
+
 
 	if (m_processingCycles > 3000 / m_processingInterval)
 	{

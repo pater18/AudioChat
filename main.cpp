@@ -44,6 +44,7 @@ void goertzelTestFunction()
 
 int main()
 {
+
 	customSound koder;
 
 	koder.StrToBit("");
@@ -51,6 +52,7 @@ int main()
 
 	sf::SoundBuffer buffer;
 	sf::Sound sound;
+
 
 	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
 	sound.setBuffer(buffer);
@@ -62,7 +64,7 @@ int main()
 
 	while (window.isOpen())
 	{
-		goertzelTestFunction();
+		//goertzelTestFunction();
 		CustomRecorder recorder;
 
 		recorder.start(10000);
