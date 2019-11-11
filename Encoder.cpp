@@ -132,7 +132,7 @@ std::vector<sf::Int16> Encoder::CRC(int antal_bit)
 	}
 
 	ud.erase(ud.begin(), ud.begin() + numPadding);
-	std::cout << "Binary streng der skal sendes: ";
+	std::cout << "Binary streng der skal laves protokol på: ";
 	for (size_t i = 0; i < ud.size(); i++)
 	{
 		std::cout << ud[i];
@@ -142,7 +142,7 @@ std::vector<sf::Int16> Encoder::CRC(int antal_bit)
 
 
 	//Stop and wait protokol for encoder
-	std::vector <int> Protokol;
+	std::vector <sf::Int16> Protokol;
 
 	for (size_t i = 0; i < ud.size(); i += 8)
 	{
@@ -202,7 +202,7 @@ std::vector<sf::Int16> Encoder::CRC(int antal_bit)
 
 	for (size_t i = 0; i < Protokol.size(); i++)
 	{
-		std::cout << Protokol[i];
+		std::cout << Protokol[i] << " ";
 	}
 
 
