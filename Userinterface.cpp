@@ -156,10 +156,6 @@ void setUI() {
 				if (event.key.code == sf::Keyboard::Enter)
 				{
 					recorder.stop();
-<<<<<<< HEAD
-=======
-
->>>>>>> 476679fe97de33c86771da011a3a6bf363f62ef5
 					makeSound();
 
 					while (sound.getStatus() != 0)
