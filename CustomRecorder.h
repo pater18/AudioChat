@@ -22,7 +22,12 @@ public:
 	void saveRecording(const sf::Int16* samples, std::size_t sampleCount);
 	void saveGoertzel(std::vector<float> goertzelData);
 	int syncDTMF();
+<<<<<<< Updated upstream
 	void updateRingBuffer(int DTMFTone);
+=======
+	void setCurDTMF(int curDTMF) { m_curDTMF = curDTMF; };
+	Decoder getDecoder() { return m_decoder; };
+>>>>>>> Stashed changes
 
 	std::clock_t startClock;
 private:

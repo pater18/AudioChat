@@ -1,5 +1,8 @@
 ﻿
+<<<<<<< Updated upstream
 #pragma once
+=======
+>>>>>>> Stashed changes
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -18,7 +21,23 @@
 #include <chrono>
 
 
+<<<<<<< Updated upstream
 
 void makeSound();
 
 void setUI();
+=======
+void makeSound();
+
+void setUI();
+
+
+class Userinterface
+{
+
+
+
+	private:
+	
+};
+>>>>>>> Stashed changes
