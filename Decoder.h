@@ -14,13 +14,8 @@ public:
 	void intToBit();
 	void bitToString();
 	std::vector<int> CRC(int); 
-<<<<<<< Updated upstream
-
-	std::string besked;
-=======
 	bool getReceivedMessage() { return m_receivedMessage; };
 	std::string getBesked() { return besked; };
->>>>>>> Stashed changes
 
 private:
 	std::vector<int> m_character;
@@ -30,11 +25,7 @@ private:
 
 	std::vector<int> _CRCok;
 	std::vector<int> vecForCRC;
-<<<<<<< Updated upstream
-	
-=======
 	std::string besked;
 	bool m_receivedMessage;
->>>>>>> Stashed changes
 };
 

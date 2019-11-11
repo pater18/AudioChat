@@ -1,10 +1,7 @@
 #include "CustomRecorder.h"
 #include "Decoder.h"
-<<<<<<< Updated upstream
-=======
 #include "Userinterface.h"
 
->>>>>>> Stashed changes
 sf::SoundBuffer buffer;
 sf::Sound sound;
 std::string test;
@@ -38,13 +35,8 @@ void setUI() {
 
 	double widthOfReceive;
 	std::string receive;
-<<<<<<< Updated upstream
-	Decoder receiveObj;
-=======
 	CustomRecorder recorder;
 	
->>>>>>> Stashed changes
-
 	sf::RectangleShape rectangle(sf::Vector2f(750, 75));
 	rectangle.setFillColor(sf::Color(128, 128, 128));
 	rectangle.setPosition(50, 700);
@@ -85,26 +77,14 @@ void setUI() {
 	newline.setCharacterSize(24);
 	newline.setString("\n");
 
-<<<<<<< Updated upstream
-=======
 	recorder.start(10000);
->>>>>>> Stashed changes
 
 	while (window.isOpen())
-
 	{
-<<<<<<< Updated upstream
-		sf::Event event;
-		while (window.pollEvent(event))
-
-=======
-
 
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
->>>>>>> Stashed changes
-
 			switch (event.type)
 			{
 			case sf::Event::Closed:
@@ -136,26 +116,17 @@ void setUI() {
 					break;
 				}
 
-<<<<<<< Updated upstream
-				if (event.mouseButton.button == sf::Mouse::Right)
-				{
-					// receiver delen
-					receive = receiveObj.besked;
-=======
 				if (recorder.getDecoder().getReceivedMessage())
 				{
 					
 					// receiver delen
 					receive = recorder.getDecoder().getBesked();
->>>>>>> Stashed changes
 					text2.setString(receive);
 					widthOfReceive = text2.getLocalBounds().width;
 					text2.setPosition(1000 - widthOfReceive - 50, 710 - moveText);
 
 
 					// move sendte tekst
-
-
 					for (size_t i = 0; i < textVector.size(); i++)
 					{
 
@@ -181,11 +152,8 @@ void setUI() {
 			case sf::Event::KeyPressed:
 				if (event.key.code == sf::Keyboard::Enter)
 				{
-<<<<<<< Updated upstream
-=======
 					recorder.stop();
 
->>>>>>> Stashed changes
 					customSound koder;
 					koder.StrToBit(test);
 					koder.CRC(32);
@@ -195,17 +163,14 @@ void setUI() {
 					sound.play();
 					koder.slet();
 
-<<<<<<< Updated upstream
-=======
 					while (sound.getStatus() != 0)
 					{
 					}
 					recorder.start(10000);
 
->>>>>>> Stashed changes
 					receive.clear();
+					
 					// move sendte tekst
-
 					widthOfReceive = text2.getLocalBounds().width;
 					text2.setPosition(1000 - widthOfReceive - 50, 710 - moveText);
 
@@ -215,8 +180,6 @@ void setUI() {
 						textVector[i].move(0, -moveText);
 
 					}
-
-
 
 					for (size_t i = 0; i < textVector2.size(); i++)
 					{
@@ -283,10 +246,7 @@ void setUI() {
 
 				}
 			}
-<<<<<<< Updated upstream
-=======
 		}
->>>>>>> Stashed changes
 
 		window.clear(sf::Color::White);
 		window.draw(rectangle);
@@ -306,10 +266,6 @@ void setUI() {
 			window.draw(obj);
 		}
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 		for (auto obj : textVector2)
 		{
 			window.draw(obj);

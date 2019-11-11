@@ -7,14 +7,6 @@
 #include "Decoder.h"
 #include "Userinterface.h"
 
-<<<<<<< Updated upstream
-
-int main()
-{
-
-	setUI();
-
-=======
 #include <vector>
 #include <iostream>
 #include <fstream>
@@ -28,7 +20,6 @@ int main()
 {
 
 	setUI();
->>>>>>> Stashed changes
 
 	return 0;
 }

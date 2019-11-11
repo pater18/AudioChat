@@ -19,20 +19,12 @@ bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t samp
 	m_processingCycles++;
 	SoundChunk currentSoundChunk(samples, sampleCount);
 	std::vector<float> goertzelResult = currentSoundChunk.goertzelAlgorithm(this->getSampleRate());
-<<<<<<< Updated upstream
-	//for (std::size_t i = 0; i < goertzelResult.size(); i++)
-	//{
-	//	std::cout << goertzelResult[i] << " ";
-	//}
 
-	//std::cout << std::endl;
-=======
 	for (std::size_t i = 0; i < goertzelResult.size(); i++)
 	{
 		std::cout << goertzelResult[i] << " ";
 	}
 	std::cout << std::endl;
->>>>>>> Stashed changes
 	
 	m_curDTMF = currentSoundChunk.determineDTMF(goertzelResult);
 	int syncGoertzel = syncDTMF();
