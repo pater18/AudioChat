@@ -6,7 +6,7 @@ bool CustomRecorder::onStart()
 	setProcessingInterval(sf::milliseconds(m_processingInterval));
 	m_ringBuffer.resize(flag.size());
 	std::fill(m_ringBuffer.begin(), m_ringBuffer.end(), -1);
-	goertzel.open("GoertzelData.txt");
+	goertzel.open("GoertzelDataTone0.txt");
 	goertzel << "Hz697" << " " << "Hz770" << " ";
 	goertzel << "Hz852" << " " << "Hz941" << " ";
 	goertzel << "Hz1209" << " " << "Hz1336" << " ";
@@ -77,7 +77,7 @@ int CustomRecorder::syncDTMF()
 		if (m_secondDetection == true) 
 		{
 			duration = (std::clock() - startClock) / (double)CLOCKS_PER_SEC;
-			if (duration > 0.530)
+			if (duration > 1)
 			{
 				startClock = std::clock();
 				return m_curDTMF;

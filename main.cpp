@@ -18,26 +18,47 @@ int main()
 {
 
 
+	sf::Event event;
 
+	//-----------------------------------------------------------------------------------------------------------------------
+	//Laver en besked der kan sendes
+	customSound koder;
+	koder.setBit(32);
+	koder.StrToBit("hej med d");
+	
+	
+	
+	koder.opdel();
+	koder.CRC();
+	koder.message(44100);					//Tager besked vektoren med 1 og 0 og l�gger det i en ny vektor, som kan l�ses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
+	koder.sletFrame();
+	koder.slet(); 
 
-	//customSound koder;
-
-
-	//sf::Event event;
-
-	//koder.StrToBit("");
-	//koder.CRC(32);
-	////koder.tjekDouble();						//Virker kun hvis der er noget i strengen ovenover.
-	//koder.message(8820);					//Tager besked vektoren med 1 og 0 og l�gger det i en ny vektor, som kan l�ses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
-	// 
-	//sf::SoundBuffer buffer;
-	//sf::Sound sound;
-
-	//buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
-	//sound.setBuffer(buffer);
-	//sound.play();
+	
+	
+	
+	//-----------------------------------------------------------------------------------------------------------------------
+	//Spiller besked der er lavet tidligere
 	sf::SoundBuffer buffer;
 	sf::Sound sound;
+	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
+	sound.setBuffer(buffer);
+	sound.play();
+
+	//-----------------------------------------------------------------------------------------------------------------------
+	//Optagager beskeden og finder ud af hvad den indeholder
+	CustomRecorder recorder;
+	recorder.start(10000);
+	std::this_thread::sleep_for(std::chrono::milliseconds(6000));
+	recorder.stop();
+	std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+
+	//-----------------------------------------------------------------------------------------------------------------------
+	//Afkoder optagelsen og laver det til en streng
+	Decoder besked;
+	besked.bitToString();
+
+	//----------------------------------------------------------------------------------------------------------------------------
 
 	sf::RenderWindow window(sf::VideoMode(1000, 800), "SFML works!");
 
@@ -96,30 +117,18 @@ int main()
 	newline.setString("\n");
 
 
-
 	while (window.isOpen())
-	
 	{
-
-		CustomRecorder recorder;
-		recorder.start();
 		
-		std::this_thread::sleep_for(std::chrono::milliseconds(6000));
-		recorder.stop();
-		std::this_thread::sleep_for(std::chrono::milliseconds(10000));
-
-	
-
 		sf::Event event;
 		while (window.pollEvent(event))
-
-
+		{
 			switch (event.type)
 			{
 			case sf::Event::Closed:
 				window.close();
 				break;
-			
+
 
 			case sf::Event::MouseButtonPressed:
 
@@ -128,14 +137,14 @@ int main()
 					if (event.mouseButton.x > 850 && event.mouseButton.x < 950 && event.mouseButton.y > 700 && event.mouseButton.y < 775)
 					{
 
-						customSound koder;
+						/*customSound koder;
 						koder.StrToBit(test);
 						koder.CRC(32);
 						koder.message(22150);
 						buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
 						sound.setBuffer(buffer);
 						sound.play();
-						koder.slet();
+						koder.slet();*/
 
 						textVector.insert(textVector.begin(), text);
 
@@ -150,11 +159,10 @@ int main()
 
 					}
 				}
-
-
 			case sf::Event::KeyPressed:
 				if (event.key.code == sf::Keyboard::Enter)
 				{
+					/*
 					customSound koder;
 					koder.StrToBit(test);
 					koder.CRC(32);
@@ -162,7 +170,7 @@ int main()
 					buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
 					sound.setBuffer(buffer);
 					sound.play();
-					koder.slet();
+					koder.slet();*/
 
 					// move sendte tekst
 					textVector.insert(textVector.begin(), text);
@@ -187,16 +195,9 @@ int main()
 
 						for (size_t i = 0; i < rectangleVec.size(); i++)
 						{
-
 							rectangleVec[i].move(0, -moveText);
-
-
 						}
-
-
 					}
-
-
 
 					test.clear();
 
@@ -235,48 +236,52 @@ int main()
 					{
 						test += "\n";
 						widthOfText = 50;
-
 					}
 
 					text.setString(test);
 
-
 					break;
 
 				}
+			}
+		}
+
+		window.clear(sf::Color::White);
+		window.draw(rectangle);
+		window.draw(rectangleSend);
+		window.draw(rectangleBesked);
+
+		for (auto obj : rectangleVec)
+		{
+			window.draw(obj);
+		}
+
+		window.draw(text);
+		window.draw(text2);
+
+		for (auto obj : textVector)
+		{
+			window.draw(obj);
+		}
+
+		for (auto obj : textVector2)
+		{
+			window.draw(obj);
+		}
 	}
 
-	window.clear(sf::Color::White);
-	window.draw(rectangle);
-	window.draw(rectangleSend);
-	window.draw(rectangleBesked);
-
-	for (auto obj : rectangleVec)
-	{
-		window.draw(obj);
-	}
-
-	window.draw(text);
-	window.draw(text2);
-
-	for (auto obj : textVector)
-	{
-		window.draw(obj);
-	}
-
-	for (auto obj : textVector2)
-	{
-		window.draw(obj);
-	}
+	
 
 	window.draw(send);
 	window.display();
-}
-
-
 
 	return 0;
 }
+
+
+
+	
+
 
 
 
