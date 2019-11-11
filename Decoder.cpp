@@ -58,6 +58,8 @@ void Decoder::setDTMFTone(int DTMF)
 void Decoder::intToBit()
 {
 
+
+
 	std::cout << " Den er her " << std::endl; 
 	for (size_t i = 0; i < sendToDecoder.size(); i++)
 	{
@@ -178,7 +180,7 @@ std::vector<int> Decoder::CRC(int antal_bit)
 }
 
 
-void Decoder::bitToString()
+std::string Decoder::bitToString()
 {
 	for (size_t u = 0; u < _CRCok.size(); u += 8)
 	{
@@ -198,5 +200,6 @@ void Decoder::bitToString()
 	}
 	
 	std::cout << besked << std::endl;
-	}
+	return besked;
+}
 

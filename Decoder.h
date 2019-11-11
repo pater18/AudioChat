@@ -12,7 +12,7 @@ public:
 	Decoder();
 	void setDTMFTone(int DTMF);
 	void intToBit();
-	void bitToString();
+	std::string bitToString();
 	std::vector<int> CRC(int); 
 
 
