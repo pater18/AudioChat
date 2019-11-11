@@ -18,20 +18,24 @@ int main()
 {
 
 
-
-
-	
-
-
 	sf::Event event;
 
 	//-----------------------------------------------------------------------------------------------------------------------
 	//Laver en besked der kan sendes
 	customSound koder;
-	koder.StrToBit("");
-	koder.CRC(32);
-	//koder.tjekDouble();						//Virker kun hvis der er noget i strengen ovenover.
+	koder.setBit(32);
+	koder.StrToBit("hej med d");
+	
+	
+	
+	koder.opdel();
+	koder.CRC();
 	koder.message(44100);					//Tager besked vektoren med 1 og 0 og l�gger det i en ny vektor, som kan l�ses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
+	koder.sletFrame();
+	koder.slet(); 
+
+	
+	
 	
 	//-----------------------------------------------------------------------------------------------------------------------
 	//Spiller besked der er lavet tidligere
@@ -113,7 +117,6 @@ int main()
 	newline.setString("\n");
 
 
-
 	while (window.isOpen())
 	{
 		
@@ -134,14 +137,14 @@ int main()
 					if (event.mouseButton.x > 850 && event.mouseButton.x < 950 && event.mouseButton.y > 700 && event.mouseButton.y < 775)
 					{
 
-						customSound koder;
+						/*customSound koder;
 						koder.StrToBit(test);
 						koder.CRC(32);
 						koder.message(22150);
 						buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
 						sound.setBuffer(buffer);
 						sound.play();
-						koder.slet();
+						koder.slet();*/
 
 						textVector.insert(textVector.begin(), text);
 
