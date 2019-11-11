@@ -22,6 +22,7 @@ public:
 	void saveRecording(const sf::Int16* samples, std::size_t sampleCount);
 	void saveGoertzel(std::vector<float> goertzelData);
 	int syncDTMF();
+	void setCurDTMF(int curDTMF) { m_curDTMF = curDTMF; };
 
 	std::clock_t startClock;
 private:
@@ -40,3 +41,6 @@ private:
 	std::ofstream recording;
 	Decoder m_decoder;
 };
+
+
+

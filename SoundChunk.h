@@ -22,6 +22,8 @@ public:
 		const std::pair<int, float>& b) {
 		return (a.second > b.second);
 	};
+	std::vector<float> goertzelForTest(std::vector<short> samples, int samplingFreq);
+
 private:
 	const sf::Int16* m_samples;
 	std::size_t m_sampleCount;
