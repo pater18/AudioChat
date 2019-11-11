@@ -101,12 +101,12 @@ int main()
 	
 	{
 
-		CustomRecorder recorder;
-		recorder.start();
-		
-		std::this_thread::sleep_for(std::chrono::milliseconds(6000));
-		recorder.stop();
-		std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+		//CustomRecorder recorder;
+		//recorder.start();
+		//
+		//std::this_thread::sleep_for(std::chrono::milliseconds(6000));
+		//recorder.stop();
+		//std::this_thread::sleep_for(std::chrono::milliseconds(10000));
 
 	
 

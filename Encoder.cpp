@@ -202,8 +202,9 @@ std::vector<sf::Int16> Encoder::CRC(int antal_bit)
 
 	for (size_t i = 0; i < Protokol.size(); i++)
 	{
-		std::cout << Protokol[i] << " ";
+		std::cout << Protokol[i];
 	}
+	std::cout << std::endl;
 
 
 	return Protokol;
