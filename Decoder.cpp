@@ -31,11 +31,15 @@ void Decoder::setDTMFTone(int DTMF)
 		if (m_listening)
 		{
 			if (m_character == flag)
+			{
+				std::cout << "START FLAG" << std::endl;
 				m_listening = false;
+			}
 		}
 		else if (m_lastEsc == true)
 		{
-			m_charVect.push_back(m_character);
+			m_charVect.push_back(m_character[0]);
+			m_charVect.push_back(m_character[1]);
 			m_lastEsc == false;
 		}
 		else if (m_character == escChar)
@@ -44,11 +48,15 @@ void Decoder::setDTMFTone(int DTMF)
 		}
 		else if (m_character == flag)
 		{
+			std::cout << "SLUT FLAG" << std::endl;
 			m_listening = true;
+			intToBit();
+			m_charVect.clear();
 		}
 		else
 		{
-			m_charVect.push_back(m_character);
+			m_charVect.push_back(m_character[0]);
+			m_charVect.push_back(m_character[1]);
 		}
 
 	}
@@ -59,9 +67,9 @@ void Decoder::intToBit()
 {
 
 	std::cout << " Den er her " << std::endl; 
-	for (size_t i = 0; i < sendToDecoder.size(); i++)
+	for (size_t i = 0; i < m_charVect.size(); i++)
 	{
-		std::bitset<4> temp(sendToDecoder[i]);
+		std::bitset<4> temp(m_charVect[i]);
 		std::cout << temp << std::endl;
 		vecForCRC.push_back(temp[3]);
 		vecForCRC.push_back(temp[2]);
@@ -178,7 +186,7 @@ std::vector<int> Decoder::CRC(int antal_bit)
 }
 
 
-void Decoder::bitToString()
+std::string Decoder::bitToString()
 {
 	for (size_t u = 0; u < _CRCok.size(); u += 8)
 	{
@@ -198,5 +206,6 @@ void Decoder::bitToString()
 	}
 	
 	std::cout << besked << std::endl;
+	return besked;
 	}
 

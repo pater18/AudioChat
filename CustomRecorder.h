@@ -22,7 +22,6 @@ public:
 	void saveRecording(const sf::Int16* samples, std::size_t sampleCount);
 	void saveGoertzel(std::vector<float> goertzelData);
 	int syncDTMF();
-	void updateRingBuffer(int DTMFTone);
 
 	std::clock_t startClock;
 private:
@@ -38,5 +37,6 @@ private:
 	const std::vector<int> flag = { 15,0 },
 		escCharacter = { 14,0 };
 	std::ofstream goertzel;
+	std::ofstream recording;
 	Decoder m_decoder;
 };
