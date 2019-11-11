@@ -55,10 +55,9 @@ void Decoder::setDTMFTone(int DTMF)
 
 }
 
-void Decoder::intToBit()
+std::vector<int> Decoder::intToBit()
 {
 
-	std::cout << " Den er her " << std::endl; 
 	for (size_t i = 0; i < sendToDecoder.size(); i++)
 	{
 		std::bitset<4> temp(sendToDecoder[i]);
@@ -72,11 +71,14 @@ void Decoder::intToBit()
 	{
 		std::cout << vecForCRC[i];
 	}
+
+	return vecForCRC; 
 }
 
 
 std::vector<int> Decoder::CRC(int antal_bit)
 {
+
 
 	std::bitset<64> generator2(0b00100000111);
 	int DataInsert = antal_bit + 8 - 1;
@@ -167,7 +169,7 @@ std::vector<int> Decoder::CRC(int antal_bit)
 			fejl++; 
 			customSound fejl_besked;
 			fejl_besked.StrToBit((char)fejl);
-			fejl_besked.CRC(32);
+			fejl_besked.CRC();
 			fejl_besked.message(5000);
 		}
 			
@@ -178,7 +180,7 @@ std::vector<int> Decoder::CRC(int antal_bit)
 }
 
 
-void Decoder::bitToString()
+std::string Decoder::bitToString()
 {
 	for (size_t u = 0; u < _CRCok.size(); u += 8)
 	{
@@ -198,5 +200,6 @@ void Decoder::bitToString()
 	}
 	
 	std::cout << besked << std::endl;
-	}
+	return besked;
+}
 
