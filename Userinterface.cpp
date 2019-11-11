@@ -9,6 +9,7 @@ std::string test;
 void makeSound() {
 
 	customSound koder;
+	std::cout << test << std::endl;
 	koder.StrToBit(test);
 	koder.CRC(32);
 	koder.message(22150);
@@ -81,6 +82,38 @@ void setUI() {
 
 	while (window.isOpen())
 	{
+		if (recorder.getDecoder().getReceivedMessage())
+		{
+			recorder.stop();
+			// receiver delen
+			receive = recorder.getDecoder().getBesked();
+			std::cout << receive << std::endl;
+			text2.setString(receive);
+			widthOfReceive = text2.getLocalBounds().width;
+			text2.setPosition(1000 - widthOfReceive - 50, 710 - moveText);
+
+
+			// move sendte tekst
+			for (size_t i = 0; i < textVector.size(); i++)
+			{
+
+				textVector[i].move(0, -moveText);
+
+			}
+
+			textVector2.insert(textVector2.begin(), text2);
+
+			for (size_t i = 1; i < textVector2.size(); i++)
+			{
+				textVector2[i].move(0, -moveText);
+
+			}
+			std::cout << "Input if " << std::endl;
+			receive.clear();
+			test.clear();
+			recorder.start(10000);
+			recorder.getDecoder().setReceivedMessageToFalse();
+		}
 
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -116,52 +149,14 @@ void setUI() {
 					break;
 				}
 
-				if (recorder.getDecoder().getReceivedMessage())
-				{
-					
-					// receiver delen
-					receive = recorder.getDecoder().getBesked();
-					text2.setString(receive);
-					widthOfReceive = text2.getLocalBounds().width;
-					text2.setPosition(1000 - widthOfReceive - 50, 710 - moveText);
-
-
-					// move sendte tekst
-					for (size_t i = 0; i < textVector.size(); i++)
-					{
-
-						textVector[i].move(0, -moveText);
-
-					}
-
-					textVector2.insert(textVector2.begin(), text2);
-
-					for (size_t i = 1; i < textVector2.size(); i++)
-					{
-						textVector2[i].move(0, -moveText);
-
-					}
-
-					receive.clear();
-					test.clear();
-
-					break;
-				}
+			
 
 
 			case sf::Event::KeyPressed:
 				if (event.key.code == sf::Keyboard::Enter)
 				{
 					recorder.stop();
-
-					customSound koder;
-					koder.StrToBit(test);
-					koder.CRC(32);
-					koder.message(10000);
-					buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
-					sound.setBuffer(buffer);
-					sound.play();
-					koder.slet();
+					makeSound();
 
 					while (sound.getStatus() != 0)
 					{

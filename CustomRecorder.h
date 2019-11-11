@@ -15,6 +15,7 @@
 class CustomRecorder : public sf::SoundRecorder
 {
 public:
+	~CustomRecorder();
 	bool onStart();
 	bool onProcessSamples(const sf::Int16* samples, std::size_t sampleCount);
 	void onStop();
