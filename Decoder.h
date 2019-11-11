@@ -15,6 +15,7 @@ public:
 	void bitToString();
 	std::vector<int> CRC(int); 
 
+	std::string besked;
 
 private:
 	std::vector<int> m_character;
@@ -24,6 +25,6 @@ private:
 
 	std::vector<int> _CRCok;
 	std::vector<int> vecForCRC;
-	std::string besked;
+	
 };
 

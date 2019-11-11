@@ -1,4 +1,5 @@
 #include "CustomRecorder.h"
+#include "Decoder.h"
 sf::SoundBuffer buffer;
 sf::Sound sound;
 std::string test;
@@ -32,6 +33,7 @@ void setUI() {
 
 	double widthOfReceive;
 	std::string receive;
+	Decoder receiveObj;
 
 	sf::RectangleShape rectangle(sf::Vector2f(750, 75));
 	rectangle.setFillColor(sf::Color(128, 128, 128));
@@ -115,7 +117,7 @@ void setUI() {
 				if (event.mouseButton.button == sf::Mouse::Right)
 				{
 					// receiver delen
-					std::cin >> receive;
+					receive = receiveObj.besked;
 					text2.setString(receive);
 					widthOfReceive = text2.getLocalBounds().width;
 					text2.setPosition(1000 - widthOfReceive - 50, 710 - moveText);
@@ -180,27 +182,27 @@ void setUI() {
 					}
 
 					// move rectangle
-					for (size_t i = 0; i < textVector.size(); i++)
-					{
-						widthOfText = text.getLocalBounds().width;
+					//for (size_t i = 0; i < textVector.size(); i++)
+					//{
+					//	widthOfText = text.getLocalBounds().width;
 
-						xyvec = textVector[i].getPosition();
-						rectangleVec.insert(rectangleVec.begin(), sf::RectangleShape(sf::Vector2f(0, 0)));
-						rectangleVec[i].setPosition(xyvec.x, xyvec.y + moveText);
-						rectangleVec[i].setFillColor(sf::Color(128, 128, 128));
-						rectangleVec[i].setSize(sf::Vector2f(widthOfText + 5, 35));
-
-
-						for (size_t i = 0; i < rectangleVec.size(); i++)
-						{
-
-							rectangleVec[i].move(0, -moveText);
+					//	xyvec = textVector[i].getPosition();
+					//	rectangleVec.insert(rectangleVec.begin(), sf::RectangleShape(sf::Vector2f(0, 0)));
+					//	rectangleVec[i].setPosition(xyvec.x, xyvec.y + moveText);
+					//	rectangleVec[i].setFillColor(sf::Color(128, 128, 128));
+					//	rectangleVec[i].setSize(sf::Vector2f(widthOfText + 5, 35));
 
 
-						}
+					//	for (size_t i = 0; i < rectangleVec.size(); i++)
+					//	{
+
+					//		rectangleVec[i].move(0, -moveText);
 
 
-					}
+					//	}
+
+
+					//}
 
 
 					receive.clear();
