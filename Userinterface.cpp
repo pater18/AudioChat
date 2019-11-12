@@ -112,6 +112,7 @@ void setUI() {
 			receive.clear();
 			test.clear();
 			recorder.start(10000);
+			std::cout << recorder.getDecoder().getReceivedMessage() << std::endl;
 			recorder.getDecoder().setReceivedMessageToFalse();
 		}
 

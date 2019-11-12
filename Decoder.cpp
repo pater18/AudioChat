@@ -30,6 +30,7 @@ void Decoder::setDTMFTone(int DTMF)
 	{
 		if (m_listening)
 		{
+			m_receivedMessage = false;
 			if (m_character == flag)
 			{
 				m_listening = false;
@@ -54,6 +55,7 @@ void Decoder::setDTMFTone(int DTMF)
 			intToBit();
 			CRC(32);
 			bitToString();
+			m_character.clear();
 		}
 		else
 		{

@@ -27,6 +27,8 @@ private:
 	std::vector<int> _CRCok;
 	std::vector<int> vecForCRC;
 	std::string besked;
+
 	bool m_receivedMessage;
+	
 };
 
