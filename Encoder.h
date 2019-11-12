@@ -11,7 +11,7 @@ public:
 	std::vector<sf::Int16> CRC(int antal_bit);
 	std::vector<std::vector<sf::Int16> > sendBuffer(std::vector<sf::Int16> _CRC);
 	//void tjekDouble();
-	std::vector<sf::Int16> Protokol;
+	std::vector<sf::Int16> insertESC;
 
 
 	

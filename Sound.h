@@ -1,5 +1,6 @@
 #pragma once
 #include "Encoder.h"
+#include "Protokol.h"
 
 #include <math.h>
 #include <vector>
