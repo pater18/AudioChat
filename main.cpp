@@ -95,7 +95,7 @@ int main()
 	newline.setCharacterSize(24);
 	newline.setString("\n");
 
-
+	
 
 	while (window.isOpen())
 	
