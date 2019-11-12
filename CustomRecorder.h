@@ -25,7 +25,7 @@ public:
 	int syncDTMF();
 	void updateRingBuffer(int DTMFTone);
 	void setCurDTMF(int curDTMF) { m_curDTMF = curDTMF; };
-	Decoder getDecoder() { return m_decoder; };
+	Decoder& getDecoder() { return m_decoder; };
 
 	std::clock_t startClock;
 private:

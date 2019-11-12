@@ -16,6 +16,7 @@ public:
 	std::vector<int> CRC(int); 
 	bool getReceivedMessage() { return m_receivedMessage; };
 	void setReceivedMessageToFalse() { m_receivedMessage = false; };
+	void setReceivedMessageToTrue() { m_receivedMessage = true; };
 	std::string getBesked() { return besked; };
 
 private:
