@@ -10,9 +10,9 @@ void makeSound() {
 
 	customSound koder;
 	std::cout << test << std::endl;
-	koder.StrToBit(test);
+	koder.StrToBit("Hej med dig");
 	koder.CRC(32);
-	koder.message(44150);
+	koder.message(44100/4);
 	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
 	sound.setBuffer(buffer);
 	sound.play();
