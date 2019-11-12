@@ -1,5 +1,6 @@
 #include "Sound.h"
 #include <math.h>
+#include "Encoder.h"
 
 
 
@@ -76,9 +77,9 @@ std::vector<sf::Int16> customSound::message(int tid)
 	}
 
 
-	for (int i = 0; i < _Encoded.size(); i += 4) // 0, 4, 8
+	for (int i = 0; i < ud.size(); i += 4) // 0, 4, 8
 	{
-		if (((_Encoded[i] == 0)) && (_Encoded[i + 1] == 0) && (_Encoded[i + 2]) == 0 && (_Encoded[i + 3] == 0))				//Bit 0000 = 0
+		if (((ud[i] == 0)) && (ud[i + 1] == 0) && (ud[i + 2]) == 0 && (ud[i + 3] == 0))				//Bit 0000 = 0
 		{
 			freq1 = 697;
 			freq2 = 1209;
@@ -88,7 +89,7 @@ std::vector<sf::Int16> customSound::message(int tid)
 			}
 
 		}
-		if ((_Encoded[i] == 0) && (_Encoded[i + 1] == 0) && (_Encoded[i + 2] == 0) && (_Encoded[i + 3] == 1))			//Bit 0001 = 1
+		if ((ud[i] == 0) && (ud[i + 1] == 0) && (ud[i + 2] == 0) && (ud[i + 3] == 1))			//Bit 0001 = 1
 		{
 			freq1 = 697;
 			freq2 = 1336;
@@ -98,7 +99,7 @@ std::vector<sf::Int16> customSound::message(int tid)
 			}
 
 		}
-		if ((_Encoded[i] == 0) && (_Encoded[i + 1] == 0) && (_Encoded[i + 2] == 1) && (_Encoded[i + 3] == 0))			//Bit 0010 = 2
+		if ((ud[i] == 0) && (ud[i + 1] == 0) && (ud[i + 2] == 1) && (ud[i + 3] == 0))			//Bit 0010 = 2
 		{
 			freq1 = 697;
 			freq2 = 1477;
@@ -107,7 +108,7 @@ std::vector<sf::Int16> customSound::message(int tid)
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
-		if ((_Encoded[i] == 0) && (_Encoded[i + 1] == 0) && (_Encoded[i + 2] == 1) && (_Encoded[i + 3] == 1))			//Bit 0011 = 3
+		if ((ud[i] == 0) && (ud[i + 1] == 0) && (ud[i + 2] == 1) && (ud[i + 3] == 1))			//Bit 0011 = 3
 		{
 			freq1 = 697;
 			freq2 = 1633;
@@ -116,7 +117,7 @@ std::vector<sf::Int16> customSound::message(int tid)
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
-		if ((_Encoded[i] == 0) && (_Encoded[i + 1] == 1) && (_Encoded[i + 2] == 0) && (_Encoded[i + 3] == 0))			//Bit 0100 = 4
+		if ((ud[i] == 0) && (ud[i + 1] == 1) && (ud[i + 2] == 0) && (ud[i + 3] == 0))			//Bit 0100 = 4
 		{
 			freq1 = 770;
 			freq2 = 1209;
@@ -125,7 +126,7 @@ std::vector<sf::Int16> customSound::message(int tid)
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
-		if ((_Encoded[i] == 0) && (_Encoded[i + 1] == 1) && (_Encoded[i + 2] == 0) && (_Encoded[i + 3] == 1))			//Bit 0101 = 5
+		if ((ud[i] == 0) && (ud[i + 1] == 1) && (ud[i + 2] == 0) && (ud[i + 3] == 1))			//Bit 0101 = 5
 		{
 			freq1 = 770;
 			freq2 = 1336;
@@ -134,7 +135,7 @@ std::vector<sf::Int16> customSound::message(int tid)
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
-		if ((_Encoded[i] == 0) && (_Encoded[i + 1] == 1) && (_Encoded[i + 2] == 1) && (_Encoded[i + 3] == 0))			//Bit 0110 = 6
+		if ((ud[i] == 0) && (ud[i + 1] == 1) && (ud[i + 2] == 1) && (ud[i + 3] == 0))			//Bit 0110 = 6
 		{
 			freq1 = 770;
 			freq2 = 1477;
@@ -143,7 +144,7 @@ std::vector<sf::Int16> customSound::message(int tid)
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
-		if ((_Encoded[i] == 0) && (_Encoded[i + 1] == 1) && (_Encoded[i + 2] == 1) && (_Encoded[i + 3] == 1))			//Bit = 7
+		if ((ud[i] == 0) && (ud[i + 1] == 1) && (ud[i + 2] == 1) && (ud[i + 3] == 1))			//Bit = 7
 		{
 			freq1 = 770;
 			freq2 = 1633;
@@ -152,7 +153,7 @@ std::vector<sf::Int16> customSound::message(int tid)
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
-		if ((_Encoded[i] == 1) && (_Encoded[i + 1] == 0) && (_Encoded[i + 2] == 0) && (_Encoded[i + 3] == 0))			//Bit 1000 = 8
+		if ((ud[i] == 1) && (ud[i + 1] == 0) && (ud[i + 2] == 0) && (ud[i + 3] == 0))			//Bit 1000 = 8
 		{
 			freq1 = 852;
 			freq2 = 1209;
@@ -161,7 +162,7 @@ std::vector<sf::Int16> customSound::message(int tid)
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
-		if ((_Encoded[i] == 1) && (_Encoded[i + 1] == 0) && (_Encoded[i + 2] == 0) && (_Encoded[i + 3] == 1))			//Bit = 9
+		if ((ud[i] == 1) && (ud[i + 1] == 0) && (ud[i + 2] == 0) && (ud[i + 3] == 1))			//Bit = 9
 		{
 			freq1 = 852;
 			freq2 = 1336;
@@ -170,7 +171,7 @@ std::vector<sf::Int16> customSound::message(int tid)
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
-		if ((_Encoded[i] == 1) && (_Encoded[i + 1] == 0) && (_Encoded[i + 2] == 1) && (_Encoded[i + 3] == 0))			//Bit = 10
+		if ((ud[i] == 1) && (ud[i + 1] == 0) && (ud[i + 2] == 1) && (ud[i + 3] == 0))			//Bit = 10
 		{
 			freq1 = 852;
 			freq2 = 1477;
@@ -179,7 +180,7 @@ std::vector<sf::Int16> customSound::message(int tid)
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
-		if ((_Encoded[i] == 1) && _Encoded[i + 1] == 0 && (_Encoded[i + 2] == 1) && (_Encoded[i + 3] == 1))			//Bit = 11
+		if ((ud[i] == 1) && ud[i + 1] == 0 && (ud[i + 2] == 1) && (ud[i + 3] == 1))			//Bit = 11
 		{
 			freq1 = 852;
 			freq2 = 1633;
@@ -188,7 +189,7 @@ std::vector<sf::Int16> customSound::message(int tid)
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
-		if ((_Encoded[i] == 1) && (_Encoded[i + 1] == 1) && (_Encoded[i + 2] == 0) && (_Encoded[i + 3] == 0))			//Bit = 12
+		if ((ud[i] == 1) && (ud[i + 1] == 1) && (ud[i + 2] == 0) && (ud[i + 3] == 0))			//Bit = 12
 		{
 			freq1 = 941;
 			freq2 = 1209;
@@ -197,7 +198,7 @@ std::vector<sf::Int16> customSound::message(int tid)
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
-		if ((_Encoded[i] == 1) && (_Encoded[i + 1] == 1) && (_Encoded[i + 2] == 0) && (_Encoded[i + 3] == 1))			//Bit = 13
+		if ((ud[i] == 1) && (ud[i + 1] == 1) && (ud[i + 2] == 0) && (ud[i + 3] == 1))			//Bit = 13
 		{
 			freq1 = 941;
 			freq2 = 1336;
@@ -206,7 +207,7 @@ std::vector<sf::Int16> customSound::message(int tid)
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
-		if ((_Encoded[i] == 1) && (_Encoded[i + 1] == 1) && (_Encoded[i + 2] == 1) && (_Encoded[i + 3] == 0))			//Bit = 14
+		if ((ud[i] == 1) && (ud[i + 1] == 1) && (ud[i + 2] == 1) && (ud[i + 3] == 0))			//Bit = 14
 		{
 			freq1 = 941;
 			freq2 = 1477;
@@ -215,7 +216,7 @@ std::vector<sf::Int16> customSound::message(int tid)
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
-		if ((_Encoded[i] == 1) && (_Encoded[i + 1] == 1) && (_Encoded[i + 2] == 1) && (_Encoded[i + 3] == 1))			//Bit = 15
+		if ((ud[i] == 1) && (ud[i + 1] == 1) && (ud[i + 2] == 1) && (ud[i + 3] == 1))			//Bit = 15
 		{
 			freq1 = 941;
 			freq2 = 1633;
