@@ -131,7 +131,7 @@ std::vector<sf::Int16> Encoder::CRC(int antal_bit)
 		std::cout << std::endl;
 	}
 
-	ud.erase(ud.begin(), ud.begin() + numPadding);
+	/*ud.erase(ud.begin(), ud.begin() + numPadding);*/
 	std::cout << "Binary streng der skal laves protokol på: ";
 	for (size_t i = 0; i < ud.size(); i++)
 	{
@@ -142,7 +142,7 @@ std::vector<sf::Int16> Encoder::CRC(int antal_bit)
 
 
 	//Stop and wait protokol for encoder
-	std::vector <sf::Int16> Protokol;
+
 
 	for (size_t i = 0; i < ud.size(); i += 8)
 	{
@@ -209,6 +209,71 @@ std::vector<sf::Int16> Encoder::CRC(int antal_bit)
 
 	return Protokol;
 
+}
+
+std::vector<std::vector<sf::Int16>> Encoder::sendBuffer(std::vector<sf::Int16> _CRC)
+{
+	int j = 0, protoStart = 0, protoSlut = 40, length = 0;
+	int flag[8] = { 1,1,1,1,0,0,0,0 };
+	int sek0[8] = { 0,0,0,0,0,0,0,0 };
+	int sek1[8] = { 0,0,0,0,0,0,0,1 };
+	length = Protokol.size();
+
+	if (length % 40 == 0)
+	{
+		vecSendBuffer.resize(length / 40);
+	}
+	else
+	{
+		vecSendBuffer.resize((length / 40) + 1);
+	}
+
+	for (size_t i = 0; i < vecSendBuffer.size(); i++)
+	{
+		if (i % 2 == 0)
+		{
+			vecSendBuffer[i].insert(vecSendBuffer[i].begin(), flag, flag+8);
+			vecSendBuffer[i].insert(vecSendBuffer[i].end(), sek0, sek0 + 8);
+			if (protoStart + 40 < Protokol.size())
+			{
+				vecSendBuffer[i].insert(vecSendBuffer[i].end(), Protokol.begin() + protoStart, Protokol.begin() + protoSlut);
+			}
+			else
+			{
+				vecSendBuffer[i].insert(vecSendBuffer[i].end(), Protokol.begin() + protoStart, Protokol.end());
+			}
+			vecSendBuffer[i].insert(vecSendBuffer[i].end(), flag, flag + 8);
+			protoStart += 40;
+			protoSlut += 40;
+		}
+		else
+		{
+			vecSendBuffer[i].insert(vecSendBuffer[i].begin(), flag, flag + 8);
+			vecSendBuffer[i].insert(vecSendBuffer[i].end(), sek1, sek1 + 8);
+			if (protoStart + 40 < Protokol.size())
+			{
+				vecSendBuffer[i].insert(vecSendBuffer[i].end(), Protokol.begin() + protoStart, Protokol.begin() + protoSlut);
+			}
+			else
+			{
+				vecSendBuffer[i].insert(vecSendBuffer[i].end(), Protokol.begin() + protoStart, Protokol.end());
+			}
+			vecSendBuffer[i].insert(vecSendBuffer[i].end(), flag, flag + 8);
+			protoStart += 40;
+			protoSlut += 40;
+
+		}
+	}
+	for (size_t i = 0; i < vecSendBuffer.size(); i++)
+	{
+		for (size_t j = 0; j < vecSendBuffer[i].size(); j++)
+		{
+			std::cout << vecSendBuffer[i][j];
+		}
+		std::cout << " ";
+
+	}
+	return vecSendBuffer;
 }
 
 

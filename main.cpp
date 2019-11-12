@@ -158,7 +158,8 @@ int main()
 					customSound koder;
 					koder.StrToBit(test);
 					koder.CRC(32);
-					koder.message(10000);
+					koder.sendBuffer(koder.Protokol);
+					koder.message(22050);
 					buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
 					sound.setBuffer(buffer);
 					sound.play();
