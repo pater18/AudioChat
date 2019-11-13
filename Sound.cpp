@@ -41,14 +41,9 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 	double faktor = tid * 0.02 ;
 	faktor = multipleEnd / faktor;
 
-
 	std::vector <std::vector<int>> freq{ {697, 1209},{697, 1336},{697, 1477},{697, 1633},{ 770, 1209},{ 770, 1336},{ 770, 1477},{ 770, 1633},{852, 1209},{852, 1336},{852, 1477},{852, 1633}, {941, 1209},{941, 1336},{941, 1477},{941, 1633} };
 
 	int freq1, freq2;
-
-
-
-
 
 	for (int i = 0; i < vecFraProt.size(); i += 4) // 0, 4, 8
 	{
@@ -73,7 +68,7 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 			}
 
 		}
-
+    
 		if ((vecFraProt[i] == 0) && (vecFraProt[i + 1] == 0) && (vecFraProt[i + 2] == 1) && (vecFraProt[i + 3] == 0))			//Bit 0010 = 2
 		{
 			freq1 = 697;
@@ -103,7 +98,7 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
-
+    
 		if ((vecFraProt[i] == 0) && (vecFraProt[i + 1] == 1) && (vecFraProt[i + 2] == 0) && (vecFraProt[i + 3] == 1))			//Bit 0101 = 5
 		{
 			freq1 = 770;
@@ -173,7 +168,7 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
-
+    
 		if ((vecFraProt[i] == 1) && (vecFraProt[i + 1] == 1) && (vecFraProt[i + 2] == 0) && (vecFraProt[i + 3] == 0))			//Bit = 12
 		{
 			freq1 = 941;
@@ -215,9 +210,6 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 		}
 
 	}
-
-
-
 
 	return _customSound;
 

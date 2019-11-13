@@ -7,12 +7,21 @@
 #include <bitset>
 #include <iostream>
 
+
+int numPadding;
+
 Encoder::Encoder()
 {
 }
 
+void Encoder::setBit(int antalBit)
+{
+	m_antalBit = antalBit; 
+}
+
 void Encoder::slet() {
 	ud.clear();
+	opdeltBesked.clear();
 }
 
 std::vector<sf::Int16> Encoder::StrToBit(sf::String input)
@@ -45,6 +54,7 @@ std::vector<sf::Int16> Encoder::StrToBit(sf::String input)
 
 	}
 
+	std::cout << "Besked skrevet i bit: ";
 	for (size_t i = 0; i < _Encoded.size(); i++)			//Tjek til at se der sker det rigtige 
 	{
 		std::cout << _Encoded[i];
@@ -55,41 +65,70 @@ std::vector<sf::Int16> Encoder::StrToBit(sf::String input)
 }
 
 
-std::vector<sf::Int16> Encoder::CRC(int antal_bit)
-{
-	// Skal have lavet padding så det er ligegyldigt hvor mange karakter men vælger at skrive. 
 
+
+void Encoder::opdel()
+{
+	
 	int indSize = _Encoded.size();
 	int paddingCoeff = 0;
+	numPadding = 0;
 
-	while (indSize > (paddingCoeff * antal_bit))
-		paddingCoeff++;
-
-	int numPadding = paddingCoeff * antal_bit - indSize;
-
-	std::cout << "Antal nuller der puttes i som padding: " << numPadding << std::endl;
-
-
-	for (int i = 0; i < numPadding; i++)
+	if (_Encoded.size() < m_antalBit)
 	{
-		_Encoded.insert(_Encoded.begin(), 0);
+		while (indSize > (paddingCoeff * m_antalBit))
+			paddingCoeff++;
+
+		numPadding = paddingCoeff * m_antalBit - indSize;
+
+		for (int i = 0; i < numPadding; i++)
+		{
+			opdeltBesked.insert(opdeltBesked.begin(), 0);
+		}
 	}
 
+	for (int i = 0; i < m_antalBit - numPadding; i++)
+		opdeltBesked.push_back(_Encoded[i]);
 
 
-	int DataInsert = antal_bit + 8 - 1;					//32 + 8 - 1 = 39 
+	std::cout << "Den enkelte pakke der sendes uden CRC - tjek: ";
 
-	for (size_t k = 0; k < _Encoded.size(); k += antal_bit) //k=8
+	for (size_t i = 0; i < opdeltBesked.size(); i++)
+	{
+		std::cout << opdeltBesked[i];
+	}
+
+	std::cout << std::endl;
+}
+
+void Encoder::sletFrame()
+{
+	if (_Encoded.size() >= m_antalBit)
+	{
+		_Encoded.erase(_Encoded.begin(), _Encoded.begin() + m_antalBit);
+	}
+	else
+		_Encoded.clear();
+
+}
+	
+
+std::vector<sf::Int16> Encoder::CRC()
+{
+
+	int DataInsert = m_antalBit + 8 - 1;					//32 + 8 - 1 = 39 
+
+	for (size_t k = 0; k < opdeltBesked.size(); k += m_antalBit) //k=8
 	{
 
 		std::bitset<64> generator(0b0000000100000111);  // CRC_8 check generator polynomie 
 
-		std::bitset<64> data(0b0);						// Vektor til at lave udregninger på.
+		std::bitset<64> data(0b0);						// Vektor til at lave udregninger pÃ¥.
 
-		for (int i = 0; i < antal_bit; i++) //=8					// I dette loop indsættes data fra strengen ind i et bitset, så det senere kan manipuleres med. 
-		{												// Det er 8 da vi laver tjek på hver 8 bit. Samtidig lægges de 8 bit i en ny vektor. 
+		for (int i = 0; i < m_antalBit; i++) //=8					// I dette loop indsÃ¦ttes data fra strengen ind i et bitset, sÃ¥ det senere kan manipuleres med. 
+		{												// Det er 8 da vi laver tjek pÃ¥ hver 8 bit. Samtidig lÃ¦gges de 8 bit i en ny vektor. 
 
-			if (_Encoded[i + k] == 1)
+			if (opdeltBesked[i + k] == 1)
 			{
 				data.set(DataInsert - i, 1); //15
 				ud.push_back(1);
@@ -102,9 +141,9 @@ std::vector<sf::Int16> Encoder::CRC(int antal_bit)
 
 		}
 
-		std::cout << "Data: " << data << std::endl;
+		std::cout << "Det data bliver lavet CRC - tjek pÃ¥: " << data << std::endl;
 
-		for (int i = 0; i < antal_bit; i++) //8
+		for (int i = 0; i < m_antalBit; i++) //8
 		{
 			if (data[DataInsert - i] == 1)
 			{
@@ -132,18 +171,16 @@ std::vector<sf::Int16> Encoder::CRC(int antal_bit)
 	}
 
 	/*ud.erase(ud.begin(), ud.begin() + numPadding);*/
-	std::cout << "Binary streng der skal laves insertESC på: ";
+	std::cout << "Binary streng der skal laves insertESC pï¿½: ";
+  
 	for (size_t i = 0; i < ud.size(); i++)
 	{
 		std::cout << ud[i];
 	}
 
-	std::cout << std::endl << "Størrelse på ud: " << ud.size() << std::endl;
-
+	std::cout << std::endl << "Stï¿½rrelse pï¿½ ud: " << ud.size() << std::endl;
 
 	//Stop and wait insertESC for encoder
-
-
 	for (size_t i = 0; i < ud.size(); i += 8)
 	{
 		if ((ud[i] == 1) && (ud[i + 1] == 1) && (ud[i + 2] == 1) && (ud[i + 3] == 1) && (ud[i + 4] == 0) && (ud[i + 5] == 0) && (ud[i + 6] == 0) && (ud[i + 7] == 0))

@@ -33,8 +33,8 @@ void Decoder::setDTMFTone(int DTMF)
 			m_receivedMessage = false;
 			if (m_character == flag)
 			{
-				m_listening = false;
 				std::cout << "START FLAG" << std::endl;
+				m_listening = false;
 			}
 		}
 		else if (m_lastEsc == true)
@@ -49,13 +49,14 @@ void Decoder::setDTMFTone(int DTMF)
 		}
 		else if (m_character == flag)
 		{
-			m_listening = true;
 			std::cout << "SLUT FLAG" << std::endl;
-			m_receivedMessage = true;
+			m_listening = true;
+      
 			intToBit();
 			CRC(32);
 			bitToString();
-			m_character.clear();
+			m_charVect.clear();
+			m_receivedMessage = true;
 		}
 		else
 		{
@@ -64,10 +65,10 @@ void Decoder::setDTMFTone(int DTMF)
 		}
 
 	}
-
+	
 }
 
-void Decoder::intToBit()
+std::vector<int> Decoder::intToBit()
 {
 	if (m_charVect.size() < 7)
 	{
@@ -80,8 +81,7 @@ void Decoder::intToBit()
 			vecForACK.push_back(temp[1]);
 			vecForACK.push_back(temp[0]);
 		}
-		
-	}
+  }
 	else
 	{
 		for (size_t i = 0; i < m_charVect.size(); i++)
@@ -101,13 +101,17 @@ void Decoder::intToBit()
 
 		std::cout << std::endl;
 		std::cout << vecForCRC.size() << std::endl;
-	}
+    
+    return vecForCRC;
+  }
+ 
 }
 
 
 std::vector<int> Decoder::CRC(int antal_bit)
 {
 		
+
 
 	std::bitset<64> generator2(0b00100000111);
 	int DataInsert = antal_bit + 8 - 1;
@@ -205,7 +209,7 @@ std::vector<int> Decoder::CRC(int antal_bit)
 }
 
 
-void Decoder::bitToString()
+std::string Decoder::bitToString()
 {
 	for (size_t u = 0; u < _CRCok.size(); u += 8)
 	{
@@ -225,5 +229,7 @@ void Decoder::bitToString()
 	}
 	
 	std::cout << besked << std::endl;
-	}
+	return besked;
+}
+
 
