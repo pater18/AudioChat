@@ -12,7 +12,7 @@ void makeSound() {
 	customSound koder;
 	std::cout << test << std::endl;
 	koder.StrToBit(test);
-	koder.CRC(32);
+	koder.CRC();
 	koder.sendBuffer(koder.insertESC);
 	Protokol testprot;
 	testprot.sendProtokol(koder.vecSendBuffer);

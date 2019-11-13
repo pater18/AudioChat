@@ -21,7 +21,6 @@ void Encoder::setBit(int antalBit)
 
 void Encoder::slet() {
 	ud.clear();
-	opdeltBesked.clear();
 }
 
 std::vector<sf::Int16> Encoder::StrToBit(sf::String input)
@@ -64,53 +63,6 @@ std::vector<sf::Int16> Encoder::StrToBit(sf::String input)
 	return _Encoded;
 }
 
-
-
-
-void Encoder::opdel()
-{
-	
-	int indSize = _Encoded.size();
-	int paddingCoeff = 0;
-	numPadding = 0;
-
-	if (_Encoded.size() < m_antalBit)
-	{
-		while (indSize > (paddingCoeff * m_antalBit))
-			paddingCoeff++;
-
-		numPadding = paddingCoeff * m_antalBit - indSize;
-
-		for (int i = 0; i < numPadding; i++)
-		{
-			opdeltBesked.insert(opdeltBesked.begin(), 0);
-		}
-	}
-
-	for (int i = 0; i < m_antalBit - numPadding; i++)
-		opdeltBesked.push_back(_Encoded[i]);
-
-
-	std::cout << "Den enkelte pakke der sendes uden CRC - tjek: ";
-
-	for (size_t i = 0; i < opdeltBesked.size(); i++)
-	{
-		std::cout << opdeltBesked[i];
-	}
-
-	std::cout << std::endl;
-}
-
-void Encoder::sletFrame()
-{
-	if (_Encoded.size() >= m_antalBit)
-	{
-		_Encoded.erase(_Encoded.begin(), _Encoded.begin() + m_antalBit);
-	}
-	else
-		_Encoded.clear();
-
-}
 	
 
 std::vector<sf::Int16> Encoder::CRC()
@@ -118,7 +70,7 @@ std::vector<sf::Int16> Encoder::CRC()
 
 	int DataInsert = m_antalBit + 8 - 1;					//32 + 8 - 1 = 39 
 
-	for (size_t k = 0; k < opdeltBesked.size(); k += m_antalBit) //k=8
+	for (size_t k = 0; k < _Encoded.size(); k += m_antalBit) //k=8
 	{
 
 		std::bitset<64> generator(0b0000000100000111);  // CRC_8 check generator polynomie 
@@ -128,7 +80,7 @@ std::vector<sf::Int16> Encoder::CRC()
 		for (int i = 0; i < m_antalBit; i++) //=8					// I dette loop indsættes data fra strengen ind i et bitset, så det senere kan manipuleres med. 
 		{												// Det er 8 da vi laver tjek på hver 8 bit. Samtidig lægges de 8 bit i en ny vektor. 
 
-			if (opdeltBesked[i + k] == 1)
+			if (_Encoded[i + k] == 1)
 			{
 				data.set(DataInsert - i, 1); //15
 				ud.push_back(1);

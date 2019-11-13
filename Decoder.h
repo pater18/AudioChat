@@ -32,9 +32,6 @@ private:
 	std::vector<int> _CRCok;
 	std::vector<int> vecForCRC;
 	std::vector<int> vecForACK;
-	std::string besked;
-
-	bool m_receivedMessage;
 	
 };
 

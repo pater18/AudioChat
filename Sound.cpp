@@ -36,10 +36,7 @@ short customSound::Sinewave(double time, double freq1, double freq2, double amp)
 std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecFraProt)
 {
 
-	int count = 0;
-	double multipleEnd = 1, multipleStart = 0;
-	double faktor = tid * 0.02 ;
-	faktor = multipleEnd / faktor;
+	
 
 	std::vector <std::vector<int>> freq{ {697, 1209},{697, 1336},{697, 1477},{697, 1633},{ 770, 1209},{ 770, 1336},{ 770, 1477},{ 770, 1633},{852, 1209},{852, 1336},{852, 1477},{852, 1633}, {941, 1209},{941, 1336},{941, 1477},{941, 1633} };
 
