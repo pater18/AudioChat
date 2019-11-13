@@ -48,7 +48,7 @@ int main()
 	customSound koder;
 
 	koder.StrToBit("");
-	koder.message(44100 * 10);
+	koder.message(44100*5);
 
 	sf::SoundBuffer buffer;
 	sf::Sound sound;
@@ -56,7 +56,7 @@ int main()
 
 	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
 	sound.setBuffer(buffer);
-	//sound.play();
+	sound.play();
 
 	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
 	sf::CircleShape shape(100.f);

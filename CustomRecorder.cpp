@@ -24,7 +24,7 @@ bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t samp
 	int syncGoertzel = syncDTMF();
 	if (syncGoertzel != -1) {
 		m_decoder.setDTMFTone(syncGoertzel);
-		//startNewRecordings(syncGoertzel);
+		startNewRecordings(syncGoertzel);
 	}
 
 
