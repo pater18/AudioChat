@@ -84,11 +84,15 @@ void Decoder::intToBit()
 	{
 		std::cout << vecForCRC[i];
 	}
+
+	std::cout << std::endl;
+	std::cout << vecForCRC.size() << std::endl;
 }
 
 
 std::vector<int> Decoder::CRC(int antal_bit)
 {
+		
 
 	std::bitset<64> generator2(0b00100000111);
 	int DataInsert = antal_bit + 8 - 1;
@@ -106,7 +110,7 @@ std::vector<int> Decoder::CRC(int antal_bit)
 		paddingCoeff2++;
 	}
 
-	int numPadding2 = paddingCoeff2 * 8;
+	int numPadding2 = (paddingCoeff2) * 8;	
 
 	std::cout << "Antal nuller der puttes i som padding2: " << numPadding2 << std::endl;
 
@@ -177,15 +181,7 @@ std::vector<int> Decoder::CRC(int antal_bit)
 		{
 			std::cout << "Der er fejl i beregningen til CRC tjek." << std::endl;
 			fejl++; 
-			customSound fejl_besked;
-			fejl_besked.StrToBit((char)fejl);
-			fejl_besked.CRC(32);
-			fejl_besked.message(5000);
-
-			for (size_t i = 0; i < temp.size(); i++)
-			{
-				_CRCok.push_back(temp[i]);
-			}
+			
 		}
 			
 		 

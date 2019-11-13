@@ -30,7 +30,7 @@ private:
 protected:
 	std::vector<int> sendToDecoder;
 
-	const int threshHold = 40000, threshHoldMultiple = 2.5;
+	const int threshHold = 40000, threshHoldMultiple = 2.0;
 
 
 	
