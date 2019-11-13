@@ -11,10 +11,12 @@ class Decoder : public SoundChunk
 public:
 	Decoder();
 	void setDTMFTone(int DTMF);
-	void intToBit();
+	std::vector<int> intToBit();
 	std::string bitToString();
 	std::vector<int> CRC(int); 
 
+
+	std::string besked;
 
 private:
 	std::vector<int> m_character;
@@ -25,6 +27,6 @@ private:
 
 	std::vector<int> _CRCok;
 	std::vector<int> vecForCRC;
-	std::string besked;
+	
 };
 

@@ -7,12 +7,21 @@
 #include <bitset>
 #include <iostream>
 
+
+int numPadding;
+
 Encoder::Encoder()
 {
 }
 
+void Encoder::setBit(int antalBit)
+{
+	m_antalBit = antalBit; 
+}
+
 void Encoder::slet() {
 	ud.clear();
+	opdeltBesked.clear();
 }
 
 std::vector<sf::Int16> Encoder::StrToBit(sf::String input)
@@ -45,6 +54,7 @@ std::vector<sf::Int16> Encoder::StrToBit(sf::String input)
 
 	}
 
+	std::cout << "Besked skrevet i bit: ";
 	for (size_t i = 0; i < _Encoded.size(); i++)			//Tjek til at se der sker det rigtige 
 	{
 		std::cout << _Encoded[i];
@@ -55,41 +65,70 @@ std::vector<sf::Int16> Encoder::StrToBit(sf::String input)
 }
 
 
-std::vector<sf::Int16> Encoder::CRC(int antal_bit)
-{
-	// Skal have lavet padding så det er ligegyldigt hvor mange karakter men vælger at skrive. 
 
+
+void Encoder::opdel()
+{
+	
 	int indSize = _Encoded.size();
 	int paddingCoeff = 0;
+	numPadding = 0;
 
-	while (indSize > (paddingCoeff * antal_bit))
-		paddingCoeff++;
-
-	int numPadding = paddingCoeff * antal_bit - indSize;
-
-	std::cout << "Antal nuller der puttes i som padding: " << numPadding << std::endl;
-
-
-	for (int i = 0; i < numPadding; i++)
+	if (_Encoded.size() < m_antalBit)
 	{
-		_Encoded.insert(_Encoded.begin(), 0);
+		while (indSize > (paddingCoeff * m_antalBit))
+			paddingCoeff++;
+
+		numPadding = paddingCoeff * m_antalBit - indSize;
+
+		for (int i = 0; i < numPadding; i++)
+		{
+			opdeltBesked.insert(opdeltBesked.begin(), 0);
+		}
 	}
 
+	for (int i = 0; i < m_antalBit - numPadding; i++)
+		opdeltBesked.push_back(_Encoded[i]);
 
 
-	int DataInsert = antal_bit + 8 - 1;					//32 + 8 - 1 = 39 
+	std::cout << "Den enkelte pakke der sendes uden CRC - tjek: ";
 
-	for (size_t k = 0; k < _Encoded.size(); k += antal_bit) //k=8
+	for (size_t i = 0; i < opdeltBesked.size(); i++)
+	{
+		std::cout << opdeltBesked[i];
+	}
+
+	std::cout << std::endl;
+}
+
+void Encoder::sletFrame()
+{
+	if (_Encoded.size() >= m_antalBit)
+	{
+		_Encoded.erase(_Encoded.begin(), _Encoded.begin() + m_antalBit);
+	}
+	else
+		_Encoded.clear();
+
+}
+	
+
+std::vector<sf::Int16> Encoder::CRC()
+{
+
+	int DataInsert = m_antalBit + 8 - 1;					//32 + 8 - 1 = 39 
+
+	for (size_t k = 0; k < opdeltBesked.size(); k += m_antalBit) //k=8
 	{
 
 		std::bitset<64> generator(0b0000000100000111);  // CRC_8 check generator polynomie 
 
-		std::bitset<64> data(0b0);						// Vektor til at lave udregninger på.
+		std::bitset<64> data(0b0);						// Vektor til at lave udregninger pÃ¥.
 
-		for (int i = 0; i < antal_bit; i++) //=8					// I dette loop indsættes data fra strengen ind i et bitset, så det senere kan manipuleres med. 
-		{												// Det er 8 da vi laver tjek på hver 8 bit. Samtidig lægges de 8 bit i en ny vektor. 
+		for (int i = 0; i < m_antalBit; i++) //=8					// I dette loop indsÃ¦ttes data fra strengen ind i et bitset, sÃ¥ det senere kan manipuleres med. 
+		{												// Det er 8 da vi laver tjek pÃ¥ hver 8 bit. Samtidig lÃ¦gges de 8 bit i en ny vektor. 
 
-			if (_Encoded[i + k] == 1)
+			if (opdeltBesked[i + k] == 1)
 			{
 				data.set(DataInsert - i, 1); //15
 				ud.push_back(1);
@@ -102,9 +141,9 @@ std::vector<sf::Int16> Encoder::CRC(int antal_bit)
 
 		}
 
-		std::cout << "Data: " << data << std::endl;
+		std::cout << "Det data bliver lavet CRC - tjek pÃ¥: " << data << std::endl;
 
-		for (int i = 0; i < antal_bit; i++) //8
+		for (int i = 0; i < m_antalBit; i++) //8
 		{
 			if (data[DataInsert - i] == 1)
 			{
@@ -132,7 +171,7 @@ std::vector<sf::Int16> Encoder::CRC(int antal_bit)
 	}
 
 	ud.erase(ud.begin(), ud.begin() + numPadding);
-	std::cout << "Binary streng der skal sendes: ";
+	std::cout << "Binary streng der skal laves protokol pÃ¥: ";
 	for (size_t i = 0; i < ud.size(); i++)
 	{
 		std::cout << ud[i];
@@ -140,149 +179,80 @@ std::vector<sf::Int16> Encoder::CRC(int antal_bit)
 
 	std::cout << std::endl << std::endl;
 
+	//Stop and wait protokol for encoder
+	std::vector <sf::Int16> Protokol;
 
-	
+	for (size_t i = 0; i < ud.size(); i += 8)
+	{
+		if ((ud[i] == 1) && (ud[i + 1] == 1) && (ud[i + 2] == 1) && (ud[i + 3] == 1) && (ud[i + 4] == 0) && (ud[i + 5] == 0) && (ud[i + 6] == 0) && (ud[i + 7] == 0))
+		{
+			//std::cout << "flag fundet";
+			Protokol.push_back(1);
+			Protokol.push_back(1);
+			Protokol.push_back(1);
+			Protokol.push_back(1);
+			Protokol.push_back(1);
+			Protokol.push_back(1);
+			Protokol.push_back(1);
+			Protokol.push_back(0);
+			Protokol.push_back(ud[i]);
+			Protokol.push_back(ud[i + 1]);
+			Protokol.push_back(ud[i + 2]);
+			Protokol.push_back(ud[i + 3]);
+			Protokol.push_back(ud[i + 4]);
+			Protokol.push_back(ud[i + 5]);
+			Protokol.push_back(ud[i + 6]);
+			Protokol.push_back(ud[i + 7]);
+		}
+		else if ((ud[i] == 1) && (ud[i + 1] == 1) && (ud[i + 2] == 1) && (ud[i + 3] == 1) && (ud[i + 4] == 1) && (ud[i + 5] == 1) && (ud[i + 6] == 1) && (ud[i + 7] == 0))
+		{
+			//std::cout << "ESC char fundet";
+			Protokol.push_back(1);
+			Protokol.push_back(1);
+			Protokol.push_back(1);
+			Protokol.push_back(1);
+			Protokol.push_back(1);
+			Protokol.push_back(1);
+			Protokol.push_back(1);
+			Protokol.push_back(0);
+			Protokol.push_back(ud[i]);
+			Protokol.push_back(ud[i + 1]);
+			Protokol.push_back(ud[i + 2]);
+			Protokol.push_back(ud[i + 3]);
+			Protokol.push_back(ud[i + 4]);
+			Protokol.push_back(ud[i + 5]);
+			Protokol.push_back(ud[i + 6]);
+			Protokol.push_back(ud[i + 7]);
+		}
+		else
+		{
+			Protokol.push_back(ud[i]);
+			Protokol.push_back(ud[i + 1]);
+			Protokol.push_back(ud[i + 2]);
+			Protokol.push_back(ud[i + 3]);
+			Protokol.push_back(ud[i + 4]);
+			Protokol.push_back(ud[i + 5]);
+			Protokol.push_back(ud[i + 6]);
+			Protokol.push_back(ud[i + 7]);
+		}
 
-	return ud;
+	}
+
+	for (size_t i = 0; i < Protokol.size(); i++)
+	{
+		std::cout << Protokol[i] << " ";
+	}
+
+
+	return Protokol;
+
+
+}
+int Encoder::getSize()
+{
+
+	return StrLenght;
+	  
 }
 
-//void Encoder::tjekDouble()
-//{
-//	bool temp1 = false;
-//	bool temp2 = false;
-//	bool temp3 = false;
-//	bool temp4 = false;
-//
-//	int count = 0; 
-//	int countAdd = 0;
-//	std::vector<int> tempD; 
-//
-//	std::cout << "Størrelse til start: " << ud.size() << std::endl; 
-//
-//	for (size_t i = 0; i < ud.size() - 4; i += 4)
-//	{
-//		temp1 = false;
-//		
-//		if ((ud[i] == ud[i + 4]) && ud[i + 1] == ud[i + 5] && ud[i + 2] == ud[i + 6] && ud[i + 3] == ud[i + 7])
-//			temp1 = true;
-//
-//		if (temp1  == true)
-//			count++;
-//	}
-//	std::cout << "count before: " << count << std::endl;
-//	count = 0; 
-//
-//	tempD.push_back(ud[0]);
-//	tempD.push_back(ud[1 + 1]);
-//	tempD.push_back(ud[2 + 2]);
-//	tempD.push_back(ud[3 + 3]);
-//
-//	for (size_t i = 0; i < ud.size() - 4; i+= 4)
-//	{
-//		
-//		if ((ud[i] == ud[i + 4]) && ud[i + 1] == ud[i + 5] && ud[i + 2] == ud[i + 6] && ud[i + 3] == ud[i + 7])
-//		{
-//
-//			if (ud[i] && ud[i + 1] && ud[i + 2] && ud[i + 3] == 1)
-//			{
-//				tempD.push_back(0);
-//				tempD.push_back(0);
-//				tempD.push_back(0);
-//				tempD.push_back(0);
-//
-//				tempD.push_back(ud[i + 4]);
-//				tempD.push_back(ud[i + 5]);
-//				tempD.push_back(ud[i + 6]);
-//				tempD.push_back(ud[i + 7]);
-//				countAdd++; 
-//				std::cout << "der er 8 1-tal" << std::endl;
-//			}
-//			else
-//			{
-//				tempD.push_back(1);
-//				tempD.push_back(1);
-//				tempD.push_back(1);
-//				tempD.push_back(1);
-//
-//				tempD.push_back(ud[i + 4]);
-//				tempD.push_back(ud[i + 5]);
-//				tempD.push_back(ud[i + 6]);
-//				tempD.push_back(ud[i + 7]);
-//			}
-//
-//			countAdd++;
-//
-//			std::cout << "der bliver tilføret 1111" << std::endl; 
-//		}
-//		else
-//		{
-//			tempD.push_back(ud[i + 4]);
-//			tempD.push_back(ud[i + 5]);
-//			tempD.push_back(ud[i + 6]);
-//			tempD.push_back(ud[i + 7]);
-//		}
-//
-//
-//
-//	}
-//
-//
-//	for (size_t i = 0; i < tempD.size() - 4; i += 4)
-//	{
-//		temp1 = false;
-//
-//		if ((tempD[i] == tempD[i + 4]) && tempD[i + 1] == tempD[i + 5] && tempD[i + 2] == tempD[i + 6] && tempD[i + 3] == tempD[i + 7])
-//			temp1 = true;
-//
-//		if (temp1 == true)
-//			count++;
-//	}	
-//
-//	
-//	std::cout << countAdd << std::endl;
-//	std::cout << count << std::endl; 
-//	//-------------------------------------------------------
-//
-//	std::vector<int> rigtige;
-//
-//
-//	rigtige.push_back(tempD[0]);
-//	rigtige.push_back(tempD[1]);
-//	rigtige.push_back(tempD[2]);
-//	rigtige.push_back(tempD[3]);
-//
-//
-//	for (size_t i = 0; i < tempD.size() - 8; i += 4)
-//	{
-//		temp1 = false;
-//
-//		if ((tempD[i] == tempD[i + 8]) && tempD[i + 1] == tempD[i + 9] && tempD[i + 2] == tempD[i + 10] && tempD[i + 3] == tempD[i + 11])
-//		{
-//			if (tempD[i + 4] && tempD[i + 5] && tempD[i + 6] && tempD[i + 7] == 1)
-//			{
-//				rigtige.push_back(tempD[8]);
-//				rigtige.push_back(tempD[9]);
-//				rigtige.push_back(tempD[10]);
-//				rigtige.push_back(tempD[11]);
-//			}
-//			if (tempD[i] && tempD[i + 2] && tempD[i + 3] && tempD[i + 4] == 1)
-//			{
-//				rigtige.push_back(tempD[8]);
-//				rigtige.push_back(tempD[9]);
-//				rigtige.push_back(tempD[10]);
-//				rigtige.push_back(tempD[11]);
-//			}
-//		}
-//		else
-//		{
-//			rigtige.push_back(tempD[5]);
-//			rigtige.push_back(tempD[6]);
-//			rigtige.push_back(tempD[7]);
-//			rigtige.push_back(tempD[8]);
-//		}
-//
-//	}
-//	std::cout << "Størrelse af rigtige: " << rigtige.size() << std::endl;
-//
-//}
 
