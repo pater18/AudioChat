@@ -69,24 +69,39 @@ void Decoder::setDTMFTone(int DTMF)
 
 void Decoder::intToBit()
 {
-
-	//std::cout << " Den er her " << std::endl; 
-	for (size_t i = 0; i < m_charVect.size(); i++)
+	if (m_charVect.size() < 7)
 	{
-		std::bitset<4> temp(m_charVect[i]);
-		std::cout << temp << std::endl;
-		vecForCRC.push_back(temp[3]);
-		vecForCRC.push_back(temp[2]);
-		vecForCRC.push_back(temp[1]);
-		vecForCRC.push_back(temp[0]);
+		for (size_t i = 0; i < m_charVect.size(); i++)
+		{
+			std::bitset<4> temp(m_charVect[i]);
+			std::cout << temp << std::endl;
+			vecForACK.push_back(temp[3]);
+			vecForACK.push_back(temp[2]);
+			vecForACK.push_back(temp[1]);
+			vecForACK.push_back(temp[0]);
+		}
+		
 	}
-	for (size_t i = 0; i < vecForCRC.size(); i++)
+	else
 	{
-		std::cout << vecForCRC[i];
-	}
+		for (size_t i = 0; i < m_charVect.size(); i++)
+		{
+			std::bitset<4> temp(m_charVect[i]);
+			std::cout << temp << std::endl;
+			vecForCRC.push_back(temp[3]);
+			vecForCRC.push_back(temp[2]);
+			vecForCRC.push_back(temp[1]);
+			vecForCRC.push_back(temp[0]);
+		}
 
-	std::cout << std::endl;
-	std::cout << vecForCRC.size() << std::endl;
+		for (size_t i = 0; i < vecForCRC.size(); i++)
+		{
+			std::cout << vecForCRC[i];
+		}
+
+		std::cout << std::endl;
+		std::cout << vecForCRC.size() << std::endl;
+	}
 }
 
 
