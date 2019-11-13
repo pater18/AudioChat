@@ -18,6 +18,7 @@ public:
 	void setReceivedMessageToFalse() { m_receivedMessage = false; };
 	void setReceivedMessageToTrue() { m_receivedMessage = true; };
 	std::string getBesked() { return besked; };
+	std::vector<int> getVecForACK() { return vecForACK; };
 
 private:
 	std::vector<int> m_character;

@@ -1,4 +1,5 @@
 #include "Protokol.h"
+#include "Decoder.h"
 
 #include <math.h>
 #include <vector>
@@ -36,6 +37,7 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 			{
 				duration = (std::clock() - startClockProt) / (double)CLOCKS_PER_SEC;
 					
+				
 				//{
 				//if ( != sekNR)
 				//{
