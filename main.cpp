@@ -68,7 +68,7 @@ int main()
 		CustomRecorder recorder;
 
 		recorder.start(10000);
-		std::this_thread::sleep_for(std::chrono::seconds(7));
+		std::this_thread::sleep_for(std::chrono::seconds(100));
 		recorder.stop();
 
 

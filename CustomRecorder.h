@@ -31,7 +31,7 @@ private:
 	int m_processingCycles = 0;
 
 	const int m_processingInterval = 30;
-	int sendingTime = 1;
+	int sendingTime = 5;
 
 	bool m_saveRecording = false;
 
