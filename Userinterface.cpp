@@ -221,11 +221,18 @@ void setUI() {
 					break;
 				}
 
+				if (event.key.code == sf::Keyboard::BackSpace)
+				{
+					test.erase(test.size() - 1, 1);
+					text.setString(test);
+
+					break;
+				}
 
 			case sf::Event::TextEntered:
 				if (event.type == sf::Event::TextEntered)
 				{
-					if (event.text.unicode < 128 && (event.text.unicode != 13))
+					if (event.text.unicode < 128 && (event.text.unicode != 13) && (event.text.unicode != 8))
 						test += (char)event.text.unicode;
 
 					widthOfText = text.getLocalBounds().width + 50;
