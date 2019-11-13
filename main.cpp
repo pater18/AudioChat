@@ -14,27 +14,70 @@
 #include <thread>
 #include <chrono>
 
+void goertzelTestFunction()
+{
+	customSound soundTest;
+
+	std::ofstream outputRecording;
+	outputRecording.open("Recording.txt");
+	std::vector<short> soundVect;
+
+	int samplingDivisor = 4;
+
+	for (std::size_t i = 0; i < 10000; i = i + samplingDivisor)
+	{
+		soundVect.push_back(soundTest.Sinewave(i, 697, 1633, 0.2));
+		outputRecording << soundVect[i / samplingDivisor] << std::endl;
+	}
+	std::cout << soundVect.size() << std::endl;
+	outputRecording.close();
+
+	SoundChunk soundChunk;
+	std::vector<float> goertzelResult;
+	goertzelResult = soundChunk.goertzelForTest(soundVect, 44100 / samplingDivisor);
+	for (std::size_t i = 0; i < goertzelResult.size(); i++)
+	{
+		std::cout << goertzelResult[i] << " ";
+	}
+
+}
+
 int main()
 {
 
-
-	sf::Event event;
-
-	//-----------------------------------------------------------------------------------------------------------------------
-	//Laver en besked der kan sendes
 	customSound koder;
-	koder.setBit(32);
-	koder.StrToBit("hej med d");
-	
-	
-	
-	koder.opdel();
-	koder.CRC();
-	koder.message(44100);					//Tager besked vektoren med 1 og 0 og l�gger det i en ny vektor, som kan l�ses af SFML. Hver tone bliver sendt i 1 sekund = 44100. 
-	koder.sletFrame();
-	koder.slet(); 
 
-	
+	koder.StrToBit("");
+	koder.message(44100*5);
+
+	sf::SoundBuffer buffer;
+	sf::Sound sound;
+
+
+	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
+	sound.setBuffer(buffer);
+	sound.play();
+
+	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+	sf::CircleShape shape(100.f);
+	shape.setFillColor(sf::Color::Green);
+
+	while (window.isOpen())
+	{
+		//goertzelTestFunction();
+		CustomRecorder recorder;
+
+		recorder.start(10000);
+		std::this_thread::sleep_for(std::chrono::seconds(100));
+		recorder.stop();
+
+
+		std::this_thread::sleep_for(std::chrono::seconds(100));
+
+		window.clear();
+		window.draw(shape);
+		window.display();
+	}
 
 	return 0;
 }

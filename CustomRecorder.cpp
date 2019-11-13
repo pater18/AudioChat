@@ -4,13 +4,8 @@ bool CustomRecorder::onStart()
 {
 	std::cout << "Recording started with " << this->getSampleRate() << " sampling freq" << std::endl;
 	setProcessingInterval(sf::milliseconds(m_processingInterval));
-	m_ringBuffer.resize(flag.size());
-	std::fill(m_ringBuffer.begin(), m_ringBuffer.end(), -1);
-	goertzel.open("GoertzelDataTone0.txt");
-	goertzel << "Hz697" << " " << "Hz770" << " ";
-	goertzel << "Hz852" << " " << "Hz941" << " ";
-	goertzel << "Hz1209" << " " << "Hz1336" << " ";
-	goertzel << "Hz1477" << " " << "Hz1633" << std::endl;
+	recording.open("Recording.txt");
+	recording << "Recording" << std::endl;
 	return true;
 }
 
@@ -23,23 +18,22 @@ bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t samp
 	//{
 	//	std::cout << goertzelResult[i] << " ";
 	//}
-
 	//std::cout << std::endl;
 	
 	m_curDTMF = currentSoundChunk.determineDTMF(goertzelResult);
 	int syncGoertzel = syncDTMF();
 	if (syncGoertzel != -1) {
 		m_decoder.setDTMFTone(syncGoertzel);
+		startNewRecordings(syncGoertzel);
 	}
 
-	if (m_processingCycles > 1000/m_processingInterval)
-		saveGoertzel(goertzelResult);
-		
-	if (m_saveRecording == true)
+
+	if (m_processingCycles > 1000 / m_processingInterval)
 	{
-		saveRecording(samples, sampleCount);
+		saveGoertzel(goertzelResult);
+		saveRecording(samples, sampleCount); 
 	}
-
+		
 	return true;
 }
 
@@ -47,13 +41,28 @@ void CustomRecorder::onStop()
 {
 	//If saveRecording - close
 	goertzel.close();
+	recording.close();
 	std::cout << std::endl << "Recording stopped" << std::endl;
+}
+
+void CustomRecorder::startNewRecordings(int dtmfTone)
+{
+	std::string fileNameGoertzel = "GoertzelData" + std::to_string(dtmfTone) + ".txt";
+	goertzel.close();
+	goertzel.open(fileNameGoertzel);
+	goertzel << "Hz697" << " " << "Hz770" << " ";
+	goertzel << "Hz852" << " " << "Hz941" << " ";
+	goertzel << "Hz1209" << " " << "Hz1336" << " ";
+	goertzel << "Hz1477" << " " << "Hz1633" << std::endl;
+
+	std::string fileNameRecording = "Recording" + std::to_string(dtmfTone) + ".txt";
+	recording.close();
+	recording.open(fileNameRecording);
+	recording << "Recording" << std::endl;
 }
 
 void CustomRecorder::saveRecording(const sf::Int16* samples, std::size_t sampleCount)
 {
-	std::ofstream recording;
-	recording.open("Recording.txt");
 	for (std::size_t i = 0; i < sampleCount; i++)
 		recording << samples[i] << std::endl;
 }
@@ -77,7 +86,7 @@ int CustomRecorder::syncDTMF()
 		if (m_secondDetection == true) 
 		{
 			duration = (std::clock() - startClock) / (double)CLOCKS_PER_SEC;
-			if (duration > 1)
+			if (duration > sendingTime)
 			{
 				startClock = std::clock();
 				return m_curDTMF;
@@ -93,17 +102,3 @@ int CustomRecorder::syncDTMF()
 	return -1;
 }
 
-void CustomRecorder::updateRingBuffer(int DTMFTone)
-{
-	if (m_ringBrufferPointer == flag.size())
-		m_ringBrufferPointer = 0;
-	m_ringBuffer.at(m_ringBrufferPointer) = DTMFTone;
-	m_ringBrufferPointer++;
-
-
-	for (std::size_t i = 0; i < m_ringBuffer.size(); i++)
-	{
-		std::cout << m_ringBuffer[i] << " ";
-	}
-	std::cout << std::endl;
-}
