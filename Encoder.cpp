@@ -67,6 +67,22 @@ std::vector<sf::Int16> Encoder::StrToBit(sf::String input)
 
 std::vector<sf::Int16> Encoder::CRC()
 {
+	int indSize = _Encoded.size();
+	int paddingCoeff = 0;
+
+	while (indSize > (paddingCoeff * m_antalBit))
+		paddingCoeff++;
+
+	int numPadding = paddingCoeff * m_antalBit - indSize;
+
+	std::cout << "Antal nuller der puttes i som padding: " << numPadding << std::endl;
+
+
+	for (int i = 0; i < numPadding; i++)
+	{
+		_Encoded.insert(_Encoded.begin(), 0);
+	}
+
 
 	int DataInsert = m_antalBit + 8 - 1;					//32 + 8 - 1 = 39 
 
