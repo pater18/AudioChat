@@ -11,9 +11,11 @@ void makeSound() {
 
 	customSound koder;
 	std::cout << test << std::endl;
+	koder.setBit(32);
 	koder.StrToBit(test);
 	koder.CRC();
 	koder.sendBuffer(koder.insertESC);
+	koder.slet();
 	Protokol testprot;
 	testprot.sendProtokol(koder.vecSendBuffer);
 //	koder.message(44100/4);
