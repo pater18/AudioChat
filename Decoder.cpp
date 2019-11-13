@@ -204,7 +204,8 @@ std::vector<int> Decoder::CRC(int antal_bit)
 			
 		 
 	}
-
+	vecForCRC.clear();
+	m_charVect.clear();
 	return _CRCok;
 }
 
@@ -228,7 +229,7 @@ std::string Decoder::bitToString()
 
 	}
 	
-	std::cout << besked << std::endl;
+	_CRCok.clear();
 	return besked;
 }
 
