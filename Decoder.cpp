@@ -168,7 +168,7 @@ std::vector<int> Decoder::CRC(int antal_bit)
 			customSound fejl_besked;
 			fejl_besked.StrToBit((char)fejl);
 			fejl_besked.CRC(32);
-			fejl_besked.message(5000);
+//			fejl_besked.message(5000);
 		}
 			
 		 

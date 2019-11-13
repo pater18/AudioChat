@@ -12,23 +12,48 @@ Protokol::Protokol()
 {
 }
 
-std::vector<sf::Int16> Protokol::sendProtokol(std::vector<std::vector<sf::Int16>> _sendBuffer)
+void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 {
+	customSound test1;
 
-	for (size_t i = 0; i < _sendBuffer.size(); i++)
+	sf::SoundBuffer buffertest;
+	sf::Sound soundtest;
+	size_t i = 0;
+
+	while ( i <= _sendBuffer.size())
 	{
-		if (i = 0)
-		{
-			//customSound::message()
+
+			test1.message(22050, _sendBuffer[i]);
+			buffertest.loadFromSamples(&test1._customSound[0], test1._customSound.size(), 1, 44100);
+			soundtest.setBuffer(buffertest);
+			soundtest.play();
+			
+			sf::sleep(sf::seconds(0.5*17));
+
+			//start timer
+			//while (timer != 0)
+
+			//{
+			//if (ackRecieved != sekNR)
+			//{
+			//	i++;
+			// break;
+			//}
+			//else if (timer == 1)
+			//{
+			//soundtest.play();
+			// timer restart;
+			//}
 
 
 
 
-		}
+			
+			
 	}
 
-	return std::vector<sf::Int16>();
 }
+
 
 
 

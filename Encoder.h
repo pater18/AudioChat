@@ -14,11 +14,13 @@ public:
 	std::vector<sf::Int16> insertESC;
 
 
+
+	std::vector<std::vector<sf::Int16> > vecSendBuffer;
 	
 private:
 	std::vector<sf::Int16> ud;
 
-	std::vector<std::vector<sf::Int16> > vecSendBuffer;
+
 protected:
 	std::vector<sf::Int16> _Encoded;
 
