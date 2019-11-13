@@ -52,11 +52,11 @@ void setUI() {
 	sf::RectangleShape rectangleSend(sf::Vector2f(100, 75));
 	rectangleSend.setFillColor(sf::Color(128, 128, 128));
 	rectangleSend.setPosition(850, 700);
-
+ 
 	sf::RectangleShape rectangleBesked(sf::Vector2f(100, 35));
 
 	sf::Font font;
-	font.loadFromFile("blue.ttf");
+	font.loadFromFile("ariblk.ttf");
 
 
 	sf::Text text;

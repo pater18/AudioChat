@@ -223,13 +223,13 @@ std::vector<std::vector<sf::Int16>> Encoder::sendBuffer(std::vector<sf::Int16> _
 	int sek1[8] = { 0,0,0,0,0,0,0,1 };
 	length = insertESC.size();
 
-	if (length % 40 == 0)
+	if (length % (m_antalBit + 8) == 0)
 	{
-		vecSendBuffer.resize(length / 40);
+		vecSendBuffer.resize(length / (m_antalBit + 8));
 	}
 	else
 	{
-		vecSendBuffer.resize((length / 40) + 1);
+		vecSendBuffer.resize((length / (m_antalBit + 8)) + 1);
 	}
 
 	for (size_t i = 0; i < vecSendBuffer.size(); i++)
@@ -238,7 +238,7 @@ std::vector<std::vector<sf::Int16>> Encoder::sendBuffer(std::vector<sf::Int16> _
 		{
 			vecSendBuffer[i].insert(vecSendBuffer[i].begin(), flag, flag+8);
 			vecSendBuffer[i].insert(vecSendBuffer[i].end(), sek0, sek0 + 8);
-			if (protoStart + 40 < insertESC.size())
+			if (protoStart + (m_antalBit + 8) < insertESC.size())
 			{
 				vecSendBuffer[i].insert(vecSendBuffer[i].end(), insertESC.begin() + protoStart, insertESC.begin() + protoSlut);
 			}
@@ -247,14 +247,14 @@ std::vector<std::vector<sf::Int16>> Encoder::sendBuffer(std::vector<sf::Int16> _
 				vecSendBuffer[i].insert(vecSendBuffer[i].end(), insertESC.begin() + protoStart, insertESC.end());
 			}
 			vecSendBuffer[i].insert(vecSendBuffer[i].end(), flag, flag + 8);
-			protoStart += 40;
-			protoSlut += 40;
+			protoStart += (m_antalBit + 8);
+			protoSlut += (m_antalBit + 8);
 		}
 		else
 		{
 			vecSendBuffer[i].insert(vecSendBuffer[i].begin(), flag, flag + 8);
 			vecSendBuffer[i].insert(vecSendBuffer[i].end(), sek1, sek1 + 8);
-			if (protoStart + 40 < insertESC.size())
+			if (protoStart + (m_antalBit + 8) < insertESC.size())
 			{
 				vecSendBuffer[i].insert(vecSendBuffer[i].end(), insertESC.begin() + protoStart, insertESC.begin() + protoSlut);
 			}
@@ -263,8 +263,8 @@ std::vector<std::vector<sf::Int16>> Encoder::sendBuffer(std::vector<sf::Int16> _
 				vecSendBuffer[i].insert(vecSendBuffer[i].end(), insertESC.begin() + protoStart, insertESC.end());
 			}
 			vecSendBuffer[i].insert(vecSendBuffer[i].end(), flag, flag + 8);
-			protoStart += 40;
-			protoSlut += 40;
+			protoStart += (m_antalBit + 8);
+			protoSlut += (m_antalBit + 8);
 
 		}
 	}
