@@ -27,23 +27,24 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 			buffertest.loadFromSamples(&test1._customSound[0], test1._customSound.size(), 1, 44100);
 			soundtest.setBuffer(buffertest);
 			soundtest.play();
-			
 			sf::sleep(sf::seconds(0.5*17));
 
-			//start timer
-			//while (timer != 0)
-
-			//{
-			//if (ackRecieved != sekNR)
-			//{
-			//	i++;
-			// break;
-			//}
-			//else if (timer == 1)
-			//{
-			//soundtest.play();
-			// timer restart;
-			//}
+			startClockProt = std::clock();
+			while (true)
+			{
+				duration = (std::clock() - startClockProt) / (double)CLOCKS_PER_SEC;
+				//{
+				//if (ackRecieved != sekNR)
+				//{
+				//	i++;
+				// break;
+				//}
+				if (duration > 4.5)
+				{
+					soundtest.play();
+					startClockProt = std::clock();
+				}
+			}
 
 
 

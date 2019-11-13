@@ -14,8 +14,11 @@ public:
 	std::vector<sf::Int16> ack;
 	void sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer);
 
-private:
 
+	std::clock_t startClockProt;
+
+private:
+	double duration;
 	std::vector<std::vector<sf::Int16> > sendBuffer;
 
 
