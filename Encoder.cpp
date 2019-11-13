@@ -138,7 +138,7 @@ std::vector<sf::Int16> Encoder::CRC(int antal_bit)
 		std::cout << ud[i];
 	}
 
-	std::cout << std::endl << std::endl;
+	std::cout << std::endl << "Størrelse på ud: " << ud.size() << std::endl;
 
 
 	//Stop and wait insertESC for encoder

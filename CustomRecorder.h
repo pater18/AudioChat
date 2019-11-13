@@ -15,6 +15,7 @@
 class CustomRecorder : public sf::SoundRecorder
 {
 public:
+	~CustomRecorder();
 	bool onStart();
 	bool onProcessSamples(const sf::Int16* samples, std::size_t sampleCount);
 	void onStop();
@@ -23,6 +24,8 @@ public:
 	void saveGoertzel(std::vector<float> goertzelData);
 	int syncDTMF();
 	void updateRingBuffer(int DTMFTone);
+	void setCurDTMF(int curDTMF) { m_curDTMF = curDTMF; };
+	Decoder& getDecoder() { return m_decoder; };
 
 	std::clock_t startClock;
 private:

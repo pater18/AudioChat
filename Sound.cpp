@@ -1,5 +1,6 @@
 #include "Sound.h"
 #include <math.h>
+#include "Encoder.h"
 
 
 
@@ -40,41 +41,13 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 	double faktor = tid * 0.02 ;
 	faktor = multipleEnd / faktor;
 
-	std::vector<int> toner{15,0};
+
 	std::vector <std::vector<int>> freq{ {697, 1209},{697, 1336},{697, 1477},{697, 1633},{ 770, 1209},{ 770, 1336},{ 770, 1477},{ 770, 1633},{852, 1209},{852, 1336},{852, 1477},{852, 1633}, {941, 1209},{941, 1336},{941, 1477},{941, 1633} };
 
 	int freq1, freq2;
 
-	//for (size_t i = 0; i < toner.size(); i++)
-	//{
-
-	//	freq1 = freq[toner[i]][0];
-	//	freq2 = freq[toner[i]][1];
 
 
-	//	for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	//	{
-	//		_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)));
-			
-			//if (i < (tid - (tid *0.98)))
-			//{
-			//	_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
-			//	multipleStart += faktor;
-			//}
-			//else if (i < (tid - (tid *0.02)) && i > (tid - (tid * 0.98)))
-			//{
-			//	_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-			//}
-			//else
-			//{
-			//	_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
-			//	multipleEnd -= faktor;
-			//}
-		//}
-
-	//	multipleEnd = 1;
-	//	multipleStart = 0;
-	//}
 
 
 	for (int i = 0; i < vecFraProt.size(); i += 4) // 0, 4, 8
@@ -89,6 +62,7 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 			}
 
 		}
+
 		if ((vecFraProt[i] == 0) && (vecFraProt[i + 1] == 0) && (vecFraProt[i + 2] == 0) && (vecFraProt[i + 3] == 1))			//Bit 0001 = 1
 		{
 			freq1 = 697;
@@ -99,6 +73,7 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 			}
 
 		}
+
 		if ((vecFraProt[i] == 0) && (vecFraProt[i + 1] == 0) && (vecFraProt[i + 2] == 1) && (vecFraProt[i + 3] == 0))			//Bit 0010 = 2
 		{
 			freq1 = 697;
@@ -108,6 +83,7 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
+
 		if ((vecFraProt[i] == 0) && (vecFraProt[i + 1] == 0) && (vecFraProt[i + 2] == 1) && (vecFraProt[i + 3] == 1))			//Bit 0011 = 3
 		{
 			freq1 = 697;
@@ -117,6 +93,7 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
+
 		if ((vecFraProt[i] == 0) && (vecFraProt[i + 1] == 1) && (vecFraProt[i + 2] == 0) && (vecFraProt[i + 3] == 0))			//Bit 0100 = 4
 		{
 			freq1 = 770;
@@ -126,6 +103,7 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
+
 		if ((vecFraProt[i] == 0) && (vecFraProt[i + 1] == 1) && (vecFraProt[i + 2] == 0) && (vecFraProt[i + 3] == 1))			//Bit 0101 = 5
 		{
 			freq1 = 770;
@@ -135,6 +113,7 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
+
 		if ((vecFraProt[i] == 0) && (vecFraProt[i + 1] == 1) && (vecFraProt[i + 2] == 1) && (vecFraProt[i + 3] == 0))			//Bit 0110 = 6
 		{
 			freq1 = 770;
@@ -144,6 +123,7 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
+
 		if ((vecFraProt[i] == 0) && (vecFraProt[i + 1] == 1) && (vecFraProt[i + 2] == 1) && (vecFraProt[i + 3] == 1))			//Bit = 7
 		{
 			freq1 = 770;
@@ -153,6 +133,7 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
+
 		if ((vecFraProt[i] == 1) && (vecFraProt[i + 1] == 0) && (vecFraProt[i + 2] == 0) && (vecFraProt[i + 3] == 0))			//Bit 1000 = 8
 		{
 			freq1 = 852;
@@ -162,6 +143,7 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
+
 		if ((vecFraProt[i] == 1) && (vecFraProt[i + 1] == 0) && (vecFraProt[i + 2] == 0) && (vecFraProt[i + 3] == 1))			//Bit = 9
 		{
 			freq1 = 852;
@@ -171,6 +153,7 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
+
 		if ((vecFraProt[i] == 1) && (vecFraProt[i + 1] == 0) && (vecFraProt[i + 2] == 1) && (vecFraProt[i + 3] == 0))			//Bit = 10
 		{
 			freq1 = 852;
@@ -180,6 +163,7 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
+
 		if ((vecFraProt[i] == 1) && vecFraProt[i + 1] == 0 && (vecFraProt[i + 2] == 1) && (vecFraProt[i + 3] == 1))			//Bit = 11
 		{
 			freq1 = 852;
@@ -189,6 +173,7 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
+
 		if ((vecFraProt[i] == 1) && (vecFraProt[i + 1] == 1) && (vecFraProt[i + 2] == 0) && (vecFraProt[i + 3] == 0))			//Bit = 12
 		{
 			freq1 = 941;
@@ -198,6 +183,7 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
+
 		if ((vecFraProt[i] == 1) && (vecFraProt[i + 1] == 1) && (vecFraProt[i + 2] == 0) && (vecFraProt[i + 3] == 1))			//Bit = 13
 		{
 			freq1 = 941;
@@ -207,6 +193,7 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
+
 		if ((vecFraProt[i] == 1) && (vecFraProt[i + 1] == 1) && (vecFraProt[i + 2] == 1) && (vecFraProt[i + 3] == 0))			//Bit = 14
 		{
 			freq1 = 941;
@@ -216,6 +203,7 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
+
 		if ((vecFraProt[i] == 1) && (vecFraProt[i + 1] == 1) && (vecFraProt[i + 2] == 1) && (vecFraProt[i + 3] == 1))			//Bit = 15
 		{
 			freq1 = 941;
@@ -228,33 +216,6 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 
 	}
 
-	//for (size_t i = 0; i < toner.size(); i++)
-	//{
-
-	//	freq1 = freq[toner[i]][0];
-	//	freq2 = freq[toner[i]][1];
-
-
-	//	for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
-	//	{
-	//		_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)));
-
-			/*if (i < (tid - (tid * 0.98)))
-			{
-				_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
-				multipleStart += faktor;
-			}
-			else if (i < (tid - (tid * 0.02)) && i >(tid - (tid * 0.98)))
-			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-			}
-			else
-			{
-				_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
-				multipleEnd -= faktor;
-			}*/
-		//}
-//	}
 
 
 

@@ -14,16 +14,22 @@ public:
 	void intToBit();
 	void bitToString();
 	std::vector<int> CRC(int); 
-
+	bool getReceivedMessage() { return m_receivedMessage; };
+	void setReceivedMessageToFalse() { m_receivedMessage = false; };
+	void setReceivedMessageToTrue() { m_receivedMessage = true; };
+	std::string getBesked() { return besked; };
 
 private:
 	std::vector<int> m_character;
-	std::vector<std::vector<int>> m_charVect;
+	std::vector<int> m_charVect;
 	const std::vector<int> flag = { 15,0 }, escChar = { 15,14 };
 	bool m_listening = true, m_lastEsc = false;
 
 	std::vector<int> _CRCok;
 	std::vector<int> vecForCRC;
 	std::string besked;
+
+	bool m_receivedMessage;
+	
 };
 

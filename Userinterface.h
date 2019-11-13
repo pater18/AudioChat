@@ -1,13 +1,10 @@
-#include <SFML/Audio.hpp>
+﻿#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
 #include "Encoder.h"
 #include "Sound.h"
 #include "CustomRecorder.h"
 #include "Decoder.h"
-#include "Protokol.h"
-#include "Userinterface.h"
-
 
 #include <vector>
 #include <iostream>
@@ -18,20 +15,6 @@
 #include <chrono>
 
 
-int main()
-{
+void makeSound();
 
-
-
-	setUI();
-
-
-	return 0;
-}
-
-
-
-
-
-
-
+void setUI();

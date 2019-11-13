@@ -19,7 +19,13 @@ std::vector<float> SoundChunk::goertzelAlgorithm(int samplingFreq)
 
 		float Q0 = 0, Q1 = 0, Q2 = 0;
 
-		for (std::size_t i = 0; i < m_sampleCount; i++)
+		if (m_sampleCount < 205)
+		{
+			std::cout << "Ikke nok samples! " << std::endl;
+			return result;
+		}
+
+		for (std::size_t i = 0; i < 205; i++)
 		{
 			Q0 = coeff * Q1 - Q2 + m_samples[i];
 			Q2 = Q1;

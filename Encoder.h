@@ -18,12 +18,11 @@ public:
 	std::vector<std::vector<sf::Int16> > vecSendBuffer;
 	
 private:
-	std::vector<sf::Int16> ud;
 
 
 protected:
 	std::vector<sf::Int16> _Encoded;
-
+	std::vector<sf::Int16> ud;
 	
 
 };
