@@ -4,12 +4,8 @@ bool CustomRecorder::onStart()
 {
 	std::cout << "Recording started with " << this->getSampleRate() << " sampling freq" << std::endl;
 	setProcessingInterval(sf::milliseconds(m_processingInterval));
-	goertzel.open("GoertzelData.txt");
 	recording.open("Recording.txt");
-	goertzel << "Hz697" << " " << "Hz770" << " ";
-	goertzel << "Hz852" << " " << "Hz941" << " ";
-	goertzel << "Hz1209" << " " << "Hz1336" << " ";
-	goertzel << "Hz1477" << " " << "Hz1633" << std::endl;
+	recording << "Recording" << std::endl;
 	return true;
 }
 
@@ -28,10 +24,11 @@ bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t samp
 	int syncGoertzel = syncDTMF();
 	if (syncGoertzel != -1) {
 		m_decoder.setDTMFTone(syncGoertzel);
+		//startNewRecordings(syncGoertzel);
 	}
 
 
-	if (m_processingCycles > 3000 / m_processingInterval)
+	if (m_processingCycles > 1000 / m_processingInterval)
 	{
 		saveGoertzel(goertzelResult);
 		saveRecording(samples, sampleCount); 
@@ -46,6 +43,22 @@ void CustomRecorder::onStop()
 	goertzel.close();
 	recording.close();
 	std::cout << std::endl << "Recording stopped" << std::endl;
+}
+
+void CustomRecorder::startNewRecordings(int dtmfTone)
+{
+	std::string fileNameGoertzel = "GoertzelData" + std::to_string(dtmfTone) + ".txt";
+	goertzel.close();
+	goertzel.open(fileNameGoertzel);
+	goertzel << "Hz697" << " " << "Hz770" << " ";
+	goertzel << "Hz852" << " " << "Hz941" << " ";
+	goertzel << "Hz1209" << " " << "Hz1336" << " ";
+	goertzel << "Hz1477" << " " << "Hz1633" << std::endl;
+
+	std::string fileNameRecording = "Recording" + std::to_string(dtmfTone) + ".txt";
+	recording.close();
+	recording.open(fileNameRecording);
+	recording << "Recording" << std::endl;
 }
 
 void CustomRecorder::saveRecording(const sf::Int16* samples, std::size_t sampleCount)
@@ -73,7 +86,7 @@ int CustomRecorder::syncDTMF()
 		if (m_secondDetection == true) 
 		{
 			duration = (std::clock() - startClock) / (double)CLOCKS_PER_SEC;
-			if (duration > 0.2)
+			if (duration > sendingTime)
 			{
 				startClock = std::clock();
 				return m_curDTMF;

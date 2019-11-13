@@ -2,9 +2,6 @@
 
 #define PI 3.14159265359
 
-SoundChunk::SoundChunk()
-{
-}
 
 std::vector<float> SoundChunk::goertzelAlgorithm(int samplingFreq)
 {

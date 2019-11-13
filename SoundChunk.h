@@ -13,7 +13,7 @@ class SoundChunk
 {
 public:
 
-	SoundChunk();
+	SoundChunk() { };
 	SoundChunk(const sf::Int16*  samples, std::size_t sampleCount)
 		: m_samples(samples), m_sampleCount(sampleCount) { };
 	std::vector<float> goertzelAlgorithm(int samplingFreq);
@@ -29,9 +29,6 @@ private:
 	std::size_t m_sampleCount;
 	const std::vector<int> m_dtmfFreq = { 697, 770, 852, 941, 1209, 1336, 1477, 1633 };
 	const std::vector< std::vector<int> > m_dtmfLookup {{0, 1, 2, 3},{ 4,5,6,7 }, { 8,9,10,11 }, { 12,13,14,15 }};
-	
-
-protected:
 	std::vector<int> sendToDecoder;
 
 	const int threshHold = 10000, threshHoldMultiple = 2;
