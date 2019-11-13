@@ -1,6 +1,7 @@
 #include "CustomRecorder.h"
 #include "Decoder.h"
 #include "Userinterface.h"
+#include "Protokol.h"
 
 sf::SoundBuffer buffer;
 sf::Sound sound;
@@ -10,13 +11,16 @@ void makeSound() {
 
 	customSound koder;
 	std::cout << test << std::endl;
-	koder.StrToBit("Hej med dig");
+	koder.StrToBit(test);
 	koder.CRC(32);
-	koder.message(44100/4);
-	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
-	sound.setBuffer(buffer);
-	sound.play();
-	koder.slet();
+	koder.sendBuffer(koder.insertESC);
+	Protokol testprot;
+	testprot.sendProtokol(koder.vecSendBuffer);
+//	koder.message(44100/4);
+//	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
+//	sound.setBuffer(buffer);
+//	sound.play();
+//	koder.slet();
 }
 
 

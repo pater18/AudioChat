@@ -19,6 +19,7 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 	sf::SoundBuffer buffertest;
 	sf::Sound soundtest;
 	size_t i = 0;
+	std::cout << _sendBuffer.size() << std::endl;
 
 	while ( i <= _sendBuffer.size())
 	{
@@ -33,7 +34,7 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 			startClockProt = std::clock();
 			while (true)
 			{
-				duration = (std::clock() - startClockProt) / (double)CLOCKS_PER_SEC >= 4.5;
+				duration = (std::clock() - startClockProt) / (double)CLOCKS_PER_SEC;
 				//{
 				//if ( != sekNR)
 				//{
@@ -44,7 +45,6 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 				{
 					soundtest.play();
 					startClockProt = std::clock();
-					sf::sleep(sf::seconds(0.2));
 					duration = (std::clock() - startClockProt) / (double)CLOCKS_PER_SEC;
 				}
 			}
