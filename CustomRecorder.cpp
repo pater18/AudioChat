@@ -82,7 +82,7 @@ int CustomRecorder::syncDTMF()
 		if (m_secondDetection == true) 
 		{
 			duration = (std::clock() - startClock) / (double)CLOCKS_PER_SEC;
-			if (duration > 0.530)
+			if (duration > 0.25)
 			{
 				startClock = std::clock();
 				return m_curDTMF;

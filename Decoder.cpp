@@ -107,7 +107,7 @@ std::vector<int> Decoder::CRC(int antal_bit)
 	{
 		indSize2 += 8;
 		tjek = indSize2 % (antal_bit + 8);
-		paddingCoeff2++;
+		paddingCoeff2++;						//1  2  
 	}
 
 	int numPadding2 = (paddingCoeff2) * 8;	

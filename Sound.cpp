@@ -55,7 +55,8 @@ std::vector<sf::Int16> customSound::message(int tid)
 
 		for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
 		{
-			
+			_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+			/*_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
 			if (i < (tid - (tid *0.98)))
 			{
 				_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
@@ -69,7 +70,7 @@ std::vector<sf::Int16> customSound::message(int tid)
 			{
 				_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
 				multipleEnd -= faktor;
-			}
+			}*/
 		}
 
 		multipleEnd = 1;
@@ -236,8 +237,8 @@ std::vector<sf::Int16> customSound::message(int tid)
 
 		for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
 		{
-
-			if (i < (tid - (tid * 0.98)))
+			_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5))* multipleStart);
+			/*if (i < (tid - (tid * 0.98)))
 			{
 				_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
 				multipleStart += faktor;
@@ -250,7 +251,7 @@ std::vector<sf::Int16> customSound::message(int tid)
 			{
 				_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
 				multipleEnd -= faktor;
-			}
+			}*/
 		}
 
 		multipleEnd = 1;
