@@ -253,6 +253,7 @@ void setUI() {
 		{
 			window.draw(obj);
 		}
+		//
 
 		window.draw(text);
 		window.draw(text2);
