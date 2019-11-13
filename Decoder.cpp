@@ -30,6 +30,7 @@ void Decoder::setDTMFTone(int DTMF)
 	{
 		if (m_listening)
 		{
+			m_receivedMessage = false;
 			if (m_character == flag)
 			{
 				std::cout << "START FLAG" << std::endl;
@@ -50,6 +51,7 @@ void Decoder::setDTMFTone(int DTMF)
 		{
 			std::cout << "SLUT FLAG" << std::endl;
 			m_listening = true;
+      
 			intToBit();
 			CRC(32);
 			bitToString();
@@ -68,30 +70,47 @@ void Decoder::setDTMFTone(int DTMF)
 
 std::vector<int> Decoder::intToBit()
 {
-
-
-	std::cout << " Den er her " << std::endl; 
-	for (size_t i = 0; i < m_charVect.size(); i++)
-
+	if (m_charVect.size() < 7)
 	{
-		std::bitset<4> temp(m_charVect[i]);
-		std::cout << temp << std::endl;
-		vecForCRC.push_back(temp[3]);
-		vecForCRC.push_back(temp[2]);
-		vecForCRC.push_back(temp[1]);
-		vecForCRC.push_back(temp[0]);
-	}
-	for (size_t i = 0; i < vecForCRC.size(); i++)
+		for (size_t i = 0; i < m_charVect.size(); i++)
+		{
+			std::bitset<4> temp(m_charVect[i]);
+			std::cout << temp << std::endl;
+			vecForACK.push_back(temp[3]);
+			vecForACK.push_back(temp[2]);
+			vecForACK.push_back(temp[1]);
+			vecForACK.push_back(temp[0]);
+		}
+  }
+	else
 	{
-		std::cout << vecForCRC[i];
-	}
+		for (size_t i = 0; i < m_charVect.size(); i++)
+		{
+			std::bitset<4> temp(m_charVect[i]);
+			std::cout << temp << std::endl;
+			vecForCRC.push_back(temp[3]);
+			vecForCRC.push_back(temp[2]);
+			vecForCRC.push_back(temp[1]);
+			vecForCRC.push_back(temp[0]);
+		}
 
-	return vecForCRC; 
+		for (size_t i = 0; i < vecForCRC.size(); i++)
+		{
+			std::cout << vecForCRC[i];
+		}
+
+		std::cout << std::endl;
+		std::cout << vecForCRC.size() << std::endl;
+    
+    return vecForCRC;
+  }
+ 
 }
 
 
 std::vector<int> Decoder::CRC(int antal_bit)
 {
+		
 
 
 	std::bitset<64> generator2(0b00100000111);
@@ -107,10 +126,10 @@ std::vector<int> Decoder::CRC(int antal_bit)
 	{
 		indSize2 += 8;
 		tjek = indSize2 % (antal_bit + 8);
-		paddingCoeff2++;
+		paddingCoeff2++;						//1  2  
 	}
 
-	int numPadding2 = paddingCoeff2 * 8;
+	int numPadding2 = (paddingCoeff2) * 8;	
 
 	std::cout << "Antal nuller der puttes i som padding2: " << numPadding2 << std::endl;
 
@@ -181,10 +200,6 @@ std::vector<int> Decoder::CRC(int antal_bit)
 		{
 			std::cout << "Der er fejl i beregningen til CRC tjek." << std::endl;
 			fejl++; 
-			customSound fejl_besked;
-			fejl_besked.StrToBit((char)fejl);
-			fejl_besked.CRC();
-			fejl_besked.message(5000);
 		}
 			
 		 

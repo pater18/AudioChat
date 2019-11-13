@@ -1,5 +1,10 @@
 #include "CustomRecorder.h"
 
+CustomRecorder::~CustomRecorder()
+{
+	this->stop();
+}
+
 bool CustomRecorder::onStart()
 {
 	std::cout << "Recording started with " << this->getSampleRate() << " sampling freq" << std::endl;
@@ -14,6 +19,7 @@ bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t samp
 	m_processingCycles++;
 	SoundChunk currentSoundChunk(samples, sampleCount);
 	std::vector<float> goertzelResult = currentSoundChunk.goertzelAlgorithm(this->getSampleRate());
+
 	//for (std::size_t i = 0; i < goertzelResult.size(); i++)
 	//{
 	//	std::cout << goertzelResult[i] << " ";
@@ -86,7 +92,8 @@ int CustomRecorder::syncDTMF()
 		if (m_secondDetection == true) 
 		{
 			duration = (std::clock() - startClock) / (double)CLOCKS_PER_SEC;
-			if (duration > sendingTime)
+
+ 			if (duration > sendingTime)
 			{
 				startClock = std::clock();
 				return m_curDTMF;

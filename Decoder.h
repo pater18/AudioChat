@@ -14,7 +14,11 @@ public:
 	std::vector<int> intToBit();
 	std::string bitToString();
 	std::vector<int> CRC(int); 
-
+	bool getReceivedMessage() { return m_receivedMessage; };
+	void setReceivedMessageToFalse() { m_receivedMessage = false; };
+	void setReceivedMessageToTrue() { m_receivedMessage = true; };
+	std::string getBesked() { return besked; };
+	std::vector<int> getVecForACK() { return vecForACK; };
 
 	std::string besked;
 
@@ -27,6 +31,10 @@ private:
 
 	std::vector<int> _CRCok;
 	std::vector<int> vecForCRC;
+	std::vector<int> vecForACK;
+	std::string besked;
+
+	bool m_receivedMessage;
 	
 };
 

@@ -17,7 +17,7 @@ std::vector<float> SoundChunk::goertzelAlgorithm(int samplingFreq)
 
 		if (m_sampleCount < 205)
 		{
-			std::cout << "FOR FÅ SAMPLES!";
+			std::cout << "Ikke nok samples! " << std::endl;
 			return result;
 		}
 		for (std::size_t i = 0; i < 205; i++)
@@ -121,7 +121,7 @@ std::vector<float> SoundChunk::goertzelForTest(std::vector<short> samples, int s
 
 		if (samples.size() < 205)
 		{
-			std::cout << "FOR FÅ SAMPLES!";
+			std::cout << "FOR FÃ… SAMPLES!";
 			return result;
 		}
 		for (std::size_t i = 0; i < 205; i++)

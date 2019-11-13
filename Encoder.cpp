@@ -170,89 +170,147 @@ std::vector<sf::Int16> Encoder::CRC()
 		std::cout << std::endl;
 	}
 
-	ud.erase(ud.begin(), ud.begin() + numPadding);
-	std::cout << "Binary streng der skal laves protokol på: ";
+	/*ud.erase(ud.begin(), ud.begin() + numPadding);*/
+	std::cout << "Binary streng der skal laves insertESC p�: ";
+  
 	for (size_t i = 0; i < ud.size(); i++)
 	{
 		std::cout << ud[i];
 	}
 
-	std::cout << std::endl << std::endl;
+	std::cout << std::endl << "St�rrelse p� ud: " << ud.size() << std::endl;
 
-	//Stop and wait protokol for encoder
-	std::vector <sf::Int16> Protokol;
-
+	//Stop and wait insertESC for encoder
 	for (size_t i = 0; i < ud.size(); i += 8)
 	{
 		if ((ud[i] == 1) && (ud[i + 1] == 1) && (ud[i + 2] == 1) && (ud[i + 3] == 1) && (ud[i + 4] == 0) && (ud[i + 5] == 0) && (ud[i + 6] == 0) && (ud[i + 7] == 0))
 		{
 			//std::cout << "flag fundet";
-			Protokol.push_back(1);
-			Protokol.push_back(1);
-			Protokol.push_back(1);
-			Protokol.push_back(1);
-			Protokol.push_back(1);
-			Protokol.push_back(1);
-			Protokol.push_back(1);
-			Protokol.push_back(0);
-			Protokol.push_back(ud[i]);
-			Protokol.push_back(ud[i + 1]);
-			Protokol.push_back(ud[i + 2]);
-			Protokol.push_back(ud[i + 3]);
-			Protokol.push_back(ud[i + 4]);
-			Protokol.push_back(ud[i + 5]);
-			Protokol.push_back(ud[i + 6]);
-			Protokol.push_back(ud[i + 7]);
+			insertESC.push_back(1);
+			insertESC.push_back(1);
+			insertESC.push_back(1);
+			insertESC.push_back(1);
+			insertESC.push_back(1);
+			insertESC.push_back(1);
+			insertESC.push_back(1);
+			insertESC.push_back(0);
+			insertESC.push_back(ud[i]);
+			insertESC.push_back(ud[i + 1]);
+			insertESC.push_back(ud[i + 2]);
+			insertESC.push_back(ud[i + 3]);
+			insertESC.push_back(ud[i + 4]);
+			insertESC.push_back(ud[i + 5]);
+			insertESC.push_back(ud[i + 6]);
+			insertESC.push_back(ud[i + 7]);
 		}
 		else if ((ud[i] == 1) && (ud[i + 1] == 1) && (ud[i + 2] == 1) && (ud[i + 3] == 1) && (ud[i + 4] == 1) && (ud[i + 5] == 1) && (ud[i + 6] == 1) && (ud[i + 7] == 0))
 		{
 			//std::cout << "ESC char fundet";
-			Protokol.push_back(1);
-			Protokol.push_back(1);
-			Protokol.push_back(1);
-			Protokol.push_back(1);
-			Protokol.push_back(1);
-			Protokol.push_back(1);
-			Protokol.push_back(1);
-			Protokol.push_back(0);
-			Protokol.push_back(ud[i]);
-			Protokol.push_back(ud[i + 1]);
-			Protokol.push_back(ud[i + 2]);
-			Protokol.push_back(ud[i + 3]);
-			Protokol.push_back(ud[i + 4]);
-			Protokol.push_back(ud[i + 5]);
-			Protokol.push_back(ud[i + 6]);
-			Protokol.push_back(ud[i + 7]);
+			insertESC.push_back(1);
+			insertESC.push_back(1);
+			insertESC.push_back(1);
+			insertESC.push_back(1);
+			insertESC.push_back(1);
+			insertESC.push_back(1);
+			insertESC.push_back(1);
+			insertESC.push_back(0);
+			insertESC.push_back(ud[i]);
+			insertESC.push_back(ud[i + 1]);
+			insertESC.push_back(ud[i + 2]);
+			insertESC.push_back(ud[i + 3]);
+			insertESC.push_back(ud[i + 4]);
+			insertESC.push_back(ud[i + 5]);
+			insertESC.push_back(ud[i + 6]);
+			insertESC.push_back(ud[i + 7]);
 		}
 		else
 		{
-			Protokol.push_back(ud[i]);
-			Protokol.push_back(ud[i + 1]);
-			Protokol.push_back(ud[i + 2]);
-			Protokol.push_back(ud[i + 3]);
-			Protokol.push_back(ud[i + 4]);
-			Protokol.push_back(ud[i + 5]);
-			Protokol.push_back(ud[i + 6]);
-			Protokol.push_back(ud[i + 7]);
+			insertESC.push_back(ud[i]);
+			insertESC.push_back(ud[i + 1]);
+			insertESC.push_back(ud[i + 2]);
+			insertESC.push_back(ud[i + 3]);
+			insertESC.push_back(ud[i + 4]);
+			insertESC.push_back(ud[i + 5]);
+			insertESC.push_back(ud[i + 6]);
+			insertESC.push_back(ud[i + 7]);
 		}
 
 	}
 
-	for (size_t i = 0; i < Protokol.size(); i++)
+	for (size_t i = 0; i < insertESC.size(); i++)
 	{
-		std::cout << Protokol[i] << " ";
+		std::cout << insertESC[i];
 	}
+	std::cout << std::endl;
 
 
-	return Protokol;
-
+	return insertESC;
 
 }
-int Encoder::getSize()
-{
 
-	return StrLenght;
-	  
+std::vector<std::vector<sf::Int16>> Encoder::sendBuffer(std::vector<sf::Int16> _CRC)
+{
+	int j = 0, protoStart = 0, protoSlut = 40, length = 0;
+	int flag[8] = { 1,1,1,1,0,0,0,0 };
+	int sek0[8] = { 0,0,0,0,0,0,0,0 };
+	int sek1[8] = { 0,0,0,0,0,0,0,1 };
+	length = insertESC.size();
+
+	if (length % 40 == 0)
+	{
+		vecSendBuffer.resize(length / 40);
+	}
+	else
+	{
+		vecSendBuffer.resize((length / 40) + 1);
+	}
+
+	for (size_t i = 0; i < vecSendBuffer.size(); i++)
+	{
+		if (i % 2 == 0)
+		{
+			vecSendBuffer[i].insert(vecSendBuffer[i].begin(), flag, flag+8);
+			vecSendBuffer[i].insert(vecSendBuffer[i].end(), sek0, sek0 + 8);
+			if (protoStart + 40 < insertESC.size())
+			{
+				vecSendBuffer[i].insert(vecSendBuffer[i].end(), insertESC.begin() + protoStart, insertESC.begin() + protoSlut);
+			}
+			else
+			{
+				vecSendBuffer[i].insert(vecSendBuffer[i].end(), insertESC.begin() + protoStart, insertESC.end());
+			}
+			vecSendBuffer[i].insert(vecSendBuffer[i].end(), flag, flag + 8);
+			protoStart += 40;
+			protoSlut += 40;
+		}
+		else
+		{
+			vecSendBuffer[i].insert(vecSendBuffer[i].begin(), flag, flag + 8);
+			vecSendBuffer[i].insert(vecSendBuffer[i].end(), sek1, sek1 + 8);
+			if (protoStart + 40 < insertESC.size())
+			{
+				vecSendBuffer[i].insert(vecSendBuffer[i].end(), insertESC.begin() + protoStart, insertESC.begin() + protoSlut);
+			}
+			else
+			{
+				vecSendBuffer[i].insert(vecSendBuffer[i].end(), insertESC.begin() + protoStart, insertESC.end());
+			}
+			vecSendBuffer[i].insert(vecSendBuffer[i].end(), flag, flag + 8);
+			protoStart += 40;
+			protoSlut += 40;
+
+		}
+	}
+	for (size_t i = 0; i < vecSendBuffer.size(); i++)
+	{
+		for (size_t j = 0; j < vecSendBuffer[i].size(); j++)
+		{
+			std::cout << vecSendBuffer[i][j];
+		}
+		std::cout << " ";
+
+	}
+	return vecSendBuffer;
 }
 
 
