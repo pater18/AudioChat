@@ -138,7 +138,6 @@ std::vector<sf::Int16> Encoder::CRC()
 		std::cout << std::endl;
 	}
 
-	/*ud.erase(ud.begin(), ud.begin() + numPadding);*/
 	std::cout << "Binary streng der skal laves insertESC p�: ";
   
 	for (size_t i = 0; i < ud.size(); i++)
