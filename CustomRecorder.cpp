@@ -19,6 +19,7 @@ bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t samp
 	//Timer timer("onProcessSamples");
 	m_processingCycles++;
 
+
 	std::vector<std::int16_t> samplesForProcessing;
 	if (sampleCount < 205)
 		return false;

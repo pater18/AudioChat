@@ -73,7 +73,7 @@ int SoundChunk::determineDtmfTwo(std::vector<float> freqComponents)
 			return -1;
 	}
 
-	std::cout << posLower << " " << posHigher << std::endl;
+	//std::cout << posLower << " " << posHigher << std::endl;
 	//std::cout << higherTones.size() << std::endl;
 
 	return m_dtmfLookup[posLower][posHigher];
