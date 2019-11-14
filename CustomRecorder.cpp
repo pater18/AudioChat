@@ -17,7 +17,15 @@ bool CustomRecorder::onStart()
 bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t sampleCount)
 {
 	m_processingCycles++;
-	SoundChunk currentSoundChunk(samples, sampleCount);
+
+	std::vector<std::int16_t> samplesForProcessing;
+	if (sampleCount < 205)
+		return false;
+	for (std::size_t i = 0; i < 205; i++)
+		samplesForProcessing.push_back(samples[i]);
+
+	SoundChunk currentSoundChunk(samplesForProcessing, samplesForProcessing.size());
+	currentSoundChunk.hanningWindow();
 	std::vector<float> goertzelResult = currentSoundChunk.goertzelAlgorithm(this->getSampleRate());
 
 	//for (std::size_t i = 0; i < goertzelResult.size(); i++)
@@ -37,7 +45,7 @@ bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t samp
 	if (m_processingCycles > 1000 / m_processingInterval)
 	{
 		saveGoertzel(goertzelResult);
-		saveRecording(samples, sampleCount); 
+		//saveRecording(samples, sampleCount); 
 	}
 		
 	return true;

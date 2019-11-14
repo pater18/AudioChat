@@ -2,6 +2,11 @@
 
 #define PI 3.14159265359
 
+void SoundChunk::hanningWindow()
+{
+	for (std::size_t i = 0; i < m_sampleCount; i++)
+		m_samples[i] = m_samples[i] * ( 0.5 * (1 - std::cos((2 * PI * i) / (m_sampleCount - 1)))) + 0.5;
+}
 
 std::vector<float> SoundChunk::goertzelAlgorithm(int samplingFreq)
 {
@@ -15,12 +20,7 @@ std::vector<float> SoundChunk::goertzelAlgorithm(int samplingFreq)
 
 		float Q0 = 0, Q1 = 0, Q2 = 0;
 
-		if (m_sampleCount < 205)
-		{
-			std::cout << "Ikke nok samples! " << std::endl;
-			return result;
-		}
-		for (std::size_t i = 0; i < 205; i++)
+		for (std::size_t i = 0; i < m_sampleCount; i++)
 		{
 			Q0 = coeff * Q1 - Q2 + m_samples[i];
 			Q2 = Q1;
@@ -94,7 +94,7 @@ int SoundChunk::determineDTMF(std::vector<float> freqComponents)
 	if (pos2 > 3)
 		pos2 = pos2 - 4;
 
-	sendToDecoder.push_back(m_dtmfLookup[pos1][pos2]);
+	//sendToDecoder.push_back(m_dtmfLookup[pos1][pos2]);
 
 	return m_dtmfLookup[pos1][pos2];
 	//std::sort(vect.begin(), vect.end(), sortinrev);
