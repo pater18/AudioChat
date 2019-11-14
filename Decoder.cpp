@@ -55,7 +55,6 @@ void Decoder::setDTMFTone(int DTMF)
 		{
 			std::cout << "SLUT FLAG" << std::endl;
 			m_listening = true;
-      
 			intToBit();
 			CRC(32);
 			bitToString();

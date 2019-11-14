@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Audio.hpp>
+#include "Timer.h"
 
 #include <iostream>
 #include <vector>

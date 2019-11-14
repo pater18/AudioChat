@@ -2,6 +2,7 @@
 #include "Decoder.h"
 #include "Userinterface.h"
 #include "Protokol.h"
+#include "Timer.h"
 
 sf::SoundBuffer buffer;
 sf::Sound sound;
