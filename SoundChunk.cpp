@@ -38,6 +38,47 @@ std::vector<float> SoundChunk::goertzelAlgorithm(int samplingFreq)
 
 }
 
+int SoundChunk::determineDtmfTwo(std::vector<float> freqComponents)
+{
+	std::vector<float> lowerTones(freqComponents.begin(), freqComponents.begin() + 4);
+	std::vector<float> higherTones(freqComponents.begin() + 4, freqComponents.end());
+
+	float maxLower = *max_element(lowerTones.begin(), lowerTones.end());
+	float maxHigher = *max_element(higherTones.begin(), higherTones.end());
+
+	if (maxLower < threshHold || maxHigher < threshHold)
+		return -1;
+
+	int posLower = -1;
+	for (std::size_t i = 0; i < lowerTones.size(); i++)
+	{
+		if (maxLower == lowerTones[i])
+		{
+			posLower = i;
+			continue;
+		}
+		if (maxLower < lowerTones[i] * threshHoldMultiple)
+			return -1;
+	}
+
+	int posHigher = -1;
+	for (std::size_t i = 0; i < higherTones.size(); i++)
+	{
+		if (maxHigher == higherTones[i])
+		{
+			posHigher = i;
+			continue;
+		}
+		if (maxHigher < higherTones[i] * threshHoldMultiple)
+			return -1;
+	}
+
+	std::cout << posLower << " " << posHigher << std::endl;
+	//std::cout << higherTones.size() << std::endl;
+
+	return m_dtmfLookup[posLower][posHigher];
+}
+
 
 int SoundChunk::determineDTMF(std::vector<float> freqComponents)
 {

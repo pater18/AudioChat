@@ -7,6 +7,7 @@
 #include "Decoder.h"
 #include "Protokol.h"
 #include "Userinterface.h"
+#include "Timer.h"
 
 
 #include <vector>

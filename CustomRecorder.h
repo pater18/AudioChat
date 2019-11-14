@@ -2,6 +2,7 @@
 #include <SFML/Audio.hpp>
 #include "SoundChunk.h"
 #include "Decoder.h"
+#include "Timer.h"
 
 #include <thread>
 #include <chrono>

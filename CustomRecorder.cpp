@@ -16,6 +16,7 @@ bool CustomRecorder::onStart()
 
 bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t sampleCount)
 {
+	//Timer timer("onProcessSamples");
 	m_processingCycles++;
 
 	std::vector<std::int16_t> samplesForProcessing;
@@ -34,11 +35,11 @@ bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t samp
 	//}
 	//std::cout << std::endl;
 	
-	m_curDTMF = currentSoundChunk.determineDTMF(goertzelResult);
+	m_curDTMF = currentSoundChunk.determineDtmfTwo(goertzelResult);
 	int syncGoertzel = syncDTMF();
 	if (syncGoertzel != -1) {
 		m_decoder.setDTMFTone(syncGoertzel);
-		startNewRecordings(syncGoertzel);
+		//startNewRecordings(syncGoertzel);
 	}
 
 
@@ -53,7 +54,7 @@ bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t samp
 
 void CustomRecorder::onStop()
 {
-	//If saveRecording - close
+
 	goertzel.close();
 	recording.close();
 	std::cout << std::endl << "Recording stopped" << std::endl;
@@ -69,10 +70,10 @@ void CustomRecorder::startNewRecordings(int dtmfTone)
 	goertzel << "Hz1209" << " " << "Hz1336" << " ";
 	goertzel << "Hz1477" << " " << "Hz1633" << std::endl;
 
-	std::string fileNameRecording = "Recording" + std::to_string(dtmfTone) + ".txt";
-	recording.close();
-	recording.open(fileNameRecording);
-	recording << "Recording" << std::endl;
+	//std::string fileNameRecording = "Recording" + std::to_string(dtmfTone) + ".txt";
+	//recording.close();
+	//recording.open(fileNameRecording);
+	//recording << "Recording" << std::endl;
 }
 
 void CustomRecorder::saveRecording(const sf::Int16* samples, std::size_t sampleCount)
