@@ -6,6 +6,7 @@
 sf::SoundBuffer buffer;
 sf::Sound sound;
 std::string test;
+Protokol testprot;
 
 void makeSound() {
 
@@ -16,7 +17,6 @@ void makeSound() {
 	koder.CRC();
 	koder.sendBuffer(koder.insertESC);
 	koder.slet();
-	Protokol testprot;
 	testprot.sendProtokol(koder.vecSendBuffer);
 //	koder.message(44100/4);
 //	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
@@ -25,6 +25,16 @@ void makeSound() {
 //	koder.slet();
 }
 
+void makeSoundAck(std::vector<sf::Int16> _vecForAck) {
+	customSound koder;
+	std::cout << test << std::endl;
+	koder.setBit(32);
+	koder.message(44100/4, _vecForAck);
+	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
+	sound.setBuffer(buffer);
+	sound.play();
+	koder.slet();
+}
 
 void setUI() {
 
@@ -56,7 +66,7 @@ void setUI() {
 	sf::RectangleShape rectangleBesked(sf::Vector2f(100, 35));
 
 	sf::Font font;
-	font.loadFromFile("ariblk.ttf");
+	font.loadFromFile("blue.ttf");
 
 
 	sf::Text text;
@@ -84,6 +94,8 @@ void setUI() {
 	newline.setCharacterSize(24);
 	newline.setString("\n");
 
+	
+
 	recorder.start(10000);
 
 	while (window.isOpen())
@@ -93,10 +105,18 @@ void setUI() {
 			recorder.stop();
 			// receiver delen
 			receive = recorder.getDecoder().getBesked();
+
+
+			std::vector<sf::Int16> sendAck = testprot.modtagetProtokol(recorder.getDecoder().getVecAck());
+
+
+			makeSoundAck(sendAck);
+
 			std::cout << receive << std::endl;
 			text2.setString(receive);
 			widthOfReceive = text2.getLocalBounds().width;
 			text2.setPosition(1000 - widthOfReceive - 50, 710 - moveText);
+			
 
 
 			// move sendte tekst
@@ -164,6 +184,8 @@ void setUI() {
 				{
 					recorder.stop();
 					makeSound();
+
+					
 
 					while (sound.getStatus() != 0)
 					{

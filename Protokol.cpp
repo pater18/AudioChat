@@ -1,5 +1,6 @@
 #include "Protokol.h"
 #include "Decoder.h"
+#include "CustomRecorder.h"
 
 #include <math.h>
 #include <vector>
@@ -15,6 +16,9 @@ Protokol::Protokol()
 
 void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 {
+	CustomRecorder protRecorder;
+
+	
 	customSound test1;
 
 	sf::SoundBuffer buffertest;
@@ -33,17 +37,27 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 			test1.slet();
 
 			startClockProt = std::clock();
+			protRecorder.start(10000);
 			while (true)
 			{
 				duration = (std::clock() - startClockProt) / (double)CLOCKS_PER_SEC;
-					
+				if (protRecorder.getDecoder().getReceivedMessage())
+				{
+					protRecorder.stop();
+					if (getSekNRSend(protRecorder.getDecoder().getVecAck()) == getSekNRSend(sendBuffer[i]))
+					{
+						soundtest.play();
+						startClockProt = std::clock();
+						duration = (std::clock() - startClockProt) / (double)CLOCKS_PER_SEC;
+						protRecorder.start(10000);
+					}
+					else 
+					{
+						i++;
+					}
+				}
 				
-				//{
-				//if ( != sekNR)
-				//{
-				//	i++;
-				// break;
-				//}
+	
 				if (duration > 4.5)
 				{
 					soundtest.play();
@@ -61,6 +75,25 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 
 }
 
+std::vector<sf::Int16> Protokol::getSekNR(std::vector<sf::Int16> _sekNR)
+{
+	std::vector<sf::Int16> returnSekNR;
+	for (int i = 0; i < 8; i++) {
+		returnSekNR.push_back(_sekNR[i]);
+	}
+
+	return returnSekNR;
+}
+std::vector<sf::Int16> Protokol::getSekNRSend(std::vector<sf::Int16> _sekNRSend)
+{
+	std::vector<sf::Int16> returnSekNRSend;
+	for (int i = 8; i < 16; i++) {
+		returnSekNRSend.push_back(_sekNRSend[i]);
+	}
+
+	return returnSekNRSend;
+}
+
 
 
 
@@ -68,8 +101,9 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 std::vector<sf::Int16> Protokol::modtagetProtokol(std::vector<sf::Int16> modtaget)
 {
 	int startFlag[8] = { 1,1,1,1,0,0,0,0 };
-
-	if ((modtaget[8] == 0) && (modtaget[9] == 0) && (modtaget[10] == 0) && (modtaget[11] == 0) && (modtaget[12] == 0) && (modtaget[13] == 0) && (modtaget[14] == 0) && (modtaget[15] == 0))
+	std::vector<sf::Int16> sekNR0 = { 0,0,0,0,0,0,0,0 };
+	std::vector<sf::Int16> sekNR1 = { 0,0,0,0,0,0,0,1 };
+	if (getSekNR(modtaget) == sekNR0)
 	{
 
 		ack.insert(ack.begin(), startFlag, startFlag + 8);
@@ -85,7 +119,7 @@ std::vector<sf::Int16> Protokol::modtagetProtokol(std::vector<sf::Int16> modtage
 	ack.insert(ack.end(), startFlag, startFlag + 8);
 	//Lav ack om til lyd og send til encoder
 }
-else if ((modtaget[8] == 0) && (modtaget[9] == 0) && (modtaget[10] == 0) && (modtaget[11] == 0) && (modtaget[12] == 0) && (modtaget[13] == 0) && (modtaget[14] == 0) && (modtaget[15] == 1))
+else if (getSekNR(modtaget) == sekNR1)
 {
 		ack.insert(ack.begin(), startFlag, startFlag + 8);
 	//Så send x til transmitter
