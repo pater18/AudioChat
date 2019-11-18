@@ -19,14 +19,16 @@
 #include <chrono>
 
 
+
+
 int main()
 {
-	/*CustomRecorder record;
-	record.start(10000);
-	std::this_thread::sleep_for(std::chrono::milliseconds(20000));
-	record.stop();*/
+	CustomRecorder record;
+	record.start(12000);
+	std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+	record.stop();
 
-	customSound lyd;
+	/*customSound lyd;
 
 	sf::Sound sound;
 	sf::SoundBuffer buffer;
@@ -35,15 +37,11 @@ int main()
 	std::vector<sf::Int16> lyde = lyd.testAfLyd(44100, toner);
 
 
-	
-
-
-
 	buffer.loadFromSamples(&lyde[0], lyde.size(), 1, 44100);
 	sound.setBuffer(buffer);
 	sound.play();
 
-	std::this_thread::sleep_for(std::chrono::milliseconds(20000));
+	std::this_thread::sleep_for(std::chrono::milliseconds(20000));*/
 	
 	//setUI();
 

@@ -28,8 +28,8 @@ bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t samp
 		SoundChunk currentSoundChunk(samplesForProcessing, samplesForProcessing.size());
 		currentSoundChunk.hanningWindow();
 		std::vector<float> goertzelResult = currentSoundChunk.goertzelAlgorithm(this->getSampleRate());
-		if (m_startSavingGoertzel == true)
-			m_goertzelDataMatrix.push_back(goertzelResult);
+		/*if (m_startSavingGoertzel == true)*/
+		m_goertzelDataMatrix.push_back(goertzelResult);
 
 		m_curDTMF = currentSoundChunk.determineDtmfTwo(goertzelResult);
 		int syncGoertzel = syncDTMF();
@@ -46,6 +46,8 @@ bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t samp
 			//saveRecording(samples, sampleCount); 
 		}
 	}
+	else
+		std::cout << "Ikke samples nok" << std::endl; 
 
 	return true;
 }
@@ -82,6 +84,9 @@ int CustomRecorder::syncDTMF()
 {
 	if (m_curDTMF == -1)
 		return -1;
+	
+		
+
 	if (m_curDTMF == m_lastDTMF)
 	{
 		if (m_secondDetection == true) 

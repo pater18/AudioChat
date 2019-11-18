@@ -13,7 +13,8 @@ std::vector<float> SoundChunk::goertzelAlgorithm(int samplingFreq)
 	std::vector<float> result;
 	for (std::size_t j = 0; j < m_dtmfFreq.size(); j++)
 	{
-		int k = (0.5 + ((m_sampleCount * m_dtmfFreq[j])) / samplingFreq);
+		float floatk = (((m_sampleCount * m_dtmfFreq[j])) / samplingFreq) + 0.5;
+		int k = (int)floatk; 
 		float w = ((2 * PI) / m_sampleCount) * k;
 		float cosw = std::cos(w);
 		float coeff = 2 * cosw;
