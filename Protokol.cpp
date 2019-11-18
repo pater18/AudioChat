@@ -44,7 +44,7 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 				if (protRecorder.getDecoder().getReceivedMessage())
 				{
 					protRecorder.stop();
-					if (getSekNR(protRecorder.getDecoder().getVecAck()) == getSekNR(sendBuffer[i]))
+					if (getSekNRSend(protRecorder.getDecoder().getVecAck()) == getSekNRSend(sendBuffer[i]))
 					{
 						soundtest.play();
 						startClockProt = std::clock();
@@ -78,11 +78,20 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 std::vector<sf::Int16> Protokol::getSekNR(std::vector<sf::Int16> _sekNR)
 {
 	std::vector<sf::Int16> returnSekNR;
-	for (int i = 8; i < 16; i++) {
+	for (int i = 0; i < 8; i++) {
 		returnSekNR.push_back(_sekNR[i]);
 	}
 
 	return returnSekNR;
+}
+std::vector<sf::Int16> Protokol::getSekNRSend(std::vector<sf::Int16> _sekNRSend)
+{
+	std::vector<sf::Int16> returnSekNRSend;
+	for (int i = 8; i < 16; i++) {
+		returnSekNRSend.push_back(_sekNRSend[i]);
+	}
+
+	return returnSekNRSend;
 }
 
 

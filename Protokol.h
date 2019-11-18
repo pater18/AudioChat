@@ -14,6 +14,7 @@ public:
 
 	void sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer);
 	std::vector<sf::Int16> getSekNR(std::vector<sf::Int16> _sekNR);
+	std::vector<sf::Int16> getSekNRSend(std::vector<sf::Int16> _sekNRSend);
 
 
 	std::clock_t startClockProt;
