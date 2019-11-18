@@ -94,6 +94,8 @@ void setUI() {
 	newline.setCharacterSize(24);
 	newline.setString("\n");
 
+	
+
 	recorder.start(10000);
 
 	while (window.isOpen())
@@ -108,15 +110,7 @@ void setUI() {
 			std::vector<sf::Int16> sendAck = testprot.modtagetProtokol(recorder.getDecoder().getVecAck());
 
 
-
-			for (size_t i = 0; i < sendAck.size(); i++)
-			{
-				std::cout << sendAck[i] << " ";
-			}
-
-			std::cout << std::endl; 
-
-			//makeSoundAck(sendAck);
+			makeSoundAck(sendAck);
 
 			std::cout << receive << std::endl;
 			text2.setString(receive);
@@ -190,6 +184,8 @@ void setUI() {
 				{
 					recorder.stop();
 					makeSound();
+
+					
 
 					while (sound.getStatus() != 0)
 					{

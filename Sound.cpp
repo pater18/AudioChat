@@ -44,7 +44,7 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 
 	for (int i = 0; i < vecFraProt.size(); i += 4) // 0, 4, 8
 	{
-		if (((vecFraProt[i] == 0)) && (vecFraProt[i + 1] == 0) && (vecFraProt[i + 2]) == 0 && (vecFraProt[i + 3] == 0))				//Bit 0000 = 0
+		if ((vecFraProt[i] == 0) && (vecFraProt[i + 1] == 0) && (vecFraProt[i + 2] == 0) && (vecFraProt[i + 3] == 0))			//Bit 0000 = 0
 		{
 			freq1 = 697;
 			freq2 = 1209;
