@@ -223,8 +223,11 @@ void setUI() {
 
 				if (event.key.code == sf::Keyboard::BackSpace)
 				{
-					test.erase(test.size() - 1, 1);
-					text.setString(test);
+					if (test.size() > 0)
+					{
+						test.erase(test.size() - 1, 1);
+						text.setString(test);
+					}
 
 					break;
 				}
