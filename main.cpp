@@ -48,7 +48,7 @@ int main()
 	customSound koder;
 
 	koder.StrToBit("");
-	koder.message(44100*5);
+	koder.message(44100/4);
 
 	sf::SoundBuffer buffer;
 	sf::Sound sound;

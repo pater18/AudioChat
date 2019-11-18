@@ -35,13 +35,9 @@ short customSound::Sinewave(double time, double freq1, double freq2, double amp)
 std::vector<sf::Int16> customSound::message(int tid)
 {
 
-	int count = 0;
-	double multipleEnd = 1, multipleStart = 0;
-	double faktor = tid * 0.02 ;
-	faktor = multipleEnd / faktor;
 
 
-	std::vector<int> toner{ 15, 0 };
+	std::vector<int> toner{ 15, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 15, 0 };
 	std::vector <std::vector<int>> freq{ {697, 1209},{697, 1336},{697, 1477},{697, 1633},{ 770, 1209},{ 770, 1336},{ 770, 1477},{ 770, 1633},{852, 1209},{852, 1336},{852, 1477},{852, 1633}, {941, 1209},{941, 1336},{941, 1477},{941, 1633} };
 
 	int freq1, freq2;
@@ -55,25 +51,11 @@ std::vector<sf::Int16> customSound::message(int tid)
 
 		for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
 		{
-			_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
-			/*if (i < (tid - (tid *0.98)))
-			{
-				_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
-				multipleStart += faktor;
-			}
-			else if (i < (tid - (tid *0.02)) && i > (tid - (tid * 0.98)))
-			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-			}
-			else
-			{
-				_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
-				multipleEnd -= faktor;
-			}*/
+			_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+			
 		}
 
-		multipleEnd = 1;
-		multipleStart = 0;
+		
 	}
 
 
@@ -238,25 +220,11 @@ std::vector<sf::Int16> customSound::message(int tid)
 
 		for (int i = 1; i < tid; i++)			// 44100 giver lyden i 1 sekund
 		{
-			_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
-			/*if (i < (tid - (tid *0.98)))
-			{
-				_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
-				multipleStart += faktor;
-			}
-			else if (i < (tid - (tid *0.02)) && i > (tid - (tid * 0.98)))
-			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
-			}
-			else
-			{
-				_customSound.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
-				multipleEnd -= faktor;
-			}*/
+			_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+		
 		}
 
-		multipleEnd = 1;
-		multipleStart = 0;
+		
 	}
 
 	return _customSound;
