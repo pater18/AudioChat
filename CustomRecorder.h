@@ -20,10 +20,8 @@ public:
 	bool onStart();
 	bool onProcessSamples(const sf::Int16* samples, std::size_t sampleCount);
 	void onStop();
-	void setSaveRecording() { m_saveRecording = true;  };
-	void startNewRecordings(int dtmfTone);
-	void saveRecording(const sf::Int16* samples, std::size_t sampleCount);
-	void saveGoertzel(std::vector<float> goertzelData);
+
+	void saveGoertzelMatrixToFile();
 	int syncDTMF();
 
 	Decoder& getDecoder() { return m_decoder; };
@@ -37,15 +35,12 @@ private:
 	const int m_processingInterval = 30;
 	int sendingTime = 1;
 
-	bool m_saveRecording = false;
+	std::vector<std::vector <float> > m_goertzelDataMatrix;
 
 	int m_lastDTMF = -1, m_curDTMF = -1;
 	double duration;
 	bool m_secondDetection = false;
 ;
-	std::ofstream goertzel;
-	std::ofstream recording;
-
 	Decoder m_decoder;
 };
 
