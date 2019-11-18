@@ -11,6 +11,7 @@ Decoder::Decoder()
 
 void Decoder::setDTMFTone(int DTMF)
 {
+	//m_vecAck.push_back(DTMF);
 	if (m_character.size() == 2)
 		m_character.clear();
 	m_character.push_back(DTMF);
@@ -56,6 +57,8 @@ void Decoder::setDTMFTone(int DTMF)
 			std::cout << "SLUT FLAG" << std::endl;
 			m_listening = true;
 			intToBit();
+			
+
 			CRC(32);
 			bitToString();
 			m_charVect.clear();
@@ -71,7 +74,7 @@ void Decoder::setDTMFTone(int DTMF)
 	
 }
 
-std::vector<int> Decoder::intToBit()
+std::vector<sf::Int16> Decoder::intToBit()
 {
 	if (m_charVect.size() < 7)
 	{
@@ -104,7 +107,9 @@ std::vector<int> Decoder::intToBit()
 
 		std::cout << std::endl;
 		std::cout << vecForCRC.size() << std::endl;
-    
+		
+		m_vecAck = vecForCRC;
+
     return vecForCRC;
   }
  

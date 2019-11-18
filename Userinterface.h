@@ -16,5 +16,6 @@
 
 
 void makeSound();
+void makeSoundAck(std::vector<sf::Int16> _vecForAck);
 
 void setUI();

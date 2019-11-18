@@ -15,6 +15,7 @@ bool CustomRecorder::onStart()
 
 bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t sampleCount)
 {
+  
 	if (sampleCount > 205)
 	{
 		m_processingCycles++;
@@ -48,6 +49,7 @@ bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t samp
 	}
 	else
 		std::cout << "Ikke samples nok" << std::endl; 
+
 
 	return true;
 }
