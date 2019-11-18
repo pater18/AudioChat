@@ -104,7 +104,7 @@ void setUI() {
 			// receiver delen
 			receive = recorder.getDecoder().getBesked();
 
-			if (receive.size() < 3)
+			if (recorder.getDecoder().getVecForCRC().size() < 25)
 			{
 				std::vector<sf::Int16> sendAck = testprot.modtagetProtokol(recorder.getDecoder().getVecForCRC());
 				makeSoundAck(sendAck);
