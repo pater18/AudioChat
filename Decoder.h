@@ -11,7 +11,7 @@ class Decoder : public SoundChunk
 public:
 	Decoder();
 	void setDTMFTone(int DTMF);
-	std::vector<int> intToBit();
+	std::vector<sf::Int16> intToBit();
 	std::string bitToString();
 	std::vector<int> CRC(int); 
 	bool getReceivedMessage() { return m_receivedMessage; };
@@ -19,7 +19,7 @@ public:
 	void setReceivedMessageToTrue() { m_receivedMessage = true; };
 	std::string getBesked() { return besked; };
 	std::vector<int> getVecForACK() { return vecForACK; };
-
+	std::vector<sf::Int16> getVecForCRC() { return vecForCRC; };
 	std::string besked;
 
 private:
@@ -30,7 +30,7 @@ private:
 	bool m_receivedMessage;
 
 	std::vector<int> _CRCok;
-	std::vector<int> vecForCRC;
+	std::vector<sf::Int16> vecForCRC;
 	std::vector<int> vecForACK;
 	
 };

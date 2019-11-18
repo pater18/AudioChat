@@ -70,7 +70,7 @@ void Decoder::setDTMFTone(int DTMF)
 	
 }
 
-std::vector<int> Decoder::intToBit()
+std::vector<sf::Int16> Decoder::intToBit()
 {
 	if (m_charVect.size() < 7)
 	{
