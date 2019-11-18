@@ -21,7 +21,6 @@
 
 int main()
 {
-	
 	setUI();
 
 	return 0;

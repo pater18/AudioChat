@@ -33,7 +33,6 @@ std::vector<float> SoundChunk::goertzelAlgorithm(int samplingFreq)
 		result.push_back(magnitude);
 
 	}
-	//std::cout << std::endl;
 	return result;
 
 }
@@ -42,6 +41,7 @@ int SoundChunk::determineDtmfTwo(std::vector<float> freqComponents)
 {
 	std::vector<float> lowerTones(freqComponents.begin(), freqComponents.begin() + 4);
 	std::vector<float> higherTones(freqComponents.begin() + 4, freqComponents.end());
+	
 
 	float maxLower = *max_element(lowerTones.begin(), lowerTones.end());
 	float maxHigher = *max_element(higherTones.begin(), higherTones.end());
