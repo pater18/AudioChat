@@ -19,7 +19,7 @@ public:
 	void setReceivedMessageToTrue() { m_receivedMessage = true; };
 	std::string getBesked() { return besked; };
 	std::vector<int> getVecForACK() { return vecForACK; };
-	std::vector<sf::Int16> getVecForCRC() { return vecForCRC; };
+	std::vector<sf::Int16> getVecAck() { return m_vecAck; };
 	std::string besked;
 
 private:
@@ -32,6 +32,7 @@ private:
 	std::vector<int> _CRCok;
 	std::vector<sf::Int16> vecForCRC;
 	std::vector<int> vecForACK;
+	std::vector<sf::Int16> m_vecAck; 
 	
 };
 

@@ -44,7 +44,7 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 				if (protRecorder.getDecoder().getReceivedMessage())
 				{
 					protRecorder.stop();
-					if (getSekNR(protRecorder.getDecoder().getVecForCRC()) == getSekNR(sendBuffer[i]))
+					if (getSekNR(protRecorder.getDecoder().getVecAck()) == getSekNR(sendBuffer[i]))
 					{
 						soundtest.play();
 						startClockProt = std::clock();

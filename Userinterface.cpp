@@ -104,18 +104,25 @@ void setUI() {
 			// receiver delen
 			receive = recorder.getDecoder().getBesked();
 
-			if (recorder.getDecoder().getVecForCRC().size() < 25)
+
+			std::vector<sf::Int16> sendAck = testprot.modtagetProtokol(recorder.getDecoder().getVecAck());
+
+
+
+			for (size_t i = 0; i < sendAck.size(); i++)
 			{
-				std::vector<sf::Int16> sendAck = testprot.modtagetProtokol(recorder.getDecoder().getVecForCRC());
-				makeSoundAck(sendAck);
+				std::cout << sendAck[i] << " ";
 			}
-			else
-			{
-				std::cout << receive << std::endl;
-				text2.setString(receive);
-				widthOfReceive = text2.getLocalBounds().width;
-				text2.setPosition(1000 - widthOfReceive - 50, 710 - moveText);
-			}
+
+			std::cout << std::endl; 
+
+			//makeSoundAck(sendAck);
+
+			std::cout << receive << std::endl;
+			text2.setString(receive);
+			widthOfReceive = text2.getLocalBounds().width;
+			text2.setPosition(1000 - widthOfReceive - 50, 710 - moveText);
+			
 
 
 			// move sendte tekst
