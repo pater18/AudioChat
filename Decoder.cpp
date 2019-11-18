@@ -16,7 +16,9 @@ void Decoder::setDTMFTone(int DTMF)
 		m_character.clear();
 	m_character.push_back(DTMF);
  
-	std::cout << DTMF << std::endl;
+	std::cout << DTMF << " ";
+	if (m_character.size() == 2)
+		std::cout << std::endl;
 
 	////Print hver karakter
 	//if (m_character.size() == 1)
@@ -54,7 +56,6 @@ void Decoder::setDTMFTone(int DTMF)
 		{
 			std::cout << "SLUT FLAG" << std::endl;
 			m_listening = true;
-      
 			intToBit();
 			
 

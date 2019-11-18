@@ -2,9 +2,11 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include "SoundChunk.h"
+#include "Timer.h"
+#include "Sound.h"
+
 #include <vector>
 #include <string>
-#include "Sound.h"
 
 class Decoder : public SoundChunk
 {

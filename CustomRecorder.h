@@ -2,6 +2,7 @@
 #include <SFML/Audio.hpp>
 #include "SoundChunk.h"
 #include "Decoder.h"
+#include "Timer.h"
 
 #include <thread>
 #include <chrono>
@@ -19,10 +20,8 @@ public:
 	bool onStart();
 	bool onProcessSamples(const sf::Int16* samples, std::size_t sampleCount);
 	void onStop();
-	void setSaveRecording() { m_saveRecording = true;  };
-	void startNewRecordings(int dtmfTone);
-	void saveRecording(const sf::Int16* samples, std::size_t sampleCount);
-	void saveGoertzel(std::vector<float> goertzelData);
+
+	void saveGoertzelMatrixToFile();
 	int syncDTMF();
 
 	Decoder& getDecoder() { return m_decoder; };
@@ -33,20 +32,17 @@ private:
 	sf::Int16 m_samples;
 	int m_processingCycles = 0;
 
-	const int m_processingInterval = 30;
-	double sendingTime = 0.5;
+	const int m_processingInterval = 20;
+	int sendingTime = 1;
 
-	bool m_saveRecording = false;
+
+	std::vector<std::vector <float> > m_goertzelDataMatrix;
+	bool m_startSavingGoertzel = false;
 
 	int m_lastDTMF = -1, m_curDTMF = -1;
 	double duration;
 	bool m_secondDetection = false;
 ;
-	std::ofstream goertzel;
-	std::ofstream recording;
-
 	Decoder m_decoder;
 };
-
-
 

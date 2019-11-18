@@ -211,3 +211,33 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 	return _customSound;
 
 }
+
+std::vector<sf::Int16> customSound::testAfLyd(int tid, std::vector<sf::Int16> &decimaler)
+{
+	sf::SoundBuffer buffer;
+	sf::Sound sound;
+	std::vector<sf::Int16> lyde;
+	std::vector <std::vector<int>> freq{ {697, 1209},{697, 1336},{697, 1477},{697, 1633},{ 770, 1209},{ 770, 1336},{ 770, 1477},{ 770, 1633},{852, 1209},{852, 1336},{852, 1477},{852, 1633}, {941, 1209},{941, 1336},{941, 1477},{941, 1633} };
+
+	int freq1, freq2;
+
+
+
+	for (int i = 0; i < decimaler.size(); i++) // 0, 4, 8
+	{
+
+		freq1 = freq[ decimaler[i] ] [0];
+		freq2 = freq[ decimaler[i] ] [1];
+		for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
+		{
+			lyde.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+		}
+	}
+
+
+	return lyde;
+	std::cout << lyde.size() << std::endl;
+	
+
+
+}

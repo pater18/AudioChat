@@ -2,25 +2,26 @@
 
 #define PI 3.14159265359
 
+void SoundChunk::hanningWindow()
+{
+	for (std::size_t i = 0; i < m_sampleCount; i++)
+		m_samples[i] = m_samples[i] * ( 0.5 * (1 - std::cos((2 * PI * i) / (m_sampleCount - 1)))) + 0.5;
+}
 
 std::vector<float> SoundChunk::goertzelAlgorithm(int samplingFreq)
 {
 	std::vector<float> result;
 	for (std::size_t j = 0; j < m_dtmfFreq.size(); j++)
 	{
-		int k = (0.5 + ((m_sampleCount * m_dtmfFreq[j])) / samplingFreq);
+		float floatk = (((m_sampleCount * m_dtmfFreq[j])) / samplingFreq) + 0.5;
+		int k = (int)floatk; 
 		float w = ((2 * PI) / m_sampleCount) * k;
 		float cosw = std::cos(w);
 		float coeff = 2 * cosw;
 
 		float Q0 = 0, Q1 = 0, Q2 = 0;
 
-		if (m_sampleCount < 205)
-		{
-			std::cout << "Ikke nok samples! " << std::endl;
-			return result;
-		}
-		for (std::size_t i = 0; i < 205; i++)
+		for (std::size_t i = 0; i < m_sampleCount; i++)
 		{
 			Q0 = coeff * Q1 - Q2 + m_samples[i];
 			Q2 = Q1;
@@ -33,9 +34,50 @@ std::vector<float> SoundChunk::goertzelAlgorithm(int samplingFreq)
 		result.push_back(magnitude);
 
 	}
-	//std::cout << std::endl;
 	return result;
 
+}
+
+int SoundChunk::determineDtmfTwo(std::vector<float> freqComponents)
+{
+	std::vector<float> lowerTones(freqComponents.begin(), freqComponents.begin() + 4);
+	std::vector<float> higherTones(freqComponents.begin() + 4, freqComponents.end());
+	
+
+	float maxLower = *max_element(lowerTones.begin(), lowerTones.end());
+	float maxHigher = *max_element(higherTones.begin(), higherTones.end());
+
+	if (maxLower < threshHold || maxHigher < threshHold)
+		return -1;
+
+	int posLower = -1;
+	for (std::size_t i = 0; i < lowerTones.size(); i++)
+	{
+		if (maxLower == lowerTones[i])
+		{
+			posLower = i;
+			continue;
+		}
+		if (maxLower < lowerTones[i] * threshHoldMultiple)
+			return -1;
+	}
+
+	int posHigher = -1;
+	for (std::size_t i = 0; i < higherTones.size(); i++)
+	{
+		if (maxHigher == higherTones[i])
+		{
+			posHigher = i;
+			continue;
+		}
+		if (maxHigher < higherTones[i] * threshHoldMultiple)
+			return -1;
+	}
+
+	//std::cout << posLower << " " << posHigher << std::endl;
+	//std::cout << higherTones.size() << std::endl;
+
+	return m_dtmfLookup[posLower][posHigher];
 }
 
 
@@ -94,7 +136,7 @@ int SoundChunk::determineDTMF(std::vector<float> freqComponents)
 	if (pos2 > 3)
 		pos2 = pos2 - 4;
 
-	sendToDecoder.push_back(m_dtmfLookup[pos1][pos2]);
+	//sendToDecoder.push_back(m_dtmfLookup[pos1][pos2]);
 
 	return m_dtmfLookup[pos1][pos2];
 	//std::sort(vect.begin(), vect.end(), sortinrev);
