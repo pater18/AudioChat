@@ -36,6 +36,7 @@ private:
 	int sendingTime = 1;
 
 	std::vector<std::vector <float> > m_goertzelDataMatrix;
+	bool m_startSavingGoertzel = false;
 
 	int m_lastDTMF = -1, m_curDTMF = -1;
 	double duration;
@@ -43,6 +44,4 @@ private:
 ;
 	Decoder m_decoder;
 };
-
-
 

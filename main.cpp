@@ -23,9 +23,10 @@ int main()
 {
 	CustomRecorder record;
 	record.start(10000);
-	std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+	std::this_thread::sleep_for(std::chrono::milliseconds(20000));
 	record.stop();
-	setUI();
+
+	//setUI();
 
 	return 0;
 }

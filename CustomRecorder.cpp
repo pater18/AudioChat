@@ -28,13 +28,15 @@ bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t samp
 		SoundChunk currentSoundChunk(samplesForProcessing, samplesForProcessing.size());
 		currentSoundChunk.hanningWindow();
 		std::vector<float> goertzelResult = currentSoundChunk.goertzelAlgorithm(this->getSampleRate());
-		m_goertzelDataMatrix.push_back(goertzelResult);
+		if (m_startSavingGoertzel == true)
+			m_goertzelDataMatrix.push_back(goertzelResult);
 
 		m_curDTMF = currentSoundChunk.determineDtmfTwo(goertzelResult);
 		int syncGoertzel = syncDTMF();
+
 		if (syncGoertzel != -1) {
 			m_decoder.setDTMFTone(syncGoertzel);
-			//startNewRecordings(syncGoertzel);
+			m_startSavingGoertzel = true;
 		}
 
 
@@ -57,7 +59,7 @@ void CustomRecorder::onStop()
 void CustomRecorder::saveGoertzelMatrixToFile()
 {
 	std::ofstream goertzel;
-	goertzel.open("Goertzel");
+	goertzel.open("Goertzel.txt");
 
 	goertzel << "Hz697" << " " << "Hz770" << " ";
 	goertzel << "Hz852" << " " << "Hz941" << " ";
@@ -70,10 +72,8 @@ void CustomRecorder::saveGoertzelMatrixToFile()
 		for (std::size_t j = 0; j < m_goertzelDataMatrix[i].size(); j++)
 		{
 			goertzel << m_goertzelDataMatrix[i][j] << " ";
-			std::cout << m_goertzelDataMatrix[i][j] << " ";
 		}
 		goertzel << std::endl;
-		std::cout << std::endl;
 	}
 	goertzel.close();
 }
