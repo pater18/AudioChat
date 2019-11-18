@@ -97,7 +97,7 @@ void setUI() {
 
 	
 
-	recorder.start(10000);
+	recorder.start(12000);
 
 	while (window.isOpen())
 	{
@@ -138,7 +138,7 @@ void setUI() {
 			std::cout << "Input if " << std::endl;
 			receive.clear();
 			test.clear();
-			recorder.start(10000);
+			recorder.start(12000);
 			std::cout << recorder.getDecoder().getReceivedMessage() << std::endl;
 			recorder.getDecoder().setReceivedMessageToFalse();
 		}
@@ -191,7 +191,7 @@ void setUI() {
 					while (sound.getStatus() != 0)
 					{
 					}
-					recorder.start(10000);
+					recorder.start(12000);
 
 					receive.clear();
 					
