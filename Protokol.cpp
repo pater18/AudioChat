@@ -49,6 +49,7 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 						soundtest.play();
 						startClockProt = std::clock();
 						duration = (std::clock() - startClockProt) / (double)CLOCKS_PER_SEC;
+						protRecorder.start(10000);
 					}
 					else 
 					{
