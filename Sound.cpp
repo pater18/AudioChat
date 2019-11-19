@@ -1,9 +1,6 @@
 #include "Sound.h"
 #include <math.h>
 #include "Encoder.h"
-#include <chrono>
-#include <thread>
-
 
 customSound::customSound()
 {
