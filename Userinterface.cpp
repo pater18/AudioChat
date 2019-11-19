@@ -30,7 +30,7 @@ void makeSoundAck(std::vector<sf::Int16> _vecForAck) {
 	customSound koder;
 	std::cout << test << std::endl;
 	koder.setBit(32);
-	koder.message(44100/4, _vecForAck);
+	koder.message(44100/2, _vecForAck);
 	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
 	sound.setBuffer(buffer);
 	sound.play();
@@ -109,7 +109,7 @@ void setUI() {
 
 
 			std::vector<sf::Int16> sendAck = testprot.modtagetProtokol(recorder.getDecoder().getVecAck());
-
+			sf::sleep(sf::seconds(1));
 
 			makeSoundAck(sendAck);
 

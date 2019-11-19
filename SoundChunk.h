@@ -36,5 +36,5 @@ private:
 	const std::vector< std::vector<int> > m_dtmfLookup {{0, 1, 2, 3},{ 4,5,6,7 }, { 8,9,10,11 }, { 12,13,14,15 }};
 	//std::vector<int> sendToDecoder;
 
-	const int threshHold = 500, threshHoldMultiple = 1.3;
+	const float threshHold = 10000, threshHoldMultiple = 1;
 };

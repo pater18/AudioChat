@@ -29,7 +29,7 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 	while ( i <= _sendBuffer.size())
 	{
 
-			test1.message(22050, _sendBuffer[i]);
+			test1.message(44100/2, _sendBuffer[i]);
 			buffertest.loadFromSamples(&test1._customSound[0], test1._customSound.size(), 1, 44100);
 			soundtest.setBuffer(buffertest);
 			soundtest.play();
@@ -37,23 +37,27 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 			test1.slet();
 
 			startClockProt = std::clock();
-			protRecorder.start(10000);
-			while (true)
+			protRecorder.start(12000);
+			bool testbool = true;
+			while (testbool)
 			{
 				duration = (std::clock() - startClockProt) / (double)CLOCKS_PER_SEC;
 				if (protRecorder.getDecoder().getReceivedMessage())
 				{
-					protRecorder.stop();
+
 					if (getSekNRSend(protRecorder.getDecoder().getVecAck()) == getSekNRSend(sendBuffer[i]))
 					{
+						protRecorder.stop();
 						soundtest.play();
 						startClockProt = std::clock();
 						duration = (std::clock() - startClockProt) / (double)CLOCKS_PER_SEC;
-						protRecorder.start(10000);
+						protRecorder.start(12000);
 					}
 					else 
 					{
 						i++;
+						testbool = false;
+						
 					}
 				}
 				

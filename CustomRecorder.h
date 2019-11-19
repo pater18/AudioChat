@@ -33,7 +33,7 @@ private:
 	int m_processingCycles = 0;
 
 	const int m_processingInterval = 20;
-	int sendingTime = 1;
+	double sendingTime = 0.5;
 
 
 	std::vector<std::vector <float> > m_goertzelDataMatrix;
