@@ -23,17 +23,13 @@
 
 int main()
 {
-	customSound soundcustom;
-	std::vector<sf::Int16> bitStreng = { 1,1,1,1,0,0,0,0 };
-
-	auto vectorOfAmplitudes = soundcustom.bitToAmplitudes(44100, bitStreng);
-	soundcustom.playSound(vectorOfAmplitudes);
-
-	std::cout << "hej";
-
-;
-	std::this_thread::sleep_for(std::chrono::seconds(100));
 	
+	CustomRecorder recorder;
+	recorder.start(12000);
+	std::this_thread::sleep_for(std::chrono::seconds(10));
+	recorder.stop();
+	std::this_thread::sleep_for(std::chrono::seconds(10));
+
 	setUI();
 
 	return 0;

@@ -58,7 +58,7 @@ int SoundChunk::determineDtmfTwo(std::vector<float> freqComponents)
 			posLower = i;
 			continue;
 		}
-		if (maxLower < lowerTones[i] * threshHoldMultiple)
+		if (maxLower < lowerTones[i] * threshHoldMultiple) 
 			return -1;
 	}
 
@@ -79,6 +79,13 @@ int SoundChunk::determineDtmfTwo(std::vector<float> freqComponents)
 
 	return m_dtmfLookup[posLower][posHigher];
 }
+
+
+
+
+
+
+
 
 
 int SoundChunk::determineDTMF(std::vector<float> freqComponents)

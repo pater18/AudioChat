@@ -37,6 +37,6 @@ private:
 	//std::vector<int> sendToDecoder;
 
 
-	const double threshHold = 1200, threshHoldMultiple = 1.0;
+	const double threshHold = 20000, threshHoldMultiple = 1.3;
 
 };

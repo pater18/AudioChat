@@ -36,9 +36,7 @@ bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t samp
 
 		if (syncGoertzel != -1) {
 			m_decoder.setDTMFTone(syncGoertzel);
-			auto goertzelDataPair = std::make_pair(syncGoertzel, m_goertzelDataMatrix);
-			m_goertzelDataPairs.push_back(goertzelDataPair);
-			m_goertzelDataMatrix.clear();
+			addGoertzelMatrixToVector(syncGoertzel);
 		}
 
 
@@ -61,6 +59,14 @@ void CustomRecorder::onStop()
 	std::cout << std::endl << "Recording stopped" << std::endl;
 }
 
+void CustomRecorder::addGoertzelMatrixToVector(int nextDtmf)
+{
+	auto goertzelDataPair = std::make_pair(m_dtmfForSavingGoertzel, m_goertzelDataMatrix);
+	m_dtmfForSavingGoertzel = nextDtmf;
+	m_goertzelDataPairs.push_back(goertzelDataPair);
+	m_goertzelDataMatrix.clear();
+}
+
 void CustomRecorder::saveGoertzelMatrixToFile()
 {
 	Timer timer("Save");
@@ -75,13 +81,18 @@ void CustomRecorder::saveGoertzelMatrixToFile()
 		goertzel << "Hz1209" << " " << "Hz1336" << " ";
 		goertzel << "Hz1477" << " " << "Hz1633" << std::endl;
 
+		std::size_t offset = 5;
+
 		for (std::size_t j = 0; j < m_goertzelDataPairs[i].second.size(); j++)
 		{
-			for (std::size_t k = 0; k < m_goertzelDataPairs[i].second[j].size(); k++)
+			if ((j > offset) && (j < m_goertzelDataPairs[i].second.size() - offset))
 			{
-				goertzel << m_goertzelDataPairs[i].second[j][k] << " ";
+				for (std::size_t k = 0; k < m_goertzelDataPairs[i].second[j].size(); k++)
+				{
+					goertzel << m_goertzelDataPairs[i].second[j][k] << " ";
+				}
+				goertzel << std::endl;
 			}
-			goertzel << std::endl;
 		}
 		goertzel.close();
 	}
