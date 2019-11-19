@@ -30,7 +30,7 @@ void makeSoundAck(std::vector<sf::Int16> _vecForAck) {
 	customSound koder;
 	std::cout << test << std::endl;
 	koder.setBit(32);
-	koder.message(44100/4, _vecForAck);
+	koder.bitToAmplitudes(44100/5, _vecForAck);
 	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
 	sound.setBuffer(buffer);
 	sound.play();
@@ -97,20 +97,21 @@ void setUI() {
 
 	
 
-	recorder.start(10000);
+	recorder.start(12000);
 
 	while (window.isOpen())
 	{
 		if (recorder.getDecoder().getReceivedMessage())
 		{
-			recorder.stop();
+
 			// receiver delen
 			receive = recorder.getDecoder().getBesked();
 
 
 			std::vector<sf::Int16> sendAck = testprot.modtagetProtokol(recorder.getDecoder().getVecAck());
 
-
+			sf::sleep(sf::milliseconds(1000));
+			//recorder.stop();
 			makeSoundAck(sendAck);
 
 			std::cout << receive << std::endl;
@@ -138,7 +139,7 @@ void setUI() {
 			std::cout << "Input if " << std::endl;
 			receive.clear();
 			test.clear();
-			recorder.start(10000);
+			recorder.start(12000);
 			std::cout << recorder.getDecoder().getReceivedMessage() << std::endl;
 			recorder.getDecoder().setReceivedMessageToFalse();
 		}
@@ -169,9 +170,7 @@ void setUI() {
 							textVector[i].move(0, -moveText);
 
 						}
-
 						test.clear();
-
 
 					}
 					break;
@@ -191,7 +190,7 @@ void setUI() {
 					while (sound.getStatus() != 0)
 					{
 					}
-					recorder.start(10000);
+					recorder.start(12000);
 
 					receive.clear();
 					

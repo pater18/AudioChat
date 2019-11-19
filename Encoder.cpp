@@ -267,6 +267,11 @@ std::vector<std::vector<sf::Int16>> Encoder::sendBuffer(std::vector<sf::Int16> _
 			protoSlut += (m_antalBit + 8);
 
 		}
+		if (i == 0)
+		{
+			std::cout << numPadding << std::endl; 
+			vecSendBuffer[0].erase(vecSendBuffer[0].begin() + 16, vecSendBuffer[0].begin() + numPadding + 16);
+		}
 	}
 	for (size_t i = 0; i < vecSendBuffer.size(); i++)
 	{

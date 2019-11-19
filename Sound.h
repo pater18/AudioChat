@@ -20,9 +20,11 @@ public:
 //#define TWOPI 6.283185307;
 	customSound();
 	short Sinewave(double time, double freq1, double freq2, double amp);
-	std::vector<sf::Int16> message(int tid, std::vector<sf::Int16> vecFraProt);
-	std::vector<sf::Int16> testAfLyd(int tid, std::vector<sf::Int16> &decimaler);
+	std::vector<sf::Int16> bitToAmplitudes(int tid, std::vector<sf::Int16> vecFraProt);
+	void playSound(std::vector<sf::Int16> vectorOfAmplitudes);
 
+
+	std::vector<sf::Int16> testAfLyd(int tid, std::vector<sf::Int16> &decimaler);
 	std::vector<sf::Int16> _customSound;
 private:
 	

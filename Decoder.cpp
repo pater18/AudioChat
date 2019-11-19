@@ -38,6 +38,7 @@ void Decoder::setDTMFTone(int DTMF)
 			m_receivedMessage = false;
 			if (m_character == flag)
 			{
+				m_charVect.clear();
 				std::cout << "START FLAG" << std::endl;
 				m_listening = false;
 			}

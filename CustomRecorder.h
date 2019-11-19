@@ -33,7 +33,9 @@ private:
 	int m_processingCycles = 0;
 
 	const int m_processingInterval = 30;
-	float sendingTime = 10000;
+
+	float sendingTime = 0.2;
+
 
 	std::vector<std::vector <float> > m_goertzelDataMatrix;
 	std::vector< std::pair< int, std::vector< std::vector<float> >>> m_goertzelDataPairs;
