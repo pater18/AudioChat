@@ -36,6 +36,8 @@ private:
 	float sendingTime = 0.2;
 
 
+
+
 	std::vector<std::vector <float> > m_goertzelDataMatrix;
 	bool m_startSavingGoertzel = false;
 

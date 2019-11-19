@@ -170,9 +170,7 @@ void setUI() {
 							textVector[i].move(0, -moveText);
 
 						}
-
 						test.clear();
-
 
 					}
 					break;

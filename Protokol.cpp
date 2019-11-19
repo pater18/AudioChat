@@ -40,18 +40,24 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 
 			startClockProt = std::clock();
 			protRecorder.start(12000);
-			while (true)
-			{
 
+			bool testbool = true;
+			while (testbool)
+			{
 				duration = (std::clock() - startClockProt) / (double)CLOCKS_PER_SEC;
 				if (protRecorder.getDecoder().getReceivedMessage())
 				{
+
 					std::cout << "Den er lige over recorder.stop()" << std::endl;
 					protRecorder.stop();
 					if (getSekNRSend(protRecorder.getDecoder().getVecAck()) == getSekNRSend(sendBuffer[i]))
 					{
 
 						std::cout << "Den er inde i if sætning" << std::endl; 
+
+					if (getSekNRSend(protRecorder.getDecoder().getVecAck()) == getSekNRSend(sendBuffer[i]))
+					{
+						protRecorder.stop();
 						soundtest.play();
 						startClockProt = std::clock();
 						duration = (std::clock() - startClockProt) / (double)CLOCKS_PER_SEC;
@@ -61,6 +67,8 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 					{
 						std::cout << "Den er inde i else " << std::endl; 
 						i++;
+						testbool = false;
+						
 					}
 				}
 				
