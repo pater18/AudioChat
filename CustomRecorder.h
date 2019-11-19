@@ -32,11 +32,11 @@ private:
 	sf::Int16 m_samples;
 	int m_processingCycles = 0;
 
-	const int m_processingInterval = 20;
-	int sendingTime = 1;
-
+	const int m_processingInterval = 30;
+	float sendingTime = 10000;
 
 	std::vector<std::vector <float> > m_goertzelDataMatrix;
+	std::vector< std::pair< int, std::vector< std::vector<float> >>> m_goertzelDataPairs;
 	bool m_startSavingGoertzel = false;
 
 	int m_lastDTMF = -1, m_curDTMF = -1;
