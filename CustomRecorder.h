@@ -32,8 +32,8 @@ private:
 	sf::Int16 m_samples;
 	int m_processingCycles = 0;
 
-	const int m_processingInterval = 20;
-	int sendingTime = 1;
+	const int m_processingInterval = 30;
+	float sendingTime = 0.2;
 
 
 	std::vector<std::vector <float> > m_goertzelDataMatrix;
