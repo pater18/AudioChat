@@ -17,10 +17,9 @@ Protokol::Protokol()
 void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 {
 
-	
 	CustomRecorder protRecorder;
 
-	
+
 	customSound test1;
 
 	sf::SoundBuffer buffertest;
@@ -28,32 +27,32 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 	size_t i = 0;
 	std::cout << _sendBuffer.size() << std::endl;
 
-	while ( i <= _sendBuffer.size())
+	while (i <= _sendBuffer.size())
 	{
-		
-			test1.message(44100/5, _sendBuffer[i]);
-			buffertest.loadFromSamples(&test1._customSound[0], test1._customSound.size(), 1, 44100);
-			soundtest.setBuffer(buffertest);
-			soundtest.play();
-			sf::sleep(sf::seconds((1/5)*(_sendBuffer[i].size()+1)));
-			test1.slet();
 
-			startClockProt = std::clock();
-			protRecorder.start(12000);
+		test1.message(44100 / 5, _sendBuffer[i]);
+		buffertest.loadFromSamples(&test1._customSound[0], test1._customSound.size(), 1, 44100);
+		soundtest.setBuffer(buffertest);
+		soundtest.play();
+		sf::sleep(sf::seconds((1 / 5) * (_sendBuffer[i].size() + 1)));
+		test1.slet();
 
-			bool testbool = true;
-			while (testbool)
+		startClockProt = std::clock();
+		protRecorder.start(12000);
+
+		bool testbool = true;
+		while (testbool)
+		{
+			duration = (std::clock() - startClockProt) / (double)CLOCKS_PER_SEC;
+			if (protRecorder.getDecoder().getReceivedMessage())
 			{
-				duration = (std::clock() - startClockProt) / (double)CLOCKS_PER_SEC;
-				if (protRecorder.getDecoder().getReceivedMessage())
+
+				std::cout << "Den er lige over recorder.stop()" << std::endl;
+				protRecorder.stop();
+				if (getSekNRSend(protRecorder.getDecoder().getVecAck()) == getSekNRSend(sendBuffer[i]))
 				{
 
-					std::cout << "Den er lige over recorder.stop()" << std::endl;
-					protRecorder.stop();
-					if (getSekNRSend(protRecorder.getDecoder().getVecAck()) == getSekNRSend(sendBuffer[i]))
-					{
-
-						std::cout << "Den er inde i if sætning" << std::endl; 
+					std::cout << "Den er inde i if sætning" << std::endl;
 
 					if (getSekNRSend(protRecorder.getDecoder().getVecAck()) == getSekNRSend(sendBuffer[i]))
 					{
@@ -63,16 +62,16 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 						duration = (std::clock() - startClockProt) / (double)CLOCKS_PER_SEC;
 						protRecorder.start(12000);
 					}
-					else 
+					else
 					{
-						std::cout << "Den er inde i else " << std::endl; 
+						std::cout << "Den er inde i else " << std::endl;
 						i++;
 						testbool = false;
-						
+
 					}
 				}
-				
-	
+
+
 				if (duration > 4.5)
 				{
 					protRecorder.stop();
@@ -83,13 +82,9 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 				}
 			}
 
+		}
 
-
-
-			
-			
 	}
-
 }
 
 std::vector<sf::Int16>  Protokol::getSekNR(std::vector<sf::Int16> _sekNR)
