@@ -28,6 +28,7 @@ private:
 	std::vector<sf::Int16> m_insertESC;
 	std::vector<std::vector<sf::Int16> > m_pakker;
 	std::vector<std::vector<sf::Int16> > m_pakkerMedHeader;
+	int m_numPadding;
 
 
 protected:

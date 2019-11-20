@@ -32,12 +32,12 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 		protokolRecorder.start(12000);
 
 		bool pakkeIkkeSendt = true;
-
+		protokolRecorder.getDecoder().setReceivedMessageToFalse();
 		while (pakkeIkkeSendt)
 		{
-			duration = (std::clock() - startClockProt) / (double)CLOCKS_PER_SEC;
 			if (protokolRecorder.getDecoder().getReceivedMessage())
 			{
+				protokolRecorder.getDecoder().intToBit(protokolRecorder.getDecoder().getCharVect());
 
 				std::cout << "Den er lige over recorder.stop()" << std::endl;
 				protokolRecorder.stop();
@@ -60,7 +60,7 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 				}
 			}
 
-
+			duration = (std::clock() - startClockProt) / (double)CLOCKS_PER_SEC;
 			if (duration > 4.5)
 			{
 				protokolRecorder.stop();
@@ -77,6 +77,7 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 std::vector<sf::Int16>  Protokol::getSekNR(std::vector<sf::Int16> _sekNR)
 {
 	std::vector<sf::Int16> returnSekNR;
+	std::cout <<"SekNR size" << _sekNR.size() << std::endl;
 	for (int i = 0; i < 8; i++) {
 		returnSekNR.push_back(_sekNR[i]);
 	}
@@ -99,7 +100,8 @@ std::vector<sf::Int16> Protokol::getSekNRSend(std::vector<sf::Int16> _sekNRSend)
 
 void Protokol::modtagetProtokol(bool &forventetSekNR, std::vector<sf::Int16> modtaget)
 {
-	if (forventetSekNR == getSekNR(modtaget)[7])
+	std::cout << "modtage size" << modtaget.size() << std::endl;
+	if (forventetSekNR == modtaget[7])
 	{
 		int startFlag[8] = { 1,1,1,1,0,0,0,0 };
 		std::vector<sf::Int16> sekNR0 = { 0,0,0,0,0,0,0,0 };
@@ -118,6 +120,7 @@ void Protokol::modtagetProtokol(bool &forventetSekNR, std::vector<sf::Int16> mod
 			ack.push_back(1);
 			ack.insert(ack.end(), startFlag, startFlag + 8);
 			//Lav ack om til lyd og send til encoder
+			
 		}
 		else if (getSekNR(modtaget) == sekNR1)
 		{

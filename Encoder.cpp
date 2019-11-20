@@ -8,7 +8,6 @@
 #include <iostream>
 
 
-int numPadding;
 
 Encoder::Encoder()
 {
@@ -72,12 +71,12 @@ std::vector<sf::Int16> Encoder::CRC(std::vector<sf::Int16> bitStrengCRC)
 	while (indSize > (paddingCoeff * m_antalBit))
 		paddingCoeff++;
 
-	int numPadding = paddingCoeff * m_antalBit - indSize;
+	m_numPadding = paddingCoeff * m_antalBit - indSize;
 
-	std::cout << "Antal nuller der puttes i som padding: " << numPadding << std::endl;
+	std::cout << "Antal nuller der puttes i som padding: " << m_numPadding << std::endl;
 
 
-	for (int i = 0; i < numPadding; i++)
+	for (int i = 0; i < m_numPadding; i++)
 	{
 		bitStrengCRC.insert(bitStrengCRC.begin(), 0);
 	}
@@ -221,6 +220,7 @@ std::vector<sf::Int16> Encoder::ESC(std::vector<sf::Int16> bitStrengESC)
 
 std::vector<std::vector<sf::Int16>> Encoder::pakker(std::vector<sf::Int16> bitStrengPakker)
 {
+
 	int j = 0, protoStart = 0, protoSlut = m_antalBit + 8, length = 0;
 	length = bitStrengPakker.size();
 
@@ -265,10 +265,11 @@ std::vector<std::vector<sf::Int16>> Encoder::pakker(std::vector<sf::Int16> bitSt
 			protoSlut += (m_antalBit + 8);
 
 		}
-		if (i == 0)
+
+		if (i == 0 && m_numPadding > 0)
 		{
-			std::cout << numPadding << std::endl; 
-			m_pakker[0].erase(m_pakker[0].begin() + 16, m_pakker[0].begin() + numPadding + 16);
+			std::cout << "m_numPadding: " << m_numPadding << std::endl; 
+			m_pakker[0].erase(m_pakker[0].begin(), m_pakker[0].begin() + m_numPadding);
 		}
 	}
 	for (size_t i = 0; i < m_pakker.size(); i++)
@@ -294,18 +295,25 @@ std::vector<std::vector<sf::Int16> > Encoder::header(std::vector<std::vector<sf:
 		if (i % 2 == 0)
 		{
 			headerVec[i].insert(headerVec[i].begin(), flag, flag + 8);
-			headerVec[i].insert(headerVec[i].end(), sek0, sek0 + 8);
+			headerVec[i].insert(headerVec[i].begin() + 8, sek0, sek0 + 8);
 			headerVec[i].insert(headerVec[i].end(), flag, flag + 8);
 		}
 		else
 		{
 			headerVec[i].insert(headerVec[i].begin(), flag, flag + 8);
-			headerVec[i].insert(headerVec[i].end(), sek1, sek1 + 8);
+			headerVec[i].insert(headerVec[i].begin() + 8, sek1, sek1 + 8);
 			headerVec[i].insert(headerVec[i].end(), flag, flag + 8);
 		}
 	}
-	m_pakkerMedHeader = headerVec;
-
+	for (size_t i = 0; i < headerVec.size(); i++)
+	{
+		for (size_t j = 0; j < headerVec[i].size(); j++)
+		{
+			std::cout << headerVec[i][j];
+		}
+		std::cout << " ";
+		m_pakkerMedHeader = headerVec;
+	}
 	return m_pakkerMedHeader;
 }
 
@@ -313,9 +321,20 @@ std::vector<std::vector<sf::Int16>> Encoder::encoderMessage(std::string message)
 {
 	setBit(32);
 	auto bitstring = StrToBit(message);
-	std::cout << "1" << std::endl;
+	for (size_t i = 0; i < bitstring.size(); i++)
+	{
+		std::cout << bitstring[i];
+	}
+	std::cout << std::endl;
+
 	auto CRCbitString = CRC(bitstring);
-	std::cout << "2" << std::endl;
+	for (size_t i = 0; i < CRCbitString.size(); i++)
+	{
+		std::cout << CRCbitString[i] << "A";
+	
+	}
+	std::cout << std::endl;
+
 	auto EscBitString = ESC(CRCbitString);
 	std::cout << "3" << std::endl;
 	auto pakkeBitString = pakker(EscBitString);
