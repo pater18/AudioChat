@@ -97,42 +97,46 @@ std::vector<sf::Int16> Protokol::getSekNRSend(std::vector<sf::Int16> _sekNRSend)
 
 
 
-std::vector<sf::Int16> Protokol::modtagetProtokol(std::vector<sf::Int16> modtaget)
+void Protokol::modtagetProtokol(bool &forventetSekNR, std::vector<sf::Int16> modtaget)
 {
-	int startFlag[8] = { 1,1,1,1,0,0,0,0 };
-	std::vector<sf::Int16> sekNR0 = { 0,0,0,0,0,0,0,0 };
-	std::vector<sf::Int16> sekNR1 = { 0,0,0,0,0,0,0,1 };
-	if (getSekNR(modtaget) == sekNR0)
+	if (forventetSekNR == getSekNR(modtaget)[7])
 	{
+		int startFlag[8] = { 1,1,1,1,0,0,0,0 };
+		std::vector<sf::Int16> sekNR0 = { 0,0,0,0,0,0,0,0 };
+		std::vector<sf::Int16> sekNR1 = { 0,0,0,0,0,0,0,1 };
+		if (getSekNR(modtaget) == sekNR0)
+		{
+			ack.insert(ack.begin(), startFlag, startFlag + 8);
+			//Så send x+1 til transmitter
+			ack.push_back(0);
+			ack.push_back(0);
+			ack.push_back(0);
+			ack.push_back(0);
+			ack.push_back(0);
+			ack.push_back(0);
+			ack.push_back(0);
+			ack.push_back(1);
+			ack.insert(ack.end(), startFlag, startFlag + 8);
+			//Lav ack om til lyd og send til encoder
+		}
+		else if (getSekNR(modtaget) == sekNR1)
+		{
+			ack.insert(ack.begin(), startFlag, startFlag + 8);
+			//Så send x til transmitter
+			ack.push_back(0);
+			ack.push_back(0);
+			ack.push_back(0);
+			ack.push_back(0);
+			ack.push_back(0);
+			ack.push_back(0);
+			ack.push_back(0);
+			ack.push_back(0);
+			//Lav ack om til lyd og send til encoder
+			ack.insert(ack.end(), startFlag, startFlag + 8);
+		}
 
-		ack.insert(ack.begin(), startFlag, startFlag + 8);
-	//Så send x+1 til transmitter
-	ack.push_back(0);
-	ack.push_back(0);
-	ack.push_back(0);
-	ack.push_back(0);
-	ack.push_back(0);
-	ack.push_back(0);
-	ack.push_back(0);
-	ack.push_back(1);
-	ack.insert(ack.end(), startFlag, startFlag + 8);
-	//Lav ack om til lyd og send til encoder
-}
-else if (getSekNR(modtaget) == sekNR1)
-{
-		ack.insert(ack.begin(), startFlag, startFlag + 8);
-	//Så send x til transmitter
-	ack.push_back(0);
-	ack.push_back(0);
-	ack.push_back(0);
-	ack.push_back(0);
-	ack.push_back(0);
-	ack.push_back(0);
-	ack.push_back(0);
-	ack.push_back(0);
-	//Lav ack om til lyd og send til encoder
-	ack.insert(ack.end(), startFlag, startFlag + 8);
-}
-	return ack;
+		customSound afspilLyd;
+		afspilLyd.playSound(bitToAmplitudes(44100 / 5, ack));
+	}
 
 }

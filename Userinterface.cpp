@@ -65,6 +65,8 @@ void Userinterface::setUI() {
 
 	recorder.start(12000);
 
+	bool forventetSekNR = 0;
+
 	while (window.isOpen())
 	{
 		if (recorder.getDecoder().getReceivedMessage())
@@ -73,6 +75,8 @@ void Userinterface::setUI() {
 			// receiver delen
 			receive = recorder.getDecoder().decodeMessage();
 
+			Protokol modtagProtokol;
+			modtagProtokol.modtagetProtokol(forventetSekNR, recorder.getDecoder().getRenBitStreng());
 
 			//std::vector<sf::Int16> sendAck = indtastedeBeskedprot.modtagetProtokol(recorder.getDecoder().getVecAck());
 
