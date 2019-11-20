@@ -30,7 +30,7 @@ void makeSoundAck(std::vector<sf::Int16> _vecForAck) {
 	customSound koder;
 	std::cout << test << std::endl;
 	koder.setBit(32);
-	koder.message(44100/5, _vecForAck);
+	koder.bitToAmplitudes(44100/5, _vecForAck);
 	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
 	sound.setBuffer(buffer);
 	sound.play();

@@ -30,7 +30,7 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 	while (i <= _sendBuffer.size())
 	{
 
-		test1.message(44100 / 5, _sendBuffer[i]);
+		test1.bitToAmplitudes(44100 / 5, _sendBuffer[i]);
 		buffertest.loadFromSamples(&test1._customSound[0], test1._customSound.size(), 1, 44100);
 		soundtest.setBuffer(buffertest);
 		soundtest.play();

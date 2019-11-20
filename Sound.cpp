@@ -2,8 +2,6 @@
 #include <math.h>
 #include "Encoder.h"
 
-
-
 customSound::customSound()
 {
 }
@@ -33,7 +31,7 @@ short customSound::Sinewave(double time, double freq1, double freq2, double amp)
   
 
 
-std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecFraProt)
+std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int16> vecFraProt)
 {
 
 	
@@ -210,6 +208,18 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 
 	return _customSound;
 
+}
+
+void customSound::playSound(std::vector<sf::Int16> vectorOfAmplitudes)
+{
+	sf::SoundBuffer buffer;
+	sf::Sound sound;
+	buffer.loadFromSamples(&vectorOfAmplitudes[0], vectorOfAmplitudes.size(), 1, 44100);
+	sound.setBuffer(buffer);
+	sound.play();
+	while (sound.getStatus() != 0)
+	{
+	}
 }
 
 std::vector<sf::Int16> customSound::testAfLyd(int tid, std::vector<sf::Int16> &decimaler)
