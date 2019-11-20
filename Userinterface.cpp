@@ -1,15 +1,11 @@
-#include "CustomRecorder.h"
-#include "Decoder.h"
 #include "Userinterface.h"
-#include "Protokol.h"
-#include "Timer.h"
 
 sf::SoundBuffer buffer;
 sf::Sound sound;
 std::string test;
 Protokol testprot;
 
-void makeSound() {
+void Userinterface::makeSound() {
 
 	customSound koder;
 	std::cout << test << std::endl;
@@ -26,7 +22,7 @@ void makeSound() {
 //	koder.slet();
 }
 
-void makeSoundAck(std::vector<sf::Int16> _vecForAck) {
+void Userinterface::makeSoundAck(std::vector<sf::Int16> _vecForAck) {
 	customSound koder;
 	std::cout << test << std::endl;
 	koder.setBit(32);
@@ -37,7 +33,8 @@ void makeSoundAck(std::vector<sf::Int16> _vecForAck) {
 	koder.slet();
 }
 
-void setUI() {
+
+void Userinterface::setUI() {
 
 	sf::RenderWindow window(sf::VideoMode(1000, 800), "SFML works!");
 
@@ -48,13 +45,9 @@ void setUI() {
 	sf::Vector2f xyvec;
 
 
-	double widthOfText = 0;
-	int moveText = 80;
 
-	double widthOfReceive;
-	std::string receive;
 	CustomRecorder recorder;
-	
+
 	sf::RectangleShape rectangle(sf::Vector2f(750, 75));
 	rectangle.setFillColor(sf::Color(128, 128, 128));
 	rectangle.setPosition(50, 700);
@@ -63,7 +56,7 @@ void setUI() {
 	sf::RectangleShape rectangleSend(sf::Vector2f(100, 75));
 	rectangleSend.setFillColor(sf::Color(128, 128, 128));
 	rectangleSend.setPosition(850, 700);
- 
+
 	sf::RectangleShape rectangleBesked(sf::Vector2f(100, 35));
 
 	sf::Font font;
@@ -94,8 +87,6 @@ void setUI() {
 	newline.setFont(font);
 	newline.setCharacterSize(24);
 	newline.setString("\n");
-
-	
 
 	recorder.start(12000);
 
@@ -210,30 +201,6 @@ void setUI() {
 						textVector2[i].move(0, -moveText);
 
 					}
-
-					// move rectangle
-					//for (size_t i = 0; i < textVector.size(); i++)
-					//{
-					//	widthOfText = text.getLocalBounds().width;
-
-					//	xyvec = textVector[i].getPosition();
-					//	rectangleVec.insert(rectangleVec.begin(), sf::RectangleShape(sf::Vector2f(0, 0)));
-					//	rectangleVec[i].setPosition(xyvec.x, xyvec.y + moveText);
-					//	rectangleVec[i].setFillColor(sf::Color(128, 128, 128));
-					//	rectangleVec[i].setSize(sf::Vector2f(widthOfText + 5, 35));
-
-
-					//	for (size_t i = 0; i < rectangleVec.size(); i++)
-					//	{
-
-					//		rectangleVec[i].move(0, -moveText);
-
-
-					//	}
-
-
-					//}
-
 
 					receive.clear();
 					test.clear();
