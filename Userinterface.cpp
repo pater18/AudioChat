@@ -1,36 +1,11 @@
 #include "Userinterface.h"
 
-sf::SoundBuffer buffer;
-sf::Sound sound;
-std::string test;
-Protokol testprot;
 
-void Userinterface::makeSound() {
-
-	customSound koder;
-	std::cout << test << std::endl;
-	koder.setBit(32);
-	koder.StrToBit(test);
-	koder.CRC();
-	koder.sendBuffer(koder.insertESC);
-	koder.slet();
-	testprot.sendProtokol(koder.vecSendBuffer);
-//	koder.message(44100/4);
-//	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
-//	sound.setBuffer(buffer);
-//	sound.play();
-//	koder.slet();
-}
 
 void Userinterface::makeSoundAck(std::vector<sf::Int16> _vecForAck) {
 	customSound koder;
-	std::cout << test << std::endl;
 	koder.setBit(32);
-	koder.bitToAmplitudes(44100/5, _vecForAck);
-	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
-	sound.setBuffer(buffer);
-	sound.play();
-	koder.slet();
+	koder.playSound(koder.bitToAmplitudes(44100 / 5, _vecForAck));
 }
 
 
@@ -43,8 +18,6 @@ void Userinterface::setUI() {
 	std::vector<sf::RectangleShape> rectangleVec;
 	std::vector<sf::RectangleShape> rectangleVec2;
 	sf::Vector2f xyvec;
-
-
 
 	CustomRecorder recorder;
 
@@ -88,6 +61,8 @@ void Userinterface::setUI() {
 	newline.setCharacterSize(24);
 	newline.setString("\n");
 
+	std::string indtastedeBesked;
+
 	recorder.start(12000);
 
 	while (window.isOpen())
@@ -96,14 +71,14 @@ void Userinterface::setUI() {
 		{
 
 			// receiver delen
-			receive = recorder.getDecoder().getBesked();
+			receive = recorder.getDecoder().decodeMessage();
 
 
-			std::vector<sf::Int16> sendAck = testprot.modtagetProtokol(recorder.getDecoder().getVecAck());
+			//std::vector<sf::Int16> sendAck = indtastedeBeskedprot.modtagetProtokol(recorder.getDecoder().getVecAck());
 
 			sf::sleep(sf::milliseconds(1000));
 			//recorder.stop();
-			makeSoundAck(sendAck);
+			//makeSoundAck(sendAck);
 
 			std::cout << receive << std::endl;
 			text2.setString(receive);
@@ -129,7 +104,7 @@ void Userinterface::setUI() {
 			}
 			std::cout << "Input if " << std::endl;
 			receive.clear();
-			test.clear();
+			indtastedeBesked.clear();
 			recorder.start(12000);
 			std::cout << recorder.getDecoder().getReceivedMessage() << std::endl;
 			recorder.getDecoder().setReceivedMessageToFalse();
@@ -151,9 +126,6 @@ void Userinterface::setUI() {
 				{
 					if (event.mouseButton.x > 850 && event.mouseButton.x < 950 && event.mouseButton.y > 700 && event.mouseButton.y < 775)
 					{
-
-						makeSound();
-
 						textVector.insert(textVector.begin(), text);
 
 						for (size_t i = 0; i < textVector.size(); i++)
@@ -161,7 +133,7 @@ void Userinterface::setUI() {
 							textVector[i].move(0, -moveText);
 
 						}
-						test.clear();
+						indtastedeBesked.clear();
 
 					}
 					break;
@@ -173,14 +145,13 @@ void Userinterface::setUI() {
 			case sf::Event::KeyPressed:
 				if (event.key.code == sf::Keyboard::Enter)
 				{
-					recorder.stop();
-					makeSound();
 
+					recorder.stop();
+
+					Encoder encoder;
+					encoder.encoderMessage(indtastedeBesked);
 					
 
-					while (sound.getStatus() != 0)
-					{
-					}
 					recorder.start(12000);
 
 					receive.clear();
@@ -203,7 +174,7 @@ void Userinterface::setUI() {
 					}
 
 					receive.clear();
-					test.clear();
+					indtastedeBesked.clear();
 
 
 
@@ -212,10 +183,10 @@ void Userinterface::setUI() {
 
 				if (event.key.code == sf::Keyboard::BackSpace)
 				{
-					if (test.size() > 0)
+					if (indtastedeBesked.size() > 0)
 					{
-						test.erase(test.size() - 1, 1);
-						text.setString(test);
+						indtastedeBesked.erase(indtastedeBesked.size() - 1, 1);
+						text.setString(indtastedeBesked);
 					}
 
 					break;
@@ -225,7 +196,7 @@ void Userinterface::setUI() {
 				if (event.type == sf::Event::TextEntered)
 				{
 					if (event.text.unicode < 128 && (event.text.unicode != 13) && (event.text.unicode != 8))
-						test += (char)event.text.unicode;
+						indtastedeBesked += (char)event.text.unicode;
 
 					widthOfText = text.getLocalBounds().width + 50;
 					sf::Vector2f vector;
@@ -235,12 +206,12 @@ void Userinterface::setUI() {
 
 					if (widthOfText + 40 >= widthRect)
 					{
-						test += "\n";
+						indtastedeBesked += "\n";
 						widthOfText = 50;
 
 					}
 
-					text.setString(test);
+					text.setString(indtastedeBesked);
 
 
 					break;

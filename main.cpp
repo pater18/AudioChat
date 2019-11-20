@@ -23,13 +23,11 @@
 
 int main()
 {
-	customSound customSound;
-	std::vector<sf::Int16> lyden = { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,15 };
-	customSound.playSound(customSound.testAfLyd(44100 * 1, lyden));
-	
-	
 
-	setUI();
+
+	Userinterface ui;
+	ui.setUI();
+
 
 	return 0;
 }

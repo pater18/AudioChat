@@ -309,4 +309,15 @@ std::vector<std::vector<sf::Int16> > Encoder::header(std::vector<std::vector<sf:
 	return m_pakkerMedHeader;
 }
 
+std::vector<std::vector<sf::Int16>> Encoder::encoderMessage(std::string message)
+{
+	auto bitstring = StrToBit(message);
+	auto CRCbitString = CRC(bitstring);
+	auto EscBitString = ESC(CRCbitString);
+	auto pakkeBitString = pakker(EscBitString);
+	auto headerBitString = header(pakkeBitString);
+
+	return headerBitString;
+}
+
 

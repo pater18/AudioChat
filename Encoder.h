@@ -14,7 +14,7 @@ public:
 	std::vector<std::vector<sf::Int16> > pakker(std::vector<sf::Int16> bitStrengPakker);
 	std::vector<std::vector<sf::Int16> > header(std::vector<std::vector<sf::Int16> > headerVec);
 
-
+	std::vector<std::vector<sf::Int16> > encoderMessage(std::string message);
 
 	
 

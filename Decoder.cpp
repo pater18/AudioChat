@@ -57,12 +57,6 @@ void Decoder::setDTMFTone(int DTMF)
 		{
 			std::cout << "SLUT FLAG" << std::endl;
 			m_listening = true;
-			intToBit();
-			
-
-			CRC(32);
-			bitToString();
-			m_charVect.clear();
 			m_receivedMessage = true;
 		}
 		else
@@ -75,7 +69,7 @@ void Decoder::setDTMFTone(int DTMF)
 	
 }
 
-std::vector<sf::Int16> Decoder::intToBit(std::vector<sf::Int16> DTMFtones)
+std::vector<sf::Int16> Decoder::intToBit(std::vector<int> DTMFtones)
 {
 
 	std::vector<sf::Int16> vecForCRC;
@@ -206,6 +200,14 @@ std::vector<sf::Int16> Decoder::CRCmodtaget(int antal_bit, std::vector<sf::Int16
 	return messageInBit;
 }
 
+std::string Decoder::decodeMessage()
+{
+	auto bitstring = intToBit(m_charVect);
+	auto CRCModtaget = CRCmodtaget(32, bitstring);
+	auto String = bitToString(CRCModtaget);
+	return String;
+}
+
 
 std::string Decoder::bitToString(std::vector<sf::Int16> messageInBit)
 {
@@ -223,7 +225,7 @@ std::string Decoder::bitToString(std::vector<sf::Int16> messageInBit)
 
 		int tempi = temp.to_ulong();
 		char tempc = (char)tempi;
-		besked.push_back(tempc);
+		message.push_back(tempc);
 
 	}
 	return message;
