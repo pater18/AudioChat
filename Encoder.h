@@ -9,15 +9,29 @@ public:
 	void setBit(int antalBit);
 	void slet();
 	std::vector<sf::Int16> StrToBit(sf::String input);
-	std::vector<sf::Int16> CRC();
-	std::vector<std::vector<sf::Int16> > sendBuffer(std::vector<sf::Int16> _CRC);
-	std::vector<sf::Int16> insertESC;
-	std::vector<std::vector<sf::Int16> > vecSendBuffer;
+	std::vector<sf::Int16> CRC(std::vector<sf::Int16> bitStrengCRC);
+	std::vector<sf::Int16> ESC(std::vector<sf::Int16> bitStrengESC);
+	std::vector<std::vector<sf::Int16> > pakker(std::vector<sf::Int16> bitStrengPakker);
+	std::vector<std::vector<sf::Int16> > header(std::vector<std::vector<sf::Int16> > headerVec);
+
+
+
+	
+
+
+
 	
 private:
 	int m_antalBit;
+	std::vector<sf::Int16> m_binStreng;
+	std::vector<sf::Int16> m_CRCstreng;
+	std::vector<sf::Int16> m_insertESC;
+	std::vector<std::vector<sf::Int16> > m_pakker;
+	std::vector<std::vector<sf::Int16> > m_pakkerMedHeader;
+
+
 protected:
-	std::vector<sf::Int16> _Encoded;
-	std::vector<sf::Int16> ud;
+
+
 
 };
