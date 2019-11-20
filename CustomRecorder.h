@@ -23,6 +23,7 @@ public:
 
 	void addGoertzelMatrixToVector(int nextDtmf);
 	void saveGoertzelMatrixToFile();
+	void saveGoertzelMatrixToSingleFile();
 	int syncDTMF();
 
 	Decoder& getDecoder() { return m_decoder; };

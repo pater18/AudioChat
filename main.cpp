@@ -23,12 +23,11 @@
 
 int main()
 {
+	customSound customSound;
+	std::vector<sf::Int16> lyden = { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,15 };
+	customSound.playSound(customSound.testAfLyd(44100 * 1, lyden));
 	
-	CustomRecorder recorder;
-	recorder.start(12000);
-	std::this_thread::sleep_for(std::chrono::seconds(10));
-	recorder.stop();
-	std::this_thread::sleep_for(std::chrono::seconds(10));
+	
 
 	setUI();
 

@@ -56,6 +56,7 @@ bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t samp
 void CustomRecorder::onStop()
 {
 	saveGoertzelMatrixToFile();
+	//saveGoertzelMatrixToSingleFile();
 	std::cout << std::endl << "Recording stopped" << std::endl;
 }
 
@@ -98,7 +99,7 @@ void CustomRecorder::saveGoertzelMatrixToFile()
 	}
 }
 
-/*void CustomRecorder::saveGoertzelMatrixToFile()
+void CustomRecorder::saveGoertzelMatrixToSingleFile()
 {
 	std::ofstream goertzel;
 	goertzel.open("Goertzel.txt");
@@ -116,9 +117,9 @@ void CustomRecorder::saveGoertzelMatrixToFile()
 			goertzel << m_goertzelDataMatrix[i][j] << " ";
 		}
 		goertzel << std::endl;
-	*\
+	}
 	goertzel.close();
-}*/
+}
 
 int CustomRecorder::syncDTMF()
 {
