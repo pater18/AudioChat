@@ -13,16 +13,17 @@ class Decoder : public SoundChunk
 public:
 	Decoder();
 	void setDTMFTone(int DTMF);
-	std::vector<sf::Int16> intToBit();
-	std::string bitToString();
-	std::vector<int> CRC(int); 
+	std::vector<sf::Int16> intToBit(std::vector<sf::Int16> DTMFtones );
+	std::string bitToString(std::vector<sf::Int16> messageInBit);
+	std::vector<sf::Int16> CRCmodtaget(int antalBit, std::vector<sf::Int16>);
+
+	bool getCRCstatus() { return m_CRCok; };
 	bool getReceivedMessage() { return m_receivedMessage; };
 	void setReceivedMessageToFalse() { m_receivedMessage = false; };
 	void setReceivedMessageToTrue() { m_receivedMessage = true; };
-	std::string getBesked() { return besked; };
 	std::vector<int> getVecForACK() { return vecForACK; };
 	std::vector<sf::Int16> getVecAck() { return m_vecAck; };
-	std::string besked;
+	
 
 private:
 	std::vector<int> m_character;
@@ -30,9 +31,9 @@ private:
 	const std::vector<int> flag = { 15,0 }, escChar = { 15,14 };
 	bool m_listening = true, m_lastEsc = false;
 	bool m_receivedMessage;
+	bool m_CRCok = false;
 
-	std::vector<int> _CRCok;
-	std::vector<sf::Int16> vecForCRC;
+	std::vector<sf::Int16> m_vecForCRC;
 	std::vector<int> vecForACK;
 	std::vector<sf::Int16> m_vecAck; 
 	
