@@ -34,7 +34,7 @@ short customSound::Sinewave(double time, double freq1, double freq2, double amp)
 std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int16> vecFraProt)
 {
 
-	
+	std::vector<sf::Int16> amplitudes;
 
 	std::vector <std::vector<int>> freq{ {697, 1209},{697, 1336},{697, 1477},{697, 1633},{ 770, 1209},{ 770, 1336},{ 770, 1477},{ 770, 1633},{852, 1209},{852, 1336},{852, 1477},{852, 1633}, {941, 1209},{941, 1336},{941, 1477},{941, 1633} };
 
@@ -48,7 +48,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 			freq2 = 1209;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 
 		}
@@ -59,7 +59,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 			freq2 = 1336;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 
 		}
@@ -70,7 +70,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 			freq2 = 1477;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
 
@@ -80,7 +80,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 			freq2 = 1633;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
 
@@ -90,7 +90,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 			freq2 = 1209;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
     
@@ -100,7 +100,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 			freq2 = 1336;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
 
@@ -110,7 +110,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 			freq2 = 1477;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
 
@@ -120,7 +120,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 			freq2 = 1633;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
 
@@ -130,7 +130,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 			freq2 = 1209;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
 
@@ -140,7 +140,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 			freq2 = 1336;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
 
@@ -150,7 +150,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 			freq2 = 1477;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
 
@@ -160,7 +160,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 			freq2 = 1633;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
     
@@ -170,7 +170,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 			freq2 = 1209;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
 
@@ -180,7 +180,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 			freq2 = 1336;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
 
@@ -190,7 +190,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 			freq2 = 1477;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
 
@@ -200,13 +200,13 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 			freq2 = 1633;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
 			}
 		}
 
 	}
 
-	return _customSound;
+	return amplitudes;
 
 }
 

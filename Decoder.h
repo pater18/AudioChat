@@ -21,8 +21,7 @@ public:
 	bool getReceivedMessage() { return m_receivedMessage; };
 	void setReceivedMessageToFalse() { m_receivedMessage = false; };
 	void setReceivedMessageToTrue() { m_receivedMessage = true; };
-	std::vector<int> getVecForACK() { return vecForACK; };
-	std::vector<sf::Int16> getVecAck() { return m_vecAck; };
+	std::vector<sf::Int16> getRenBitStreng() { return m_renBitStreng; };
 	std::string decodeMessage();
 
 	
@@ -35,7 +34,7 @@ private:
 	bool m_receivedMessage;
 	bool m_CRCok = false;
 
-	std::vector<sf::Int16> m_vecForCRC;
+	std::vector<sf::Int16> m_renBitStreng;
 	std::vector<int> vecForACK;
 	std::vector<sf::Int16> m_vecAck; 
 	

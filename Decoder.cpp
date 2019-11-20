@@ -92,7 +92,7 @@ std::vector<sf::Int16> Decoder::intToBit(std::vector<int> DTMFtones)
 	std::cout << std::endl;
 	std::cout << vecForCRC.size() << std::endl;
 		
-	m_vecForCRC = vecForCRC;
+	m_renBitStreng = vecForCRC;
 
     return vecForCRC;
   }

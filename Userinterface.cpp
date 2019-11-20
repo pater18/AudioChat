@@ -149,7 +149,8 @@ void Userinterface::setUI() {
 					recorder.stop();
 
 					Encoder encoder;
-					encoder.encoderMessage(indtastedeBesked);
+					Protokol protokolSend;
+					protokolSend.sendProtokol(encoder.encoderMessage(indtastedeBesked));
 					
 
 					recorder.start(12000);

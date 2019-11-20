@@ -311,11 +311,17 @@ std::vector<std::vector<sf::Int16> > Encoder::header(std::vector<std::vector<sf:
 
 std::vector<std::vector<sf::Int16>> Encoder::encoderMessage(std::string message)
 {
+	setBit(32);
 	auto bitstring = StrToBit(message);
+	std::cout << "1" << std::endl;
 	auto CRCbitString = CRC(bitstring);
+	std::cout << "2" << std::endl;
 	auto EscBitString = ESC(CRCbitString);
+	std::cout << "3" << std::endl;
 	auto pakkeBitString = pakker(EscBitString);
+	std::cout << "4" << std::endl;
 	auto headerBitString = header(pakkeBitString);
+	std::cout << "5" << std::endl;
 
 	return headerBitString;
 }
