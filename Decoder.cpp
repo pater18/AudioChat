@@ -11,25 +11,25 @@ Decoder::Decoder()
 
 void Decoder::setDTMFTone(int DTMF)
 {
-	//m_vecAck.push_back(DTMF);
+	double durationSinceLastDTMF;
+	durationSinceLastDTMF = (std::clock() - messageTimeOut) / (double)CLOCKS_PER_SEC;
+	if (durationSinceLastDTMF > m_timeOutDuration)
+	{
+		m_charVect.clear();
+		std::cout << "CLEAR" << std::endl;
+	}
+
+	messageTimeOut = std::clock();
+
 	if (m_character.size() == 2)
 		m_character.clear();
+
 	m_character.push_back(DTMF);
- 
 	std::cout << DTMF << " ";
 	if (m_character.size() == 2)
 		std::cout << std::endl;
 
-	////Print hver karakter
-	//if (m_character.size() == 1)
-	//{
-	//	for (std::size_t i = 0; i < m_character.size(); i++)
-	//	{
-	//		std::cout << m_character[i] << " ";
-	//	}
-	//	std::cout << std::endl;
-	//}
-	
+
 	
 	if (m_character.size() == 2)
 	{

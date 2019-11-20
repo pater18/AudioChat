@@ -29,7 +29,6 @@ public:
 	Decoder& getDecoder() { return m_decoder; };
 	void setCurDTMF(int curDTMF) { m_curDTMF = curDTMF; };
 
-	std::clock_t startClock;
 private:
 	sf::Int16 m_samples;
 	int m_processingCycles = 0;
@@ -37,7 +36,7 @@ private:
 	const int m_processingInterval = 30;
 
 	float sendingTime = 0.2;
-
+	std::clock_t startClock;
 
 	std::vector<std::vector <float> > m_goertzelDataMatrix;
 	std::vector< std::pair< int, std::vector< std::vector<float> >>> m_goertzelDataPairs;
