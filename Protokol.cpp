@@ -42,7 +42,7 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 				std::cout << "Den er lige over recorder.stop()" << std::endl;
 				protokolRecorder.stop();
 
-				if (getSekNR(protokolRecorder.getDecoder().getRenBitStreng()) == getSekNRSend(sendBuffer[i]))
+				if (getSekNR(protokolRecorder.getDecoder().getRenBitStreng()) == getSekNRSend(_sendBuffer[i]))
 				{
 					std::cout << "Den er inde i if sætning" << std::endl;
 					protokolRecorder.stop();
