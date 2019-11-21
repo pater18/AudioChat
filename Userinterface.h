@@ -28,7 +28,13 @@ public:
 	void receive(CustomRecorder &recorder);
 
 private:
-
+	sf::RectangleShape rectangleTextBox;
+	sf::RectangleShape rectangleSendBox;
+	std::vector<sf::Text> sendTextVec;
+	std::vector<sf::Text> receiveTextVec;
+	sf::Text sendText;
+	sf::Text sendBox;
+	sf::Text receiveText;
 
 	int moveText = 80;
 	double widthOfReceive;

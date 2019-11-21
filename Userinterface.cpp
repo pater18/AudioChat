@@ -1,14 +1,5 @@
 #include "Userinterface.h"
 
-
-sf::RectangleShape rectangleTextBox;
-sf::RectangleShape rectangleSendBox;
-std::vector<sf::Text> sendTextVec;
-std::vector<sf::Text> receiveTextVec;
-sf::Text sendText;
-sf::Text sendBox;
-sf::Text receiveText;
-
 void Userinterface::makeSoundAck(std::vector<sf::Int16> _vecForAck) {
 	customSound koder;
 	koder.setBit(32);
@@ -62,7 +53,6 @@ void Userinterface::displayUI(sf::RenderWindow &window)
 
 void Userinterface::setupUI()
 {
-
 	rectangleTextBox.setSize(sf::Vector2f(750, 75));
 	rectangleTextBox.setFillColor(sf::Color(128, 128, 128));
 	rectangleTextBox.setPosition(50, 700);
@@ -89,15 +79,31 @@ void Userinterface::setupUI()
 	receiveText.setCharacterSize(20);
 	receiveText.setFillColor(sf::Color::Black);
 	
+	sf::RenderWindow window(sf::VideoMode(1000, 800), "Userinterface");
+
+	CustomRecorder recorder;
+	recorder.start(12000);
+
+	while (window.isOpen())
+	{
+		receive(recorder);
+
+		sf::Event event;
+
+		while (window.pollEvent(event))
+		{
+			send(window, event, recorder);
+		}
+
+		displayUI(window);
+	}
 }
 
 void Userinterface::receive(CustomRecorder &recorder)
 {
-	setupUI();
 
 	if (recorder.getDecoder().getReceivedMessage())
 	{
-
 		// receiver delen
 		receiveMessage = recorder.getDecoder().decodeMessage();
 
@@ -119,7 +125,6 @@ void Userinterface::receive(CustomRecorder &recorder)
 		// move sendte tekst
 		moveTextFunc(sendTextVec, receiveTextVec, receiveTextVec, receiveText);
 
-
 		std::cout << "Input if " << std::endl;
 		receiveMessage.clear();
 		indtastedeBesked.clear();
@@ -127,7 +132,6 @@ void Userinterface::receive(CustomRecorder &recorder)
 		std::cout << recorder.getDecoder().getReceivedMessage() << std::endl;
 		recorder.getDecoder().setReceivedMessageToFalse();
 	}
-
 }
 
 void Userinterface::send(sf::RenderWindow &window, sf::Event &event, CustomRecorder &recorder)
@@ -137,7 +141,6 @@ void Userinterface::send(sf::RenderWindow &window, sf::Event &event, CustomRecor
 	case sf::Event::Closed:
 		window.close();
 		break;
-
 
 	case sf::Event::MouseButtonPressed:
 
@@ -153,9 +156,6 @@ void Userinterface::send(sf::RenderWindow &window, sf::Event &event, CustomRecor
 			}
 			break;
 		}
-
-
-
 
 	case sf::Event::KeyPressed:
 		if (event.key.code == sf::Keyboard::Enter)
@@ -203,48 +203,4 @@ void Userinterface::send(sf::RenderWindow &window, sf::Event &event, CustomRecor
 			break;
 		}
 	}
-
-}
-
-void Userinterface::UI()
-{
-	sf::RenderWindow window(sf::VideoMode(1000, 800), "Userinterface");
-
-	CustomRecorder recorder;
-	recorder.start(12000);
-
-	while (window.isOpen())
-	{
-		receive(recorder);
-
-		sf::Event event;
-
-		while (window.pollEvent(event))
-		{
-			send(window, event, recorder);
-		}
-
-		window.clear(sf::Color::White);
-		window.draw(rectangleTextBox);
-		window.draw(rectangleSendBox);
-
-		window.draw(sendBox);
-		window.draw(sendText);
-		window.draw(receiveText);
-
-		for (auto obj : sendTextVec)
-		{
-			window.draw(obj);
-		}
-
-		for (auto obj : receiveTextVec)
-		{
-			window.draw(obj);
-		}
-
-		window.display();
-
-		//displayUI(window);
-	}
-
 }
