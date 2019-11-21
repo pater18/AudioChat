@@ -20,14 +20,21 @@ public:
 	void makeSound();
 	void makeSoundAck(std::vector<sf::Int16> _vecForAck);
 	void initUI();
-	void setUI();
+	void setupUI();
+	void moveTextFunc(std::vector<sf::Text> sendTextVec, std::vector<sf::Text> receiveTextVec, std::vector<sf::Text> sendOrReceiveTextVec, sf::Text sendOrReceiveText);
+	void displayUI(sf::RenderWindow &window);
+	void UI();
+	void send(sf::RenderWindow& window, sf::Event &event, CustomRecorder &recorder);
+	void receive(CustomRecorder &recorder);
 
 private:
-	double widthOfText = 0;
-	int moveText = 80;
 
+
+	int moveText = 80;
 	double widthOfReceive;
-	std::string receive;
-	
+	std::string receiveMessage;
+	std::string indtastedeBesked;
+	bool forventetSekNR = 0;
+
 };
 
