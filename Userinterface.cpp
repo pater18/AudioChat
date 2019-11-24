@@ -1,14 +1,19 @@
 #include "Userinterface.h"
 
+
 void Userinterface::makeSoundAck(std::vector<sf::Int16> _vecForAck) {
 	customSound koder;
 	koder.setBit(32);
 	koder.playSound(koder.bitToAmplitudes(44100 / 5, _vecForAck));
 }
 
-void Userinterface::moveTextFunc(std::vector<sf::Text> sendTextVec, std::vector<sf::Text> receiveTextVec, std::vector<sf::Text> sendOrReceiveTextVec, sf::Text sendOrReceiveText)
+void Userinterface::moveTextFunc(std::vector<sf::Text> sendTextVec, std::vector<sf::Text> receiveTextVec, sf::Text receiveText, std::vector<sf::Text> sendOrReceiveTextVec, sf::Text sendOrReceiveText)
 {
 	int moveText = 80;
+	double widthOfReceive;
+
+	widthOfReceive = receiveText.getLocalBounds().width;
+	receiveText.setPosition(1000 - widthOfReceive - 50, 710 - moveText);
 
 	sendOrReceiveTextVec.insert(sendOrReceiveTextVec.begin(), sendOrReceiveText);
 
@@ -27,77 +32,17 @@ void Userinterface::moveTextFunc(std::vector<sf::Text> sendTextVec, std::vector<
 
 }
 
-void Userinterface::displayUI(sf::RenderWindow &window)
-{
-	window.clear(sf::Color::White);
-	window.draw(rectangleTextBox);
-	window.draw(rectangleSendBox);
+//void Userinterface::defineSFMLobj()
+//{
+//	getRectangleTextBox(rectangleTextBox);
+//	getRectangleSendBox(rectangleSendBox);
+//	getSendTextVec(sendTextVec);
+//	getReceiveTextVec(receiveTextVec);
+//	getSendText(sendText);
+//	getSendBox(sendBox);
+//	getReceiveText(receiveText);
+//}
 
-	window.draw(sendBox);
-	window.draw(sendText);
-	window.draw(receiveText);
-
-	for (auto obj : sendTextVec)
-	{
-		window.draw(obj);
-	}
-
-	for (auto obj : receiveTextVec)
-	{
-		window.draw(obj);
-	}
-
-	window.display();
-}
-
-
-void Userinterface::setupUI()
-{
-	rectangleTextBox.setSize(sf::Vector2f(750, 75));
-	rectangleTextBox.setFillColor(sf::Color(128, 128, 128));
-	rectangleTextBox.setPosition(50, 700);
-
-	rectangleSendBox.setSize(sf::Vector2f(100, 75));
-	rectangleSendBox.setFillColor(sf::Color(128, 128, 128));
-	rectangleSendBox.setPosition(850, 700);
-
-	sf::Font font;
-	font.loadFromFile("blue.ttf");
-
-	sendText.setFont(font);
-	sendText.setCharacterSize(20);
-	sendText.setFillColor(sf::Color::Black);
-	sendText.setPosition(60, 710);
-
-	sendBox.setFont(font);
-	sendBox.setString("Send");
-	sendBox.setCharacterSize(20);
-	sendBox.setFillColor(sf::Color::Black);
-	sendBox.setPosition(880, 725);
-
-	receiveText.setFont(font);
-	receiveText.setCharacterSize(20);
-	receiveText.setFillColor(sf::Color::Black);
-	
-	sf::RenderWindow window(sf::VideoMode(1000, 800), "Userinterface");
-
-	CustomRecorder recorder;
-	recorder.start(12000);
-
-	while (window.isOpen())
-	{
-		receive(recorder);
-
-		sf::Event event;
-
-		while (window.pollEvent(event))
-		{
-			send(window, event, recorder);
-		}
-
-		displayUI(window);
-	}
-}
 
 void Userinterface::receive(CustomRecorder &recorder)
 {
@@ -119,11 +64,7 @@ void Userinterface::receive(CustomRecorder &recorder)
 		std::cout << receiveMessage << std::endl;
 		receiveText.setString(receiveMessage);
 
-		widthOfReceive = receiveText.getLocalBounds().width;
-		receiveText.setPosition(1000 - widthOfReceive - 50, 710 - moveText);
-
-		// move sendte tekst
-		moveTextFunc(sendTextVec, receiveTextVec, receiveTextVec, receiveText);
+		moveTextFunc(sendTextVec, receiveTextVec, receiveText, receiveTextVec, receiveText);
 
 		std::cout << "Input if " << std::endl;
 		receiveMessage.clear();
@@ -149,7 +90,7 @@ void Userinterface::send(sf::RenderWindow &window, sf::Event &event, CustomRecor
 			if (event.mouseButton.x > 850 && event.mouseButton.x < 950 && event.mouseButton.y > 700 && event.mouseButton.y < 775)
 			{
 
-				moveTextFunc(sendTextVec, receiveTextVec, sendTextVec, sendText);
+				moveTextFunc(sendTextVec, receiveTextVec, receiveText, sendTextVec, sendText);
 
 				indtastedeBesked.clear();
 
@@ -169,10 +110,7 @@ void Userinterface::send(sf::RenderWindow &window, sf::Event &event, CustomRecor
 
 			recorder.start(12000);
 
-			// move sendte tekst
-			widthOfReceive = receiveText.getLocalBounds().width;
-			receiveText.setPosition(1000 - widthOfReceive - 50, 710 - moveText);
-			moveTextFunc(sendTextVec, receiveTextVec, sendTextVec, sendText);
+			moveTextFunc(sendTextVec, receiveTextVec, receiveText, sendTextVec, sendText);
 
 			receiveMessage.clear();
 			indtastedeBesked.clear();
@@ -203,4 +141,80 @@ void Userinterface::send(sf::RenderWindow &window, sf::Event &event, CustomRecor
 			break;
 		}
 	}
+}
+
+void Userinterface::displayUI(sf::RenderWindow& window)
+{
+	//defineSFMLobj();
+
+	window.clear(sf::Color::White);
+	window.draw(rectangleTextBox);
+	window.draw(rectangleSendBox);
+
+	window.draw(sendBox);
+	window.draw(sendText);
+	window.draw(receiveText);
+
+	for (auto obj : sendTextVec)
+	{
+		window.draw(obj);
+	}
+
+	for (auto obj : receiveTextVec)
+	{
+		window.draw(obj);
+	}
+
+	window.display();
+}
+
+
+void Userinterface::setupUI()
+{
+	//defineSFMLobj();
+	rectangleTextBox.setSize(sf::Vector2f(750, 75));
+	rectangleTextBox.setFillColor(sf::Color(128, 128, 128));
+	rectangleTextBox.setPosition(50, 700);
+
+	rectangleSendBox.setSize(sf::Vector2f(100, 75));
+	rectangleSendBox.setFillColor(sf::Color(128, 128, 128));
+	rectangleSendBox.setPosition(850, 700);
+
+	sf::Font font;
+	font.loadFromFile("ariblk.ttf");
+
+	sendText.setFont(font);
+	sendText.setCharacterSize(20);
+	sendText.setFillColor(sf::Color::Black);
+	sendText.setPosition(60, 710);
+
+	sendBox.setFont(font);
+	sendBox.setString("Send");
+	sendBox.setCharacterSize(20);
+	sendBox.setFillColor(sf::Color::Black);
+	sendBox.setPosition(880, 725);
+
+	receiveText.setFont(font);
+	receiveText.setCharacterSize(20);
+	receiveText.setFillColor(sf::Color::Black);
+
+	sf::RenderWindow window(sf::VideoMode(1000, 800), "Userinterface");
+
+	CustomRecorder recorder;
+	recorder.start(12000);
+
+	while (window.isOpen())
+	{
+		receive(recorder);
+
+		sf::Event event;
+
+		while (window.pollEvent(event))
+		{
+			send(window, event, recorder);
+		}
+
+		displayUI(window);
+	}
+
 }
