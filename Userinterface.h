@@ -19,11 +19,10 @@ class Userinterface{
 public:
 	void makeSound();
 	void makeSoundAck(std::vector<sf::Int16> _vecForAck);
-	void initUI();
 	void setupUI();
 	void moveTextFunc(std::vector<sf::Text> sendTextVec, std::vector<sf::Text> receiveTextVec, sf::Text receiveText, std::vector<sf::Text> sendOrReceiveTextVec, sf::Text sendOrReceiveText);
 	void displayUI(sf::RenderWindow &window);
-	void send(sf::RenderWindow& window, sf::Event &event, CustomRecorder &recorder);
+	void send(sf::RenderWindow &window, sf::Event &event, CustomRecorder &recorder);
 	void receive(CustomRecorder &recorder);
 	//void defineSFMLobj();
 
