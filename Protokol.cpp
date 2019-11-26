@@ -116,7 +116,7 @@ void Protokol::modtagetProtokol(bool &forventetSekNR, std::vector<sf::Int16> mod
 		std::cout << "modtage size" << modtaget.size() << std::endl;
 		if (forventetSekNR == modtaget[7] || modtaget[6] == 1)
 		{
-
+			//modtageRecorder.stop();
 
 			if (getSekNR(modtaget) == sekNR0)
 			{

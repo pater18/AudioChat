@@ -75,7 +75,7 @@ void Userinterface::setUI() {
 		{
 //////////////////////////////////////////////
 			recorder.getDecoder().setReceivedMessageToFalse();
-			recorder.getDecoder().decodeMessage();
+			std::string besked = recorder.getDecoder().decodeMessage();
 			recorder.pause();
 			int sekNr = recorder.getDecoder().getRenBitStreng()[7];
 			int lastMessage = recorder.getDecoder().getRenBitStreng()[6];
@@ -83,7 +83,7 @@ void Userinterface::setUI() {
 			if ((sekNr == 0 || sekNr == 1) && lastMessage == 0)
 			{
 				if (forventetSekNR == sekNr)
-				receive += recorder.getDecoder().decodeMessage();
+				receive += besked;
 				std::cout << receive << std::endl;
 
 				Protokol modtagProtokol;
@@ -95,7 +95,7 @@ void Userinterface::setUI() {
 
 			else if (lastMessage == 1 && sekNr == 1)
 			{
-				receive += recorder.getDecoder().decodeMessage();
+				receive += besked;
 				std::cout << receive << " " << "sidste" << std::endl;
 
 				Protokol modtagProtokol;

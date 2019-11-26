@@ -208,7 +208,7 @@ std::vector<sf::Int16> Decoder::CRCmodtaget(int antal_bit, std::vector<sf::Int16
 std::string Decoder::decodeMessage()
 {
 	auto bitstring = intToBit(m_charVect);
-	auto CRCModtaget = CRCmodtaget(32, bitstring);
+	auto CRCModtaget = CRCmodtaget(g_antalbit, bitstring);
 	auto String = bitToString(CRCModtaget);
 	return String;
 }
