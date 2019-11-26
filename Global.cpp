@@ -10,7 +10,7 @@ int g_antalbit = 32;
 
 //SoundChunk.h
 double g_threshHold = 400;
-double g_threshHoldMultible = 1.3;
+double g_threshHoldMultible = 1.1;
 
 //Userinterface.h
 

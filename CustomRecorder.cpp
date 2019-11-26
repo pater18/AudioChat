@@ -65,7 +65,7 @@ void CustomRecorder::addGoertzelMatrixToVector(int nextDtmf)
 	auto goertzelDataPair = std::make_pair(m_dtmfForSavingGoertzel, m_goertzelDataMatrix);
 	m_dtmfForSavingGoertzel = nextDtmf;
 	m_goertzelDataPairs.push_back(goertzelDataPair);
-	m_goertzelDataMatrix.clear();
+	//m_goertzelDataMatrix.clear();
 }
 
 void CustomRecorder::saveGoertzelMatrixToFile()
