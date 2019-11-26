@@ -32,18 +32,6 @@ void Userinterface::moveTextFunc(std::vector<sf::Text> sendTextVec, std::vector<
 
 }
 
-//void Userinterface::defineSFMLobj()
-//{
-//	getRectangleTextBox(rectangleTextBox);
-//	getRectangleSendBox(rectangleSendBox);
-//	getSendTextVec(sendTextVec);
-//	getReceiveTextVec(receiveTextVec);
-//	getSendText(sendText);
-//	getSendBox(sendBox);
-//	getReceiveText(receiveText);
-//}
-
-
 void Userinterface::receive(CustomRecorder &recorder)
 {
 
@@ -145,8 +133,6 @@ void Userinterface::send(sf::RenderWindow &window, sf::Event &event, CustomRecor
 
 void Userinterface::displayUI(sf::RenderWindow& window)
 {
-	//defineSFMLobj();
-
 	window.clear(sf::Color::White);
 	window.draw(rectangleTextBox);
 	window.draw(rectangleSendBox);
@@ -171,7 +157,6 @@ void Userinterface::displayUI(sf::RenderWindow& window)
 
 void Userinterface::setupUI()
 {
-	//defineSFMLobj();
 	rectangleTextBox.setSize(sf::Vector2f(750, 75));
 	rectangleTextBox.setFillColor(sf::Color(128, 128, 128));
 	rectangleTextBox.setPosition(50, 700);
