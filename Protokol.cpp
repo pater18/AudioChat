@@ -130,7 +130,7 @@ void Protokol::modtagetProtokol(bool &forventetSekNR, std::vector<sf::Int16> mod
 			ack.push_back(1);
 			ack.insert(ack.end(), startFlag, startFlag + 8);
 			//Lav ack om til lyd og send til encoder
-			
+			forventetSekNR = 1;
 		}
 		else if (getSekNR(modtaget) == sekNR1)
 		{
@@ -146,6 +146,7 @@ void Protokol::modtagetProtokol(bool &forventetSekNR, std::vector<sf::Int16> mod
 			ack.push_back(0);
 			//Lav ack om til lyd og send til encoder
 			ack.insert(ack.end(), startFlag, startFlag + 8);
+			forventetSekNR = 0;
 		}
 		else if (getSekNR(modtaget) == sekNR11)
 		{
@@ -161,6 +162,7 @@ void Protokol::modtagetProtokol(bool &forventetSekNR, std::vector<sf::Int16> mod
 			ack.push_back(0);
 			//Lav ack om til lyd og send til encoder
 			ack.insert(ack.end(), startFlag, startFlag + 8);
+			forventetSekNR = 0;
 		}
 		customSound afspilLyd;
 		afspilLyd.playSound(bitToAmplitudes(44100 / 5, ack));
