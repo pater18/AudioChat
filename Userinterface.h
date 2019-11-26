@@ -25,7 +25,6 @@ public:
 	void receive(CustomRecorder& recorder);
 
 
-
 private:
 	sf::RectangleShape rectangleTextBox;
 	sf::RectangleShape rectangleSendBox;

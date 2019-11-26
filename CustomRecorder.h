@@ -30,6 +30,8 @@ public:
 	Decoder& getDecoder() { return m_decoder; };
 	void setCurDTMF(int curDTMF) { m_curDTMF = curDTMF; };
 
+	std::clock_t startClock;
+
 private:
 	sf::Int16 m_samples;
 	int m_processingCycles = 0;
