@@ -22,6 +22,7 @@ public:
 	void setReceivedMessageToFalse() { m_receivedMessage = false; };
 	void setReceivedMessageToTrue() { m_receivedMessage = true; };
 	std::vector<int> getCharVect() { return m_charVect; };
+	std::vector<int>& getCharacter() { return m_character; };
 	std::vector<sf::Int16> getRenBitStreng() { return m_renBitStreng; };
 	std::string decodeMessage();
 	

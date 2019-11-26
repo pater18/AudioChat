@@ -88,7 +88,7 @@ void Userinterface::setUI() {
 				Protokol modtagProtokol;
 				modtagProtokol.modtagetProtokol(forventetSekNR, recorder.getDecoder().getRenBitStreng());
 				recorder.getDecoder().setReceivedMessageToFalse();
-				recorder.start(g_samplingFreq);
+				recorder.resume();
 
 			}
 

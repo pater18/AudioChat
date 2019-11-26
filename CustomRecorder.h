@@ -23,7 +23,7 @@ public:
 	void onStop();
 
 	void pause() { m_paused = true; };
-	void resume() { m_paused = false; };
+	void resume() { m_paused = false; m_decoder.getCharacter().clear(); };
 
 	void addGoertzelMatrixToVector(int nextDtmf);
 	void saveGoertzelMatrixToFile();
