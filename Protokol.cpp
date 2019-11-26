@@ -26,10 +26,10 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 	while (i < _sendBuffer.size())
 	{
 
-		afspilLyd.playSound(afspilLyd.bitToAmplitudes(44100 / 5, _sendBuffer[i]));
+		afspilLyd.playSound(afspilLyd.bitToAmplitudes(g_sendeTid * 44100, _sendBuffer[i]));
 
 		startClockProt = std::clock();
-		protokolRecorder.start(12000);
+		protokolRecorder.start(g_samplingFreq);
 
 		bool pakkeIkkeSendt = true;
 		protokolRecorder.getDecoder().setReceivedMessageToFalse();
@@ -46,10 +46,10 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 				{
 					std::cout << "Den er inde i if sætning" << std::endl;
 					protokolRecorder.stop();
-					afspilLyd.playSound(afspilLyd.bitToAmplitudes(44100 / 5, _sendBuffer[i]));
+					afspilLyd.playSound(afspilLyd.bitToAmplitudes(g_sendeTid * 44100, _sendBuffer[i]));
 
 					startClockProt = std::clock();
-					protokolRecorder.start(12000);
+					protokolRecorder.start(g_samplingFreq);
 				}
 				/////////////
 				else if (protokolRecorder.getDecoder().getRenBitStreng()[6] == 1)
@@ -69,13 +69,13 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 			}
 
 			duration = (std::clock() - startClockProt) / (double)CLOCKS_PER_SEC;
-			if (duration > 4.5)
+			if (duration > g_sendeTid * 6 + 0.5)
 			{
 				protokolRecorder.stop();
-				afspilLyd.playSound(afspilLyd.bitToAmplitudes(44100 / 5, _sendBuffer[i]));
+				afspilLyd.playSound(afspilLyd.bitToAmplitudes(g_sendeTid * 44100, _sendBuffer[i]));
 				startClockProt = std::clock();
 		
-				protokolRecorder.start(12000);
+				protokolRecorder.start(g_samplingFreq);
 			}
 			
 		}
@@ -186,5 +186,5 @@ void Protokol::modtagetProtokol(bool &forventetSekNR, std::vector<sf::Int16> mod
 
 	
 	customSound afspilLyd;
-	afspilLyd.playSound(bitToAmplitudes(44100 / 5, ack));
+	afspilLyd.playSound(bitToAmplitudes(g_sendeTid * 44100, ack));
 }

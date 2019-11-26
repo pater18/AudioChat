@@ -35,7 +35,7 @@ private:
 	bool m_CRCok = false;
 
 	std::clock_t messageTimeOut;
-	double m_timeOutDuration = 0.5; 
+	double m_timeOutDuration = g_sendeTid * 2; 
 
 	std::vector<sf::Int16> m_renBitStreng;
 	std::vector<int> vecForACK;

@@ -2,11 +2,11 @@
 
 
 
-void Userinterface::makeSoundAck(std::vector<sf::Int16> _vecForAck) {
-	customSound koder;
-	koder.setBit(32);
-	koder.playSound(koder.bitToAmplitudes(44100 / 5, _vecForAck));
-}
+//void Userinterface::makeSoundAck(std::vector<sf::Int16> _vecForAck) {
+//	customSound koder;
+//	koder.setBit(g_antalbit);
+//	koder.playSound(koder.bitToAmplitudes(44100 * g_sendeTid, _vecForAck));
+//}
 
 
 void Userinterface::setUI() {
@@ -63,7 +63,7 @@ void Userinterface::setUI() {
 
 	std::string indtastedeBesked;
 
-	recorder.start(12000);
+	recorder.start(g_samplingFreq);
 
 	bool forventetSekNR = 0;
 
@@ -79,20 +79,20 @@ void Userinterface::setUI() {
 			int sekNr = recorder.getDecoder().getRenBitStreng()[7];
 			int lastMessage = recorder.getDecoder().getRenBitStreng()[6];
 
-			if ((recorder.getDecoder().getRenBitStreng()[7] == 0 || recorder.getDecoder().getRenBitStreng()[7] == 1) && recorder.getDecoder().getRenBitStreng()[6] == 0)
+			if ((sekNr == 0 || sekNr == 1) && lastMessage == 0)
 			{
-				if (forventetSekNR == recorder.getDecoder().getRenBitStreng()[7])
+				if (forventetSekNR == sekNr)
 				receive += recorder.getDecoder().decodeMessage();
 				std::cout << receive << std::endl;
 
 				Protokol modtagProtokol;
 				modtagProtokol.modtagetProtokol(forventetSekNR, recorder.getDecoder().getRenBitStreng());
 				recorder.getDecoder().setReceivedMessageToFalse();
-				recorder.start(12000);
+				recorder.start(g_samplingFreq);
 
 			}
 
-			else if (recorder.getDecoder().getRenBitStreng()[6] == 1 && recorder.getDecoder().getRenBitStreng()[7] == 1)
+			else if (lastMessage == 1 && sekNr == 1)
 			{
 				receive += recorder.getDecoder().decodeMessage();
 				std::cout << receive << " " << "sidste" << std::endl;
@@ -123,7 +123,7 @@ void Userinterface::setUI() {
 				std::cout << "Input if " << std::endl;
 				receive.clear();
 				indtastedeBesked.clear();
-				recorder.start(12000);
+				recorder.start(g_samplingFreq);
 				std::cout << recorder.getDecoder().getReceivedMessage() << std::endl;
 				recorder.getDecoder().setReceivedMessageToFalse();
 			}
@@ -180,7 +180,7 @@ void Userinterface::setUI() {
 					protokolSend.sendProtokol(encoder.encoderMessage(indtastedeBesked));
 					
 
-					recorder.start(12000);
+					recorder.start(g_samplingFreq);
 
 					receive.clear();
 					

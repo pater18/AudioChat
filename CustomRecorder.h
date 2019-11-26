@@ -4,6 +4,7 @@
 #include "Decoder.h"
 #include "Timer.h"
 
+
 #include <thread>
 #include <chrono>
 #include <cstdio>
@@ -34,9 +35,9 @@ private:
 	sf::Int16 m_samples;
 	int m_processingCycles = 0;
 
-	const int m_processingInterval = 30;
+	const int m_processingInterval = g_processInterval;
 
-	float sendingTime = 0.2;
+	float sendingTime = g_sendeTid;
 
 
 	std::vector<std::vector <float> > m_goertzelDataMatrix;

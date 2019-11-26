@@ -336,28 +336,12 @@ std::vector<std::vector<sf::Int16> > Encoder::header(std::vector<std::vector<sf:
 
 std::vector<std::vector<sf::Int16>> Encoder::encoderMessage(std::string message)
 {
-	setBit(32);
+	setBit(g_antalbit);
 	auto bitstring = StrToBit(message);
-	for (size_t i = 0; i < bitstring.size(); i++)
-	{
-		std::cout << bitstring[i];
-	}
-	std::cout << std::endl;
-
 	auto CRCbitString = CRC(bitstring);
-	for (size_t i = 0; i < CRCbitString.size(); i++)
-	{
-		std::cout << CRCbitString[i] << "A";
-	
-	}
-	std::cout << std::endl;
-
 	auto EscBitString = ESC(CRCbitString);
-	std::cout << "3" << std::endl;
 	auto pakkeBitString = pakker(EscBitString);
-	std::cout << "4" << std::endl;
 	auto headerBitString = header(pakkeBitString);
-	std::cout << "5" << std::endl;
 
 	return headerBitString;
 }

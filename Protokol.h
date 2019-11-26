@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "Sound.h"
 #include <vector>
+#include "Global.h"
 
 
 class Protokol : public customSound

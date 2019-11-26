@@ -28,8 +28,6 @@ short customSound::Sinewave(double time, double freq1, double freq2, double amp)
 }
 
 
-  
-
 
 std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int16> vecFraProt)
 {
@@ -216,11 +214,12 @@ void customSound::playSound(std::vector<sf::Int16> vectorOfAmplitudes)
 	sf::Sound sound;
 	buffer.loadFromSamples(&vectorOfAmplitudes[0], vectorOfAmplitudes.size(), 1, 44100);
 	sound.setBuffer(buffer);
+	sf::sleep(sf::seconds(0.2));
 	sound.play();
 	while (sound.getStatus() != 0)
 	{
 	}
-	sf::sleep(sf::seconds(0.5));
+	
 }
 
 std::vector<sf::Int16> customSound::testAfLyd(int tid, std::vector<sf::Int16> &decimaler)
