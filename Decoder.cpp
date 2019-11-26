@@ -68,6 +68,7 @@ void Decoder::setDTMFTone(int DTMF)
 			std::cout << "SLUT FLAG" << std::endl;
 			m_listening = true;
 			m_receivedMessage = true;
+			m_character.clear();
 		}
 		else
 		{
