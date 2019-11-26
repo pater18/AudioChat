@@ -11,6 +11,16 @@ Decoder::Decoder()
 
 void Decoder::setDTMFTone(int DTMF)
 {
+	double durationSinceLastDTMF;
+	durationSinceLastDTMF = (std::clock() - messageTimeOut) / (double)CLOCKS_PER_SEC;
+	if (durationSinceLastDTMF > m_timeOutDuration)
+	{
+		m_charVect.clear();
+		m_character.clear();
+		std::cout << "CLEAR" << std::endl;
+	}
+	messageTimeOut = std::clock();
+
 	//m_vecAck.push_back(DTMF);
 	if (m_character.size() == 2)
 		m_character.clear();

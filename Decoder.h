@@ -24,7 +24,6 @@ public:
 	std::vector<int> getCharVect() { return m_charVect; };
 	std::vector<sf::Int16> getRenBitStreng() { return m_renBitStreng; };
 	std::string decodeMessage();
-
 	
 
 private:
@@ -34,6 +33,9 @@ private:
 	bool m_listening = true, m_lastEsc = false;
 	bool m_receivedMessage;
 	bool m_CRCok = false;
+
+	std::clock_t messageTimeOut;
+	double m_timeOutDuration = 0.5; 
 
 	std::vector<sf::Int16> m_renBitStreng;
 	std::vector<int> vecForACK;

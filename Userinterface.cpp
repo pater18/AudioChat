@@ -75,6 +75,7 @@ void Userinterface::setUI() {
 		{
 //////////////////////////////////////////////
 			recorder.getDecoder().decodeMessage();
+			recorder.stop();
 
 			if (recorder.getDecoder().getRenBitStreng()[7] == 0 || recorder.getDecoder().getRenBitStreng()[7] == 1)
 			{
