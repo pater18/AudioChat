@@ -88,9 +88,9 @@ std::vector<sf::Int16> Encoder::CRC(std::vector<sf::Int16> bitStrengCRC)
 	for (size_t k = 0; k < bitStrengCRC.size(); k += m_antalBit) //k=8
 	{
 
-		std::bitset<64> generator(0b0000000100000111);  // CRC_8 check generator polynomie 
+		std::bitset<128> generator(0b0000000100000111);  // CRC_8 check generator polynomie 
 
-		std::bitset<64> data(0b0);						// Vektor til at lave udregninger på.
+		std::bitset<128> data(0b0);						// Vektor til at lave udregninger på.
 
 		for (int i = 0; i < m_antalBit; i++) //=8					// I dette loop indsættes data fra strengen ind i et bitset, så det senere kan manipuleres med. 
 		{												// Det er 8 da vi laver tjek på hver 8 bit. Samtidig lægges de 8 bit i en ny vektor. 
@@ -265,10 +265,11 @@ std::vector<std::vector<sf::Int16>> Encoder::pakker(std::vector<sf::Int16> bitSt
 			protoSlut += (m_antalBit + 8);
 
 		}
-		if (i == 0)
+
+		if (i == 0 && (numPadding < 0))
 		{
-			std::cout << numPadding << std::endl; 
-			m_pakker[0].erase(m_pakker[0].begin() + 16, m_pakker[0].begin() + numPadding + 16);
+			std::cout << numPadding << numPadding << std::endl; 
+			m_pakker[0].erase(m_pakker[0].begin(), m_pakker[0].begin() + numPadding);
 		}
 	}
 	for (size_t i = 0; i < m_pakker.size(); i++)
@@ -288,20 +289,43 @@ std::vector<std::vector<sf::Int16> > Encoder::header(std::vector<std::vector<sf:
 	int flag[8] = { 1,1,1,1,0,0,0,0 };
 	int sek0[8] = { 0,0,0,0,0,0,0,0 };
 	int sek1[8] = { 0,0,0,0,0,0,0,1 };
+	int sek2[8] = { 0,0,0,0,0,0,1,0 };
+	int sek3[8] = { 0,0,0,0,0,0,1,1 };
 
 	for (size_t i = 0; i < headerVec.size(); i++)
 	{
 		if (i % 2 == 0)
 		{
-			headerVec[i].insert(headerVec[i].begin(), flag, flag + 8);
-			headerVec[i].insert(headerVec[i].end(), sek0, sek0 + 8);
-			headerVec[i].insert(headerVec[i].end(), flag, flag + 8);
+			if (headerVec.size() != i + 1)
+			{
+				headerVec[i].insert(headerVec[i].begin(), flag, flag + 8);
+				headerVec[i].insert(headerVec[i].end(), sek0, sek0 + 8);
+				headerVec[i].insert(headerVec[i].end(), flag, flag + 8);
+			}
+			else
+			{
+				headerVec[i].insert(headerVec[i].begin(), flag, flag + 8);
+				headerVec[i].insert(headerVec[i].end(), sek2, sek2 + 8);
+				headerVec[i].insert(headerVec[i].end(), flag, flag + 8);
+			}
+
+			
 		}
 		else
 		{
-			headerVec[i].insert(headerVec[i].begin(), flag, flag + 8);
-			headerVec[i].insert(headerVec[i].end(), sek1, sek1 + 8);
-			headerVec[i].insert(headerVec[i].end(), flag, flag + 8);
+			if (headerVec.size() != i + 1)
+			{
+				headerVec[i].insert(headerVec[i].begin(), flag, flag + 8);
+				headerVec[i].insert(headerVec[i].end(), sek1, sek1 + 8);
+				headerVec[i].insert(headerVec[i].end(), flag, flag + 8);
+			}
+			else
+			{
+				headerVec[i].insert(headerVec[i].begin(), flag, flag + 8);
+				headerVec[i].insert(headerVec[i].end(), sek3, sek3 + 8);
+				headerVec[i].insert(headerVec[i].end(), flag, flag + 8);
+			}
+			
 		}
 	}
 	m_pakkerMedHeader = headerVec;
@@ -311,7 +335,7 @@ std::vector<std::vector<sf::Int16> > Encoder::header(std::vector<std::vector<sf:
 
 std::vector<std::vector<sf::Int16>> Encoder::encoderMessage(std::string message)
 {
-	setBit(32);
+	setBit(64);
 	auto bitstring = StrToBit(message);
 	std::cout << "1" << std::endl;
 	auto CRCbitString = CRC(bitstring);

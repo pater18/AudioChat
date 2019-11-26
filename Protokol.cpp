@@ -35,14 +35,15 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 
 		while (pakkeIkkeSendt)
 		{
+			
 			duration = (std::clock() - startClockProt) / (double)CLOCKS_PER_SEC;
-			if (protokolRecorder.getDecoder().getReceivedMessage())
+			if (protokolRecorder.getDecoder().getReceivedMessage())					//Modtager et ackno
 			{
 
 				std::cout << "Den er lige over recorder.stop()" << std::endl;
 				protokolRecorder.stop();
 
-				if (getSekNR(protokolRecorder.getDecoder().getRenBitStreng()) == getSekNRSend(_sendBuffer[i]))
+				if (getSekNR(protokolRecorder.getDecoder().getRenBitStreng()) == getSekNRSend(_sendBuffer[i]))		//Sender den samme besked igen hvis den ikke blev modtaget rigigt i den anden ende
 				{
 					std::cout << "Den er inde i if sætning" << std::endl;
 					protokolRecorder.stop();
@@ -51,7 +52,7 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 					startClockProt = std::clock();
 					protokolRecorder.start(12000);
 				}
-				else
+				else																								//Gør klar til at næste pakke kan sendes. 
 				{
 					std::cout << "Den er inde i else " << std::endl;
 					i++;
@@ -59,8 +60,6 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 
 				}
 			}
-
-
 			if (duration > 4.5)
 			{
 				protokolRecorder.stop();
@@ -69,6 +68,7 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 		
 				protokolRecorder.start(12000);
 			}
+			
 			
 		}
 	}
@@ -97,14 +97,16 @@ std::vector<sf::Int16> Protokol::getSekNRSend(std::vector<sf::Int16> _sekNRSend)
 
 
 
-void Protokol::modtagetProtokol(bool &forventetSekNR, std::vector<sf::Int16> modtaget)
+void Protokol::modtagetProtokol(bool& forventetSekNR, std::vector<sf::Int16> modtaget)
 {
-	if (forventetSekNR == getSekNR(modtaget)[7])
+	if (forventetSekNR == modtaget[7]) 
 	{
 		int startFlag[8] = { 1,1,1,1,0,0,0,0 };
 		std::vector<sf::Int16> sekNR0 = { 0,0,0,0,0,0,0,0 };
 		std::vector<sf::Int16> sekNR1 = { 0,0,0,0,0,0,0,1 };
-		if (getSekNR(modtaget) == sekNR0)
+		std::vector<sf::Int16> sekNR3 = { 0,0,0,0,0,0,1,0 };
+		std::vector<sf::Int16> sekNR4 = { 0,0,0,0,0,0,1,1 };
+		if (getSekNR(modtaget) == sekNR0 || getSekNR(modtaget) == sekNR3)
 		{
 			ack.insert(ack.begin(), startFlag, startFlag + 8);
 			//Så send x+1 til transmitter
@@ -118,8 +120,9 @@ void Protokol::modtagetProtokol(bool &forventetSekNR, std::vector<sf::Int16> mod
 			ack.push_back(1);
 			ack.insert(ack.end(), startFlag, startFlag + 8);
 			//Lav ack om til lyd og send til encoder
+			forventetSekNR = 1; 
 		}
-		else if (getSekNR(modtaget) == sekNR1)
+		else if (getSekNR(modtaget) == sekNR1 || getSekNR(modtaget) == sekNR4)
 		{
 			ack.insert(ack.begin(), startFlag, startFlag + 8);
 			//Så send x til transmitter
@@ -133,10 +136,57 @@ void Protokol::modtagetProtokol(bool &forventetSekNR, std::vector<sf::Int16> mod
 			ack.push_back(0);
 			//Lav ack om til lyd og send til encoder
 			ack.insert(ack.end(), startFlag, startFlag + 8);
+			forventetSekNR = 0;
 		}
 
 		customSound afspilLyd;
 		afspilLyd.playSound(bitToAmplitudes(44100 / 5, ack));
+		
 	}
+	else 
+	{
+		int startFlag[8] = { 1,1,1,1,0,0,0,0 };
+		std::vector<sf::Int16> sekNR0 = { 0,0,0,0,0,0,0,0 };
+		std::vector<sf::Int16> sekNR1 = { 0,0,0,0,0,0,0,1 };
+		std::vector<sf::Int16> sekNR3 = { 0,0,0,0,0,0,1,0 };
+		std::vector<sf::Int16> sekNR4 = { 0,0,0,0,0,0,1,1 };
+		if (getSekNR(modtaget) == sekNR0 || getSekNR(modtaget) == sekNR3)
+		{
+			ack.insert(ack.begin(), startFlag, startFlag + 8);
+			//Så send x+1 til transmitter
+			ack.push_back(0);
+			ack.push_back(0);
+			ack.push_back(0);
+			ack.push_back(0);
+			ack.push_back(0);
+			ack.push_back(0);
+			ack.push_back(0);
+			ack.push_back(0);
+			ack.insert(ack.end(), startFlag, startFlag + 8);
+			//Lav ack om til lyd og send til encoder
+		}
+		else if (getSekNR(modtaget) == sekNR1 || getSekNR(modtaget) == sekNR4)
+		{
+			ack.insert(ack.begin(), startFlag, startFlag + 8);
+			//Så send x til transmitter
+			ack.push_back(0);
+			ack.push_back(0);
+			ack.push_back(0);
+			ack.push_back(0);
+			ack.push_back(0);
+			ack.push_back(0);
+			ack.push_back(0);
+			ack.push_back(1);
+			//Lav ack om til lyd og send til encoder
+			ack.insert(ack.end(), startFlag, startFlag + 8);
+
+		}
+
+		customSound afspilLyd;
+		afspilLyd.playSound(bitToAmplitudes(44100 / 5, ack));
+
+	}
+	
+	
 
 }
