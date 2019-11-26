@@ -35,6 +35,9 @@ private:
 	bool m_receivedMessage;
 	bool m_CRCok = false;
 
+	std::clock_t messageTimeOut;
+	double m_timeOutDuration = 0.5;
+
 	std::vector<sf::Int16> m_renBitStreng;
 	std::vector<int> vecForACK;
 	std::vector<sf::Int16> m_vecAck; 
