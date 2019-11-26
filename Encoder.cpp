@@ -8,7 +8,6 @@
 #include <iostream>
 
 
-int numPadding;
 
 Encoder::Encoder()
 {
@@ -20,20 +19,21 @@ void Encoder::setBit(int antalBit)
 }
 
 void Encoder::slet() {
-	ud.clear();
+	m_CRCstreng.clear();
 }
 
 std::vector<sf::Int16> Encoder::StrToBit(sf::String input)
 {
+	std::vector<int> stringToBitVec;
 
-	std::vector<int> binString;
 	int StrLenght = input.getSize();
 
 	for (int i = 0; i < input.getSize(); i++)
 	{
-		binString.push_back(input[i]);					//Put hvert bogstav i en vektor 
 
-		std::string binary = std::bitset<8>(binString[i]).to_string(); //Converter hvert bogstav til en bitstreng.
+		stringToBitVec.push_back(input[i]);					//Put hvert bogstav i en vektor 
+
+		std::string binary = std::bitset<8>(stringToBitVec[i]).to_string(); //Converter hvert bogstav til en bitstreng.
 
 		//std::cout << "Streng: " << binary << std::endl;					//Udskriver bitstrengen for det bogstav
 
@@ -42,51 +42,49 @@ std::vector<sf::Int16> Encoder::StrToBit(sf::String input)
 			int temp = (int)binary[i];
 			if (temp == 48)
 			{
-				_Encoded.push_back(0);
+				m_binStreng.push_back(0);
 			}
 			else
 			{
-				_Encoded.push_back(1);
+				m_binStreng.push_back(1);
 			}
-
 		}
-
 	}
 
 	std::cout << "Besked skrevet i bit: ";
-	for (size_t i = 0; i < _Encoded.size(); i++)			//Tjek til at se der sker det rigtige 
+	for (size_t i = 0; i < m_binStreng.size(); i++)			//Tjek til at se der sker det rigtige 
 	{
-		std::cout << _Encoded[i];
+		std::cout << m_binStreng[i];
 	}
 	std::cout << std::endl; 
 
-	return _Encoded;
+	return m_binStreng;
 }
 
 	
 
-std::vector<sf::Int16> Encoder::CRC()
+std::vector<sf::Int16> Encoder::CRC(std::vector<sf::Int16> bitStrengCRC)
 {
-	int indSize = _Encoded.size();
+	int indSize = bitStrengCRC.size();
 	int paddingCoeff = 0;
 
 	while (indSize > (paddingCoeff * m_antalBit))
 		paddingCoeff++;
 
-	int numPadding = paddingCoeff * m_antalBit - indSize;
+	m_numPadding = paddingCoeff * m_antalBit - indSize;
 
-	std::cout << "Antal nuller der puttes i som padding: " << numPadding << std::endl;
+	std::cout << "Antal nuller der puttes i som padding: " << m_numPadding << std::endl;
 
 
-	for (int i = 0; i < numPadding; i++)
+	for (int i = 0; i < m_numPadding; i++)
 	{
-		_Encoded.insert(_Encoded.begin(), 0);
+		bitStrengCRC.insert(bitStrengCRC.begin(), 0);
 	}
 
 
 	int DataInsert = m_antalBit + 8 - 1;					//32 + 8 - 1 = 39 
 
-	for (size_t k = 0; k < _Encoded.size(); k += m_antalBit) //k=8
+	for (size_t k = 0; k < bitStrengCRC.size(); k += m_antalBit) //k=8
 	{
 
 		std::bitset<64> generator(0b0000000100000111);  // CRC_8 check generator polynomie 
@@ -96,15 +94,15 @@ std::vector<sf::Int16> Encoder::CRC()
 		for (int i = 0; i < m_antalBit; i++) //=8					// I dette loop indsættes data fra strengen ind i et bitset, så det senere kan manipuleres med. 
 		{												// Det er 8 da vi laver tjek på hver 8 bit. Samtidig lægges de 8 bit i en ny vektor. 
 
-			if (_Encoded[i + k] == 1)
+			if (bitStrengCRC[i + k] == 1)
 			{
 				data.set(DataInsert - i, 1); //15
-				ud.push_back(1);
+				m_CRCstreng.push_back(1);
 			}
 			else
 			{
 				data.set(DataInsert - i, 0); //15
-				ud.push_back(0);
+				m_CRCstreng.push_back(0);
 			}
 
 		}
@@ -132,157 +130,219 @@ std::vector<sf::Int16> Encoder::CRC()
 		std::cout << "Rest efter division: ";
 		for (int i = 0; i < 8; i++)
 		{
-			ud.push_back(data[7 - i]);
+			m_CRCstreng.push_back(data[7 - i]);
 			std::cout << data[7 - i];
 		}
 		std::cout << std::endl;
 	}
+	return m_CRCstreng;
+}
 
-	std::cout << "Binary streng der skal laves insertESC p�: ";
+std::vector<sf::Int16> Encoder::ESC(std::vector<sf::Int16> bitStrengESC)
+{
+	std::vector<int> ESCknap = { 1,1,1,1,1,1,1,0 };
+	std::cout << "Binary streng der skal laves m_insertESC paa: ";
   
-	for (size_t i = 0; i < ud.size(); i++)
+	for (size_t i = 0; i < bitStrengESC.size(); i++)
 	{
-		std::cout << ud[i];
+		std::cout << bitStrengESC[i];
 	}
 
-	std::cout << std::endl << "St�rrelse p� ud: " << ud.size() << std::endl;
+	std::cout << std::endl << "Stoerrelse paa bitStrengESC: " << bitStrengESC.size() << std::endl;
 
-	//Stop and wait insertESC for encoder
-	for (size_t i = 0; i < ud.size(); i += 8)
+	//Stop and wait m_insertESC for encoder
+	for (size_t i = 0; i < bitStrengESC.size(); i += 8)
 	{
-		if ((ud[i] == 1) && (ud[i + 1] == 1) && (ud[i + 2] == 1) && (ud[i + 3] == 1) && (ud[i + 4] == 0) && (ud[i + 5] == 0) && (ud[i + 6] == 0) && (ud[i + 7] == 0))
+		if ((bitStrengESC[i] == 1) && (bitStrengESC[i + 1] == 1) && (bitStrengESC[i + 2] == 1) && (bitStrengESC[i + 3] == 1) && (bitStrengESC[i + 4] == 0) && (bitStrengESC[i + 5] == 0) && (bitStrengESC[i + 6] == 0) && (bitStrengESC[i + 7] == 0))
 		{
 			//std::cout << "flag fundet";
-			insertESC.push_back(1);
-			insertESC.push_back(1);
-			insertESC.push_back(1);
-			insertESC.push_back(1);
-			insertESC.push_back(1);
-			insertESC.push_back(1);
-			insertESC.push_back(1);
-			insertESC.push_back(0);
-			insertESC.push_back(ud[i]);
-			insertESC.push_back(ud[i + 1]);
-			insertESC.push_back(ud[i + 2]);
-			insertESC.push_back(ud[i + 3]);
-			insertESC.push_back(ud[i + 4]);
-			insertESC.push_back(ud[i + 5]);
-			insertESC.push_back(ud[i + 6]);
-			insertESC.push_back(ud[i + 7]);
+			m_insertESC.push_back(1);
+			m_insertESC.push_back(1);
+			m_insertESC.push_back(1);
+			m_insertESC.push_back(1);
+			m_insertESC.push_back(1);
+			m_insertESC.push_back(1);
+			m_insertESC.push_back(1);
+			m_insertESC.push_back(0);
+			m_insertESC.push_back(bitStrengESC[i]);
+			m_insertESC.push_back(bitStrengESC[i + 1]);
+			m_insertESC.push_back(bitStrengESC[i + 2]);
+			m_insertESC.push_back(bitStrengESC[i + 3]);
+			m_insertESC.push_back(bitStrengESC[i + 4]);
+			m_insertESC.push_back(bitStrengESC[i + 5]);
+			m_insertESC.push_back(bitStrengESC[i + 6]);
+			m_insertESC.push_back(bitStrengESC[i + 7]);
 		}
-		else if ((ud[i] == 1) && (ud[i + 1] == 1) && (ud[i + 2] == 1) && (ud[i + 3] == 1) && (ud[i + 4] == 1) && (ud[i + 5] == 1) && (ud[i + 6] == 1) && (ud[i + 7] == 0))
+		else if ((bitStrengESC[i] == 1) && (bitStrengESC[i + 1] == 1) && (bitStrengESC[i + 2] == 1) && (bitStrengESC[i + 3] == 1) && (bitStrengESC[i + 4] == 1) && (bitStrengESC[i + 5] == 1) && (bitStrengESC[i + 6] == 1) && (bitStrengESC[i + 7] == 0))
 		{
 			//std::cout << "ESC char fundet";
-			insertESC.push_back(1);
-			insertESC.push_back(1);
-			insertESC.push_back(1);
-			insertESC.push_back(1);
-			insertESC.push_back(1);
-			insertESC.push_back(1);
-			insertESC.push_back(1);
-			insertESC.push_back(0);
-			insertESC.push_back(ud[i]);
-			insertESC.push_back(ud[i + 1]);
-			insertESC.push_back(ud[i + 2]);
-			insertESC.push_back(ud[i + 3]);
-			insertESC.push_back(ud[i + 4]);
-			insertESC.push_back(ud[i + 5]);
-			insertESC.push_back(ud[i + 6]);
-			insertESC.push_back(ud[i + 7]);
+			m_insertESC.push_back(1);
+			m_insertESC.push_back(1);
+			m_insertESC.push_back(1);
+			m_insertESC.push_back(1);
+			m_insertESC.push_back(1);
+			m_insertESC.push_back(1);
+			m_insertESC.push_back(1);
+			m_insertESC.push_back(0);
+			m_insertESC.push_back(bitStrengESC[i]);
+			m_insertESC.push_back(bitStrengESC[i + 1]);
+			m_insertESC.push_back(bitStrengESC[i + 2]);
+			m_insertESC.push_back(bitStrengESC[i + 3]);
+			m_insertESC.push_back(bitStrengESC[i + 4]);
+			m_insertESC.push_back(bitStrengESC[i + 5]);
+			m_insertESC.push_back(bitStrengESC[i + 6]);
+			m_insertESC.push_back(bitStrengESC[i + 7]);
 		}
 		else
 		{
-			insertESC.push_back(ud[i]);
-			insertESC.push_back(ud[i + 1]);
-			insertESC.push_back(ud[i + 2]);
-			insertESC.push_back(ud[i + 3]);
-			insertESC.push_back(ud[i + 4]);
-			insertESC.push_back(ud[i + 5]);
-			insertESC.push_back(ud[i + 6]);
-			insertESC.push_back(ud[i + 7]);
+			m_insertESC.push_back(bitStrengESC[i]);
+			m_insertESC.push_back(bitStrengESC[i + 1]);
+			m_insertESC.push_back(bitStrengESC[i + 2]);
+			m_insertESC.push_back(bitStrengESC[i + 3]);
+			m_insertESC.push_back(bitStrengESC[i + 4]);
+			m_insertESC.push_back(bitStrengESC[i + 5]);
+			m_insertESC.push_back(bitStrengESC[i + 6]);
+			m_insertESC.push_back(bitStrengESC[i + 7]);
 		}
 
 	}
 
-	for (size_t i = 0; i < insertESC.size(); i++)
+	for (size_t i = 0; i < m_insertESC.size(); i++)
 	{
-		std::cout << insertESC[i];
+		std::cout << m_insertESC[i];
 	}
 	std::cout << std::endl;
 
 
-	return insertESC;
+	return m_insertESC;
 
 }
 
-std::vector<std::vector<sf::Int16>> Encoder::sendBuffer(std::vector<sf::Int16> _CRC)
+std::vector<std::vector<sf::Int16>> Encoder::pakker(std::vector<sf::Int16> bitStrengPakker)
 {
-	int j = 0, protoStart = 0, protoSlut = 40, length = 0;
-	int flag[8] = { 1,1,1,1,0,0,0,0 };
-	int sek0[8] = { 0,0,0,0,0,0,0,0 };
-	int sek1[8] = { 0,0,0,0,0,0,0,1 };
-	length = insertESC.size();
+
+	int j = 0, protoStart = 0, protoSlut = m_antalBit + 8, length = 0;
+	length = bitStrengPakker.size();
 
 	if (length % (m_antalBit + 8) == 0)
 	{
-		vecSendBuffer.resize(length / (m_antalBit + 8));
+		m_pakker.resize(length / (m_antalBit + 8));
 	}
 	else
 	{
-		vecSendBuffer.resize((length / (m_antalBit + 8)) + 1);
+		m_pakker.resize((length / (m_antalBit + 8)) + 1);
 	}
 
-	for (size_t i = 0; i < vecSendBuffer.size(); i++)
+	for (size_t i = 0; i < m_pakker.size(); i++)
 	{
 		if (i % 2 == 0)
 		{
-			vecSendBuffer[i].insert(vecSendBuffer[i].begin(), flag, flag+8);
-			vecSendBuffer[i].insert(vecSendBuffer[i].end(), sek0, sek0 + 8);
-			if (protoStart + (m_antalBit + 8) < insertESC.size())
+			if (protoStart + (m_antalBit + 8) < bitStrengPakker.size())
 			{
-				vecSendBuffer[i].insert(vecSendBuffer[i].end(), insertESC.begin() + protoStart, insertESC.begin() + protoSlut);
+				m_pakker[i].insert(m_pakker[i].end(), bitStrengPakker.begin() + protoStart, bitStrengPakker.begin() + protoSlut);
 			}
 			else
 			{
-				vecSendBuffer[i].insert(vecSendBuffer[i].end(), insertESC.begin() + protoStart, insertESC.end());
+				m_pakker[i].insert(m_pakker[i].end(), bitStrengPakker.begin() + protoStart, bitStrengPakker.end());
 			}
-			vecSendBuffer[i].insert(vecSendBuffer[i].end(), flag, flag + 8);
+
 			protoStart += (m_antalBit + 8);
 			protoSlut += (m_antalBit + 8);
 		}
 		else
 		{
-			vecSendBuffer[i].insert(vecSendBuffer[i].begin(), flag, flag + 8);
-			vecSendBuffer[i].insert(vecSendBuffer[i].end(), sek1, sek1 + 8);
-			if (protoStart + (m_antalBit + 8) < insertESC.size())
+
+			if (protoStart + (m_antalBit + 8) < bitStrengPakker.size())
 			{
-				vecSendBuffer[i].insert(vecSendBuffer[i].end(), insertESC.begin() + protoStart, insertESC.begin() + protoSlut);
+				m_pakker[i].insert(m_pakker[i].end(), bitStrengPakker.begin() + protoStart, bitStrengPakker.begin() + protoSlut);
 			}
 			else
 			{
-				vecSendBuffer[i].insert(vecSendBuffer[i].end(), insertESC.begin() + protoStart, insertESC.end());
+				m_pakker[i].insert(m_pakker[i].end(), bitStrengPakker.begin() + protoStart, bitStrengPakker.end());
 			}
-			vecSendBuffer[i].insert(vecSendBuffer[i].end(), flag, flag + 8);
+
 			protoStart += (m_antalBit + 8);
 			protoSlut += (m_antalBit + 8);
 
 		}
-		if (i == 0)
+
+		if (i == 0 && m_numPadding > 0)
 		{
-			std::cout << numPadding << std::endl; 
-			vecSendBuffer[0].erase(vecSendBuffer[0].begin() + 16, vecSendBuffer[0].begin() + numPadding + 16);
+			std::cout << "m_numPadding: " << m_numPadding << std::endl; 
+			m_pakker[0].erase(m_pakker[0].begin(), m_pakker[0].begin() + m_numPadding);
 		}
 	}
-	for (size_t i = 0; i < vecSendBuffer.size(); i++)
+	for (size_t i = 0; i < m_pakker.size(); i++)
 	{
-		for (size_t j = 0; j < vecSendBuffer[i].size(); j++)
+		for (size_t j = 0; j < m_pakker[i].size(); j++)
 		{
-			std::cout << vecSendBuffer[i][j];
+			std::cout << m_pakker[i][j];
 		}
 		std::cout << " ";
 
 	}
-	return vecSendBuffer;
+	return m_pakker;
+}
+
+std::vector<std::vector<sf::Int16> > Encoder::header(std::vector<std::vector<sf::Int16> > headerVec)
+{
+	int flag[8] = { 1,1,1,1,0,0,0,0 };
+	int sek0[8] = { 0,0,0,0,0,0,0,0 };
+	int sek1[8] = { 0,0,0,0,0,0,0,1 };
+
+	for (size_t i = 0; i < headerVec.size(); i++)
+	{
+		if (i % 2 == 0)
+		{
+			headerVec[i].insert(headerVec[i].begin(), flag, flag + 8);
+			headerVec[i].insert(headerVec[i].begin() + 8, sek0, sek0 + 8);
+			headerVec[i].insert(headerVec[i].end(), flag, flag + 8);
+		}
+		else
+		{
+			headerVec[i].insert(headerVec[i].begin(), flag, flag + 8);
+			headerVec[i].insert(headerVec[i].begin() + 8, sek1, sek1 + 8);
+			headerVec[i].insert(headerVec[i].end(), flag, flag + 8);
+		}
+	}
+	for (size_t i = 0; i < headerVec.size(); i++)
+	{
+		for (size_t j = 0; j < headerVec[i].size(); j++)
+		{
+			std::cout << headerVec[i][j];
+		}
+		std::cout << " ";
+		m_pakkerMedHeader = headerVec;
+	}
+	return m_pakkerMedHeader;
+}
+
+std::vector<std::vector<sf::Int16>> Encoder::encoderMessage(std::string message)
+{
+	setBit(32);
+	auto bitstring = StrToBit(message);
+	for (size_t i = 0; i < bitstring.size(); i++)
+	{
+		std::cout << bitstring[i];
+	}
+	std::cout << std::endl;
+
+	auto CRCbitString = CRC(bitstring);
+	for (size_t i = 0; i < CRCbitString.size(); i++)
+	{
+		std::cout << CRCbitString[i] << "A";
+	
+	}
+	std::cout << std::endl;
+
+	auto EscBitString = ESC(CRCbitString);
+	std::cout << "3" << std::endl;
+	auto pakkeBitString = pakker(EscBitString);
+	std::cout << "4" << std::endl;
+	auto headerBitString = header(pakkeBitString);
+	std::cout << "5" << std::endl;
+
+	return headerBitString;
 }
 
 

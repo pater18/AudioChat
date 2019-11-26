@@ -24,8 +24,10 @@
 int main()
 {
 
-	
-	setUI();
+
+	Userinterface ui;
+	ui.setUI();
+
 
 	return 0;
 }

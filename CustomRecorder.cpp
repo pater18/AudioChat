@@ -15,7 +15,6 @@ bool CustomRecorder::onStart()
 
 bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t sampleCount)
 {
-  
 	if (sampleCount > 205)
 	{
 		m_processingCycles++;
@@ -37,7 +36,7 @@ bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t samp
 
 		if (syncGoertzel != -1) {
 			m_decoder.setDTMFTone(syncGoertzel);
-			m_startSavingGoertzel = true;
+			addGoertzelMatrixToVector(syncGoertzel);
 		}
 
 
@@ -57,10 +56,50 @@ bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t samp
 void CustomRecorder::onStop()
 {
 	saveGoertzelMatrixToFile();
+	//saveGoertzelMatrixToSingleFile();
 	std::cout << std::endl << "Recording stopped" << std::endl;
 }
 
+void CustomRecorder::addGoertzelMatrixToVector(int nextDtmf)
+{
+	auto goertzelDataPair = std::make_pair(m_dtmfForSavingGoertzel, m_goertzelDataMatrix);
+	m_dtmfForSavingGoertzel = nextDtmf;
+	m_goertzelDataPairs.push_back(goertzelDataPair);
+	m_goertzelDataMatrix.clear();
+}
+
 void CustomRecorder::saveGoertzelMatrixToFile()
+{
+	Timer timer("Save");
+	for (std::size_t i = 0; i < m_goertzelDataPairs.size(); i++)
+	{
+		std::ofstream goertzel;
+		std::string fileName = "Goertzel" + std::to_string(m_goertzelDataPairs[i].first) + ".txt";
+		goertzel.open(fileName);
+
+		goertzel << "Hz697" << " " << "Hz770" << " ";
+		goertzel << "Hz852" << " " << "Hz941" << " ";
+		goertzel << "Hz1209" << " " << "Hz1336" << " ";
+		goertzel << "Hz1477" << " " << "Hz1633" << std::endl;
+
+		std::size_t offset = 5;
+
+		for (std::size_t j = 0; j < m_goertzelDataPairs[i].second.size(); j++)
+		{
+			if ((j > offset) && (j < m_goertzelDataPairs[i].second.size() - offset))
+			{
+				for (std::size_t k = 0; k < m_goertzelDataPairs[i].second[j].size(); k++)
+				{
+					goertzel << m_goertzelDataPairs[i].second[j][k] << " ";
+				}
+				goertzel << std::endl;
+			}
+		}
+		goertzel.close();
+	}
+}
+
+void CustomRecorder::saveGoertzelMatrixToSingleFile()
 {
 	std::ofstream goertzel;
 	goertzel.open("Goertzel.txt");
@@ -69,7 +108,7 @@ void CustomRecorder::saveGoertzelMatrixToFile()
 	goertzel << "Hz852" << " " << "Hz941" << " ";
 	goertzel << "Hz1209" << " " << "Hz1336" << " ";
 	goertzel << "Hz1477" << " " << "Hz1633" << std::endl;
-	
+
 
 	for (std::size_t i = 0; i < m_goertzelDataMatrix.size(); i++)
 	{
@@ -86,8 +125,6 @@ int CustomRecorder::syncDTMF()
 {
 	if (m_curDTMF == -1)
 		return -1;
-	
-		
 
 	if (m_curDTMF == m_lastDTMF)
 	{
@@ -102,12 +139,16 @@ int CustomRecorder::syncDTMF()
 			}
 			return -1;
 		}
-		m_secondDetection = true;
-		startClock = std::clock();
-		return m_curDTMF;
+		else {
+			m_secondDetection = true;
+			startClock = std::clock();
+			return m_curDTMF;
+		}
 	}
-	m_lastDTMF = m_curDTMF;
-	m_secondDetection = false;
+	else {
+		m_lastDTMF = m_curDTMF;
+		m_secondDetection = false;
+	}
 	return -1;
 }
 

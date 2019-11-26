@@ -1,43 +1,15 @@
-#include "CustomRecorder.h"
-#include "Decoder.h"
 #include "Userinterface.h"
-#include "Protokol.h"
-#include "Timer.h"
 
-sf::SoundBuffer buffer;
-sf::Sound sound;
-std::string test;
-Protokol testprot;
 
-void makeSound() {
 
+void Userinterface::makeSoundAck(std::vector<sf::Int16> _vecForAck) {
 	customSound koder;
-	std::cout << test << std::endl;
 	koder.setBit(32);
-	koder.StrToBit(test);
-	koder.CRC();
-	koder.sendBuffer(koder.insertESC);
-	koder.slet();
-	testprot.sendProtokol(koder.vecSendBuffer);
-//	koder.message(44100/4);
-//	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
-//	sound.setBuffer(buffer);
-//	sound.play();
-//	koder.slet();
+	koder.playSound(koder.bitToAmplitudes(44100 / 5, _vecForAck));
 }
 
-void makeSoundAck(std::vector<sf::Int16> _vecForAck) {
-	customSound koder;
-	std::cout << test << std::endl;
-	koder.setBit(32);
-	koder.message(44100/5, _vecForAck);
-	buffer.loadFromSamples(&koder._customSound[0], koder._customSound.size(), 1, 44100);
-	sound.setBuffer(buffer);
-	sound.play();
-	koder.slet();
-}
 
-void setUI() {
+void Userinterface::setUI() {
 
 	sf::RenderWindow window(sf::VideoMode(1000, 800), "SFML works!");
 
@@ -47,14 +19,8 @@ void setUI() {
 	std::vector<sf::RectangleShape> rectangleVec2;
 	sf::Vector2f xyvec;
 
-
-	double widthOfText = 0;
-	int moveText = 80;
-
-	double widthOfReceive;
-	std::string receive;
 	CustomRecorder recorder;
-	
+
 	sf::RectangleShape rectangle(sf::Vector2f(750, 75));
 	rectangle.setFillColor(sf::Color(128, 128, 128));
 	rectangle.setPosition(50, 700);
@@ -63,7 +29,7 @@ void setUI() {
 	sf::RectangleShape rectangleSend(sf::Vector2f(100, 75));
 	rectangleSend.setFillColor(sf::Color(128, 128, 128));
 	rectangleSend.setPosition(850, 700);
- 
+
 	sf::RectangleShape rectangleBesked(sf::Vector2f(100, 35));
 
 	sf::Font font;
@@ -95,9 +61,11 @@ void setUI() {
 	newline.setCharacterSize(24);
 	newline.setString("\n");
 
-	
+	std::string indtastedeBesked;
 
 	recorder.start(12000);
+
+	bool forventetSekNR = 0;
 
 	while (window.isOpen())
 	{
@@ -105,14 +73,16 @@ void setUI() {
 		{
 
 			// receiver delen
-			receive = recorder.getDecoder().getBesked();
+			receive = recorder.getDecoder().decodeMessage();
 
+			Protokol modtagProtokol;
+			modtagProtokol.modtagetProtokol(forventetSekNR, recorder.getDecoder().getRenBitStreng());
 
-			std::vector<sf::Int16> sendAck = testprot.modtagetProtokol(recorder.getDecoder().getVecAck());
+			//std::vector<sf::Int16> sendAck = indtastedeBeskedprot.modtagetProtokol(recorder.getDecoder().getVecAck());
 
 			sf::sleep(sf::milliseconds(1000));
 			//recorder.stop();
-			makeSoundAck(sendAck);
+			//makeSoundAck(sendAck);
 
 			std::cout << receive << std::endl;
 			text2.setString(receive);
@@ -138,7 +108,7 @@ void setUI() {
 			}
 			std::cout << "Input if " << std::endl;
 			receive.clear();
-			test.clear();
+			indtastedeBesked.clear();
 			recorder.start(12000);
 			std::cout << recorder.getDecoder().getReceivedMessage() << std::endl;
 			recorder.getDecoder().setReceivedMessageToFalse();
@@ -160,9 +130,6 @@ void setUI() {
 				{
 					if (event.mouseButton.x > 850 && event.mouseButton.x < 950 && event.mouseButton.y > 700 && event.mouseButton.y < 775)
 					{
-
-						makeSound();
-
 						textVector.insert(textVector.begin(), text);
 
 						for (size_t i = 0; i < textVector.size(); i++)
@@ -170,7 +137,7 @@ void setUI() {
 							textVector[i].move(0, -moveText);
 
 						}
-						test.clear();
+						indtastedeBesked.clear();
 
 					}
 					break;
@@ -182,14 +149,14 @@ void setUI() {
 			case sf::Event::KeyPressed:
 				if (event.key.code == sf::Keyboard::Enter)
 				{
-					recorder.stop();
-					makeSound();
 
+					recorder.stop();
+
+					Encoder encoder;
+					Protokol protokolSend;
+					protokolSend.sendProtokol(encoder.encoderMessage(indtastedeBesked));
 					
 
-					while (sound.getStatus() != 0)
-					{
-					}
 					recorder.start(12000);
 
 					receive.clear();
@@ -211,32 +178,8 @@ void setUI() {
 
 					}
 
-					// move rectangle
-					//for (size_t i = 0; i < textVector.size(); i++)
-					//{
-					//	widthOfText = text.getLocalBounds().width;
-
-					//	xyvec = textVector[i].getPosition();
-					//	rectangleVec.insert(rectangleVec.begin(), sf::RectangleShape(sf::Vector2f(0, 0)));
-					//	rectangleVec[i].setPosition(xyvec.x, xyvec.y + moveText);
-					//	rectangleVec[i].setFillColor(sf::Color(128, 128, 128));
-					//	rectangleVec[i].setSize(sf::Vector2f(widthOfText + 5, 35));
-
-
-					//	for (size_t i = 0; i < rectangleVec.size(); i++)
-					//	{
-
-					//		rectangleVec[i].move(0, -moveText);
-
-
-					//	}
-
-
-					//}
-
-
 					receive.clear();
-					test.clear();
+					indtastedeBesked.clear();
 
 
 
@@ -245,10 +188,10 @@ void setUI() {
 
 				if (event.key.code == sf::Keyboard::BackSpace)
 				{
-					if (test.size() > 0)
+					if (indtastedeBesked.size() > 0)
 					{
-						test.erase(test.size() - 1, 1);
-						text.setString(test);
+						indtastedeBesked.erase(indtastedeBesked.size() - 1, 1);
+						text.setString(indtastedeBesked);
 					}
 
 					break;
@@ -258,7 +201,7 @@ void setUI() {
 				if (event.type == sf::Event::TextEntered)
 				{
 					if (event.text.unicode < 128 && (event.text.unicode != 13) && (event.text.unicode != 8))
-						test += (char)event.text.unicode;
+						indtastedeBesked += (char)event.text.unicode;
 
 					widthOfText = text.getLocalBounds().width + 50;
 					sf::Vector2f vector;
@@ -268,12 +211,12 @@ void setUI() {
 
 					if (widthOfText + 40 >= widthRect)
 					{
-						test += "\n";
+						indtastedeBesked += "\n";
 						widthOfText = 50;
 
 					}
 
-					text.setString(test);
+					text.setString(indtastedeBesked);
 
 
 					break;

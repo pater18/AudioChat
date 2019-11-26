@@ -21,25 +21,27 @@ public:
 	bool onProcessSamples(const sf::Int16* samples, std::size_t sampleCount);
 	void onStop();
 
+	void addGoertzelMatrixToVector(int nextDtmf);
 	void saveGoertzelMatrixToFile();
+	void saveGoertzelMatrixToSingleFile();
 	int syncDTMF();
 
 	Decoder& getDecoder() { return m_decoder; };
 	void setCurDTMF(int curDTMF) { m_curDTMF = curDTMF; };
 
-	std::clock_t startClock;
 private:
 	sf::Int16 m_samples;
 	int m_processingCycles = 0;
 
 	const int m_processingInterval = 30;
+
 	float sendingTime = 0.2;
-
-
-
+	std::clock_t startClock;
 
 	std::vector<std::vector <float> > m_goertzelDataMatrix;
+	std::vector< std::pair< int, std::vector< std::vector<float> >>> m_goertzelDataPairs;
 	bool m_startSavingGoertzel = false;
+	int m_dtmfForSavingGoertzel = -1;
 
 	int m_lastDTMF = -1, m_curDTMF = -1;
 	double duration;
