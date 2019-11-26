@@ -133,9 +133,6 @@ std::vector<sf::Int16> Decoder::CRCmodtaget(int antal_bit, std::vector<sf::Int16
 
 	int numPadding2 = (paddingCoeff2) * 8;	
 
-	std::cout << "Antal nuller der puttes i som padding2: " << numPadding2 << std::endl;
-
-
 	for (int i = 0; i < numPadding2; i++)
 	{
 		bitStreng.insert(bitStreng.begin(), 0);
@@ -159,10 +156,6 @@ std::vector<sf::Int16> Decoder::CRCmodtaget(int antal_bit, std::vector<sf::Int16
 				bitMedPadding.set((antal_bit + 8) - 1 - i, 0);
 			}
 		}
-
-		std::cout << "bitMedPadding start: ";
-		std::cout << bitMedPadding;
-		std::cout << std::endl;
 		
 
 		std::vector<int> temp;

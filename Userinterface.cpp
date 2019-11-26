@@ -74,6 +74,7 @@ void Userinterface::setUI() {
 		if (recorder.getDecoder().getReceivedMessage())
 		{
 //////////////////////////////////////////////
+			recorder.getDecoder().setReceivedMessageToFalse();
 			recorder.getDecoder().decodeMessage();
 			recorder.pause();
 			int sekNr = recorder.getDecoder().getRenBitStreng()[7];
@@ -87,7 +88,7 @@ void Userinterface::setUI() {
 
 				Protokol modtagProtokol;
 				modtagProtokol.modtagetProtokol(forventetSekNR, recorder.getDecoder().getRenBitStreng());
-				recorder.getDecoder().setReceivedMessageToFalse();
+				//recorder.getDecoder().setReceivedMessageToFalse();
 				recorder.resume();
 
 			}
@@ -125,7 +126,7 @@ void Userinterface::setUI() {
 				indtastedeBesked.clear();
 				recorder.resume();;
 				std::cout << recorder.getDecoder().getReceivedMessage() << std::endl;
-				recorder.getDecoder().setReceivedMessageToFalse();
+				
 			}
 		}
 

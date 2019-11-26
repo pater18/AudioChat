@@ -55,6 +55,7 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer, Cu
 					std::cout << "Ack for sidste besked modtaget" << std::endl;
 						i++;
 						pakkeIkkeSendt = false;
+						protokolRecorder.getDecoder().setReceivedMessageToFalse();
 				}
 				////////////////
 				else

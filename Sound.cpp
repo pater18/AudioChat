@@ -219,6 +219,7 @@ void customSound::playSound(std::vector<sf::Int16> vectorOfAmplitudes)
 	while (sound.getStatus() != 0)
 	{
 	}
+	sf::sleep(sf::milliseconds(200));
 	
 }
 
