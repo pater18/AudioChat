@@ -14,10 +14,8 @@ Protokol::Protokol()
 {
 }
 
-void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
+void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer, CustomRecorder& protokolRecorder)
 {
-
-	CustomRecorder protokolRecorder;
 	customSound afspilLyd;
 
 	size_t i = 0;
@@ -29,7 +27,7 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 		afspilLyd.playSound(afspilLyd.bitToAmplitudes(g_sendeTid * 44100, _sendBuffer[i]));
 
 		startClockProt = std::clock();
-		protokolRecorder.start(g_samplingFreq);
+		protokolRecorder.resume();
 
 		bool pakkeIkkeSendt = true;
 		protokolRecorder.getDecoder().setReceivedMessageToFalse();
@@ -40,16 +38,16 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 				protokolRecorder.getDecoder().intToBit(protokolRecorder.getDecoder().getCharVect());
 
 				std::cout << "Den er lige over recorder.stop()" << std::endl;
-				protokolRecorder.stop();
+				protokolRecorder.pause();
 
 				if (getSekNR(protokolRecorder.getDecoder().getRenBitStreng()) == getSekNRSend(_sendBuffer[i]))
 				{
 					std::cout << "Den er inde i if sætning" << std::endl;
-					protokolRecorder.stop();
+					protokolRecorder.pause();
 					afspilLyd.playSound(afspilLyd.bitToAmplitudes(g_sendeTid * 44100, _sendBuffer[i]));
 
 					startClockProt = std::clock();
-					protokolRecorder.start(g_samplingFreq);
+					protokolRecorder.resume();
 				}
 				/////////////
 				else if (protokolRecorder.getDecoder().getRenBitStreng()[6] == 1)
@@ -71,11 +69,11 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 			duration = (std::clock() - startClockProt) / (double)CLOCKS_PER_SEC;
 			if (duration > g_sendeTid * 6 + 0.5)
 			{
-				protokolRecorder.stop();
+				protokolRecorder.pause();
 				afspilLyd.playSound(afspilLyd.bitToAmplitudes(g_sendeTid * 44100, _sendBuffer[i]));
 				startClockProt = std::clock();
 		
-				protokolRecorder.start(g_samplingFreq);
+				protokolRecorder.resume();
 			}
 			
 		}

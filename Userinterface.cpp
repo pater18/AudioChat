@@ -75,7 +75,7 @@ void Userinterface::setUI() {
 		{
 //////////////////////////////////////////////
 			recorder.getDecoder().decodeMessage();
-			recorder.stop();
+			recorder.pause();
 			int sekNr = recorder.getDecoder().getRenBitStreng()[7];
 			int lastMessage = recorder.getDecoder().getRenBitStreng()[6];
 
@@ -123,7 +123,7 @@ void Userinterface::setUI() {
 				std::cout << "Input if " << std::endl;
 				receive.clear();
 				indtastedeBesked.clear();
-				recorder.start(g_samplingFreq);
+				recorder.resume();;
 				std::cout << recorder.getDecoder().getReceivedMessage() << std::endl;
 				recorder.getDecoder().setReceivedMessageToFalse();
 			}
@@ -173,14 +173,14 @@ void Userinterface::setUI() {
 				if (event.key.code == sf::Keyboard::Enter)
 				{
 
-					recorder.stop();
+					recorder.pause();
 
 					Encoder encoder;
 					Protokol protokolSend;
-					protokolSend.sendProtokol(encoder.encoderMessage(indtastedeBesked));
+					protokolSend.sendProtokol(encoder.encoderMessage(indtastedeBesked), recorder);
 					
 
-					recorder.start(g_samplingFreq);
+					recorder.resume();;
 
 					receive.clear();
 					

@@ -15,41 +15,43 @@ bool CustomRecorder::onStart()
 
 bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t sampleCount)
 {
-	if (sampleCount > 205)
+	if (!m_paused)
 	{
-		m_processingCycles++;
-
-
-		std::vector<std::int16_t> samplesForProcessing;
-
-		for (std::size_t i = 0; i < 205; i++)
-			samplesForProcessing.push_back(samples[i]);
-
-		SoundChunk currentSoundChunk(samplesForProcessing, samplesForProcessing.size());
-		currentSoundChunk.hanningWindow();
-		std::vector<float> goertzelResult = currentSoundChunk.goertzelAlgorithm(this->getSampleRate());
-		/*if (m_startSavingGoertzel == true)*/
-		m_goertzelDataMatrix.push_back(goertzelResult);
-
-		m_curDTMF = currentSoundChunk.determineDtmfTwo(goertzelResult);
-		int syncGoertzel = syncDTMF();
-
-		if (syncGoertzel != -1) {
-			m_decoder.setDTMFTone(syncGoertzel);
-			addGoertzelMatrixToVector(syncGoertzel);
-		}
-
-
-		if (m_processingCycles > 1000 / m_processingInterval)
+		if (sampleCount > 205)
 		{
-			//saveGoertzel(goertzelResult);
-			//saveRecording(samples, sampleCount); 
+			m_processingCycles++;
+
+
+			std::vector<std::int16_t> samplesForProcessing;
+
+			for (std::size_t i = 0; i < 205; i++)
+				samplesForProcessing.push_back(samples[i]);
+
+			SoundChunk currentSoundChunk(samplesForProcessing, samplesForProcessing.size());
+			currentSoundChunk.hanningWindow();
+			std::vector<float> goertzelResult = currentSoundChunk.goertzelAlgorithm(this->getSampleRate());
+			/*if (m_startSavingGoertzel == true)*/
+			m_goertzelDataMatrix.push_back(goertzelResult);
+
+			m_curDTMF = currentSoundChunk.determineDtmfTwo(goertzelResult);
+			int syncGoertzel = syncDTMF();
+
+			if (syncGoertzel != -1) {
+				m_decoder.setDTMFTone(syncGoertzel);
+				addGoertzelMatrixToVector(syncGoertzel);
+			}
+
+
+			if (m_processingCycles > 1000 / m_processingInterval)
+			{
+				//saveGoertzel(goertzelResult);
+				//saveRecording(samples, sampleCount); 
+			}
 		}
+		else
+			std::cout << "Ikke samples nok" << std::endl;
+
 	}
-	else
-		std::cout << "Ikke samples nok" << std::endl; 
-
-
 	return true;
 }
 

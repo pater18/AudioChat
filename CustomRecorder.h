@@ -22,6 +22,9 @@ public:
 	bool onProcessSamples(const sf::Int16* samples, std::size_t sampleCount);
 	void onStop();
 
+	void pause() { m_paused = true; };
+	void resume() { m_paused = false; };
+
 	void addGoertzelMatrixToVector(int nextDtmf);
 	void saveGoertzelMatrixToFile();
 	void saveGoertzelMatrixToSingleFile();
@@ -32,6 +35,8 @@ public:
 
 	std::clock_t startClock;
 private:
+	bool m_paused = false;
+
 	sf::Int16 m_samples;
 	int m_processingCycles = 0;
 
