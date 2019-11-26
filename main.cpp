@@ -24,6 +24,11 @@
 int main()
 {
 
+	customSound test;
+	std::vector<sf::Int16> lyde{15, 0, 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,15 ,15,0 };
+	test.playSound(test.testAfLyd(44100 * g_sendeTid, lyde));
+
+
 
 	Userinterface ui;
 	ui.setUI();
