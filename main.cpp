@@ -26,7 +26,7 @@ int main()
 
 
 	Userinterface ui;
-	ui.setUI();
+	ui.setupUI();
 
 
 	return 0;
