@@ -23,7 +23,7 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 	size_t i = 0;
 	std::cout << _sendBuffer.size() << std::endl;
 
-	while (i <= _sendBuffer.size())
+	while (i < _sendBuffer.size())
 	{
 
 		afspilLyd.playSound(afspilLyd.bitToAmplitudes(44100 / 5, _sendBuffer[i]));
@@ -184,6 +184,7 @@ void Protokol::modtagetProtokol(bool &forventetSekNR, std::vector<sf::Int16> mod
 		//Lav ack om til lyd og send til encoder
 	}
 
+	
 	customSound afspilLyd;
 	afspilLyd.playSound(bitToAmplitudes(44100 / 5, ack));
 }

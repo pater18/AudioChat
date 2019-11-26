@@ -18,6 +18,7 @@ void Decoder::setDTMFTone(int DTMF)
 		m_charVect.clear();
 		m_character.clear();
 		std::cout << "CLEAR" << std::endl;
+		m_listening = true; 
 	}
 	messageTimeOut = std::clock();
 

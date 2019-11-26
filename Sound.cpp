@@ -220,6 +220,7 @@ void customSound::playSound(std::vector<sf::Int16> vectorOfAmplitudes)
 	while (sound.getStatus() != 0)
 	{
 	}
+	sf::sleep(sf::seconds(0.5));
 }
 
 std::vector<sf::Int16> customSound::testAfLyd(int tid, std::vector<sf::Int16> &decimaler)

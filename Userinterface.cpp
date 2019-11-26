@@ -76,9 +76,12 @@ void Userinterface::setUI() {
 //////////////////////////////////////////////
 			recorder.getDecoder().decodeMessage();
 			recorder.stop();
+			int sekNr = recorder.getDecoder().getRenBitStreng()[7];
+			int lastMessage = recorder.getDecoder().getRenBitStreng()[6];
 
-			if ((recorder.getDecoder().getRenBitStreng()[7] == 0 || recorder.getDecoder().getRenBitStreng()[7] == 1) && recorder.getDecoder().getRenBitStreng()[6] != 0)
+			if ((recorder.getDecoder().getRenBitStreng()[7] == 0 || recorder.getDecoder().getRenBitStreng()[7] == 1) && recorder.getDecoder().getRenBitStreng()[6] == 0)
 			{
+				if (forventetSekNR == recorder.getDecoder().getRenBitStreng()[7])
 				receive += recorder.getDecoder().decodeMessage();
 				std::cout << receive << std::endl;
 
