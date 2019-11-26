@@ -68,51 +68,68 @@ void Userinterface::setUI() {
 	bool forventetSekNR = 0;
 
 	while (window.isOpen())
+
+
 	{
 		if (recorder.getDecoder().getReceivedMessage())
 		{
+//////////////////////////////////////////////
+			if (recorder.getDecoder().getRenBitStreng()[7] == 0 || recorder.getDecoder().getRenBitStreng()[7] == 1)
+			{
+				receive += recorder.getDecoder().decodeMessage();
+				std::cout << receive << std::endl;
 
-			// receiver delen
-			receive = recorder.getDecoder().decodeMessage();
+				Protokol modtagProtokol;
+				modtagProtokol.modtagetProtokol(forventetSekNR, recorder.getDecoder().getRenBitStreng());
+				recorder.getDecoder().setReceivedMessageToFalse();
+				recorder.start(12000);
 
-			Protokol modtagProtokol;
-			modtagProtokol.modtagetProtokol(forventetSekNR, recorder.getDecoder().getRenBitStreng());
+			}
 
-			//std::vector<sf::Int16> sendAck = indtastedeBeskedprot.modtagetProtokol(recorder.getDecoder().getVecAck());
+			else if (recorder.getDecoder().getRenBitStreng()[6] == 1 && recorder.getDecoder().getRenBitStreng()[7] == 1)
+			{
+				receive += recorder.getDecoder().decodeMessage();
+				std::cout << receive << std::endl;
 
-			sf::sleep(sf::milliseconds(1000));
-			//recorder.stop();
-			//makeSoundAck(sendAck);
+				Protokol modtagProtokol;
+				modtagProtokol.modtagetProtokol(forventetSekNR, recorder.getDecoder().getRenBitStreng());
 
-			std::cout << receive << std::endl;
-			text2.setString(receive);
-			widthOfReceive = text2.getLocalBounds().width;
-			text2.setPosition(1000 - widthOfReceive - 50, 710 - moveText);
+				text2.setString(receive);
+				widthOfReceive = text2.getLocalBounds().width;
+				text2.setPosition(1000 - widthOfReceive - 50, 710 - moveText);
+
+
+				// move sendte tekst
+				for (size_t i = 0; i < textVector.size(); i++)
+				{
+
+					textVector[i].move(0, -moveText);
+
+				}
+
+				textVector2.insert(textVector2.begin(), text2);
+
+				for (size_t i = 1; i < textVector2.size(); i++)
+				{
+					textVector2[i].move(0, -moveText);
+
+				}
+				std::cout << "Input if " << std::endl;
+				receive.clear();
+				indtastedeBesked.clear();
+				recorder.start(12000);
+				std::cout << recorder.getDecoder().getReceivedMessage() << std::endl;
+				recorder.getDecoder().setReceivedMessageToFalse();
+			}
+		}
+
+///////////////////////////////////////////
+
+	//		sf::sleep(sf::milliseconds(1000));
 			
 
 
-			// move sendte tekst
-			for (size_t i = 0; i < textVector.size(); i++)
-			{
 
-				textVector[i].move(0, -moveText);
-
-			}
-
-			textVector2.insert(textVector2.begin(), text2);
-
-			for (size_t i = 1; i < textVector2.size(); i++)
-			{
-				textVector2[i].move(0, -moveText);
-
-			}
-			std::cout << "Input if " << std::endl;
-			receive.clear();
-			indtastedeBesked.clear();
-			recorder.start(12000);
-			std::cout << recorder.getDecoder().getReceivedMessage() << std::endl;
-			recorder.getDecoder().setReceivedMessageToFalse();
-		}
 
 		sf::Event event;
 		while (window.pollEvent(event))

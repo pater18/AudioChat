@@ -289,22 +289,39 @@ std::vector<std::vector<sf::Int16> > Encoder::header(std::vector<std::vector<sf:
 	int flag[8] = { 1,1,1,1,0,0,0,0 };
 	int sek0[8] = { 0,0,0,0,0,0,0,0 };
 	int sek1[8] = { 0,0,0,0,0,0,0,1 };
-
+	int sek11[8] = { 0,0,0,0,0,0,1,1 };
+	////////////////////
 	for (size_t i = 0; i < headerVec.size(); i++)
 	{
 		if (i % 2 == 0)
 		{
 			headerVec[i].insert(headerVec[i].begin(), flag, flag + 8);
-			headerVec[i].insert(headerVec[i].begin() + 8, sek0, sek0 + 8);
 			headerVec[i].insert(headerVec[i].end(), flag, flag + 8);
+			if (i == headerVec.size()-1)
+			{
+				headerVec[i].insert(headerVec[i].begin() + 8, sek11, sek11 + 8);
+			}
+			else
+			{
+				headerVec[i].insert(headerVec[i].begin() + 8, sek0, sek0 + 8);
+			}
 		}
 		else
 		{
 			headerVec[i].insert(headerVec[i].begin(), flag, flag + 8);
-			headerVec[i].insert(headerVec[i].begin() + 8, sek1, sek1 + 8);
 			headerVec[i].insert(headerVec[i].end(), flag, flag + 8);
+			if (i == headerVec.size()-1)
+			{
+				headerVec[i].insert(headerVec[i].begin() + 8, sek11, sek11 + 8);
+			}
+			else
+			{
+				headerVec[i].insert(headerVec[i].begin() + 8, sek1, sek1 + 8);
+			}
 		}
 	}
+///////////////////7
+
 	for (size_t i = 0; i < headerVec.size(); i++)
 	{
 		for (size_t j = 0; j < headerVec[i].size(); j++)
