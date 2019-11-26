@@ -87,7 +87,7 @@ void Userinterface::setUI() {
 				std::cout << receive << std::endl;
 
 				Protokol modtagProtokol;
-				modtagProtokol.modtagetProtokol(forventetSekNR, recorder.getDecoder().getRenBitStreng());
+				modtagProtokol.modtagetProtokol(forventetSekNR, recorder.getDecoder().getRenBitStreng(),recorder);
 				//recorder.getDecoder().setReceivedMessageToFalse();
 				recorder.resume();
 
@@ -99,7 +99,7 @@ void Userinterface::setUI() {
 				std::cout << receive << " " << "sidste" << std::endl;
 
 				Protokol modtagProtokol;
-				modtagProtokol.modtagetProtokol(forventetSekNR, recorder.getDecoder().getRenBitStreng());
+				modtagProtokol.modtagetProtokol(forventetSekNR, recorder.getDecoder().getRenBitStreng(), recorder);
 
 				text2.setString(receive);
 				widthOfReceive = text2.getLocalBounds().width;

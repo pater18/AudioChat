@@ -12,7 +12,7 @@ class Protokol : public customSound
 public:
 
 	Protokol();
-	void modtagetProtokol(bool &forventetSekNR, std::vector<sf::Int16> modtaget);
+	void modtagetProtokol(bool &forventetSekNR, std::vector<sf::Int16> modtaget, CustomRecorder& modtageRecorder);
 
 	void sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer, CustomRecorder& protokolRecorder);
 	std::vector<sf::Int16> getSekNR(std::vector<sf::Int16> _sekNR);
