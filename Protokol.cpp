@@ -52,7 +52,7 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer)
 					protokolRecorder.start(12000);
 				}
 				/////////////
-				else if (getSekNR(protokolRecorder.getDecoder().getRenBitStreng())[6] == 1)
+				else if (protokolRecorder.getDecoder().getRenBitStreng()[6] == 1)
 				{
 					std::cout << "Ack for sidste besked modtaget" << std::endl;
 						i++;

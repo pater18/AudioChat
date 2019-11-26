@@ -77,7 +77,7 @@ void Userinterface::setUI() {
 			recorder.getDecoder().decodeMessage();
 			recorder.stop();
 
-			if (recorder.getDecoder().getRenBitStreng()[7] == 0 || recorder.getDecoder().getRenBitStreng()[7] == 1)
+			if ((recorder.getDecoder().getRenBitStreng()[7] == 0 || recorder.getDecoder().getRenBitStreng()[7] == 1) && recorder.getDecoder().getRenBitStreng()[6] != 0)
 			{
 				receive += recorder.getDecoder().decodeMessage();
 				std::cout << receive << std::endl;
@@ -92,7 +92,7 @@ void Userinterface::setUI() {
 			else if (recorder.getDecoder().getRenBitStreng()[6] == 1 && recorder.getDecoder().getRenBitStreng()[7] == 1)
 			{
 				receive += recorder.getDecoder().decodeMessage();
-				std::cout << receive << std::endl;
+				std::cout << receive << " " << "sidste" << std::endl;
 
 				Protokol modtagProtokol;
 				modtagProtokol.modtagetProtokol(forventetSekNR, recorder.getDecoder().getRenBitStreng());
