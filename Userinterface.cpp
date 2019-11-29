@@ -75,7 +75,9 @@ void Userinterface::setUI() {
 		{
 //////////////////////////////////////////////
 			recorder.getDecoder().setReceivedMessageToFalse();
+
 			std::string besked = recorder.getDecoder().decodeMessage();
+
 			recorder.pause();
 			int sekNr = recorder.getDecoder().getRenBitStreng()[7];
 			int lastMessage = recorder.getDecoder().getRenBitStreng()[6];

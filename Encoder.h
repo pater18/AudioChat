@@ -17,9 +17,6 @@ public:
 
 	std::vector<std::vector<sf::Int16> > encoderMessage(std::string message);
 
-	
-
-
 
 	
 private:

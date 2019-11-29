@@ -96,15 +96,17 @@ std::vector<sf::Int16> Decoder::intToBit(std::vector<int> DTMFtones)
 		vecForCRC.push_back(temp[0]);
 	}
 
-	for (size_t i = 0; i < vecForCRC.size(); i++)
+	/*for (size_t i = 0; i < vecForCRC.size(); i++)
 	{
 		std::cout << vecForCRC[i];
 	}
 
 	std::cout << std::endl;
-	std::cout << vecForCRC.size() << std::endl;
+	std::cout << vecForCRC.size() << std::endl;*/
 		
 	m_renBitStreng = vecForCRC;
+
+	vecForCRC.erase(vecForCRC.begin(), vecForCRC.begin() + 8);		// For at slette sekvensnummer, så der ikke bliver lavet crc tjek på det også 
 
     return vecForCRC;
   }
@@ -118,27 +120,27 @@ std::vector<sf::Int16> Decoder::CRCmodtaget(int antal_bit, std::vector<sf::Int16
 
 	std::bitset<64> generator2(0b00100000111);
 	int DataInsert = antal_bit + 8 - 1;
-	int bitStrengSize = bitStreng.size();
+	int bitStrengSize = bitStreng.size(); //16
 	
 	int paddingCoeff2 = 0;
-	int tjek = bitStrengSize % (antal_bit + 8);
+	int tjek = bitStrengSize % (antal_bit + 8); // 16
 
 
 	while (tjek != 0)
 	{
-		bitStrengSize += 8;
+		bitStrengSize += 8;						//24 32 40
 		tjek = bitStrengSize % (antal_bit + 8);
-		paddingCoeff2++;						//1  2  
+		paddingCoeff2++;						//1 2 3
 	}
 
-	int numPadding2 = (paddingCoeff2) * 8;	
+	int numPadding2 = (paddingCoeff2) * 8;	//24
 
 	for (int i = 0; i < numPadding2; i++)
 	{
 		bitStreng.insert(bitStreng.begin(), 0);
 	}
 
-	int fejl = 0; 
+	std::cout << "størrelse på bitsteng før crc " << bitStreng.size() << std::endl;
 
 	for (size_t k = 0; k < bitStreng.size(); k += antal_bit + 8) //k=8    vecForCRC = 64
 	{
