@@ -89,7 +89,7 @@ std::vector<sf::Int16> Decoder::intToBit(std::vector<int> DTMFtones)
 	for (size_t i = 0; i < DTMFtones.size(); i++)
 	{
 		std::bitset<4> temp(DTMFtones[i]);
-		std::cout << temp << std::endl;
+		std::cout << temp << std::endl;		//----------------------------------------------------------
 		vecForCRC.push_back(temp[3]);
 		vecForCRC.push_back(temp[2]);
 		vecForCRC.push_back(temp[1]);
@@ -118,7 +118,7 @@ std::vector<sf::Int16> Decoder::CRCmodtaget(int antal_bit, std::vector<sf::Int16
 		
 	std::vector<sf::Int16> messageInBit; 
 
-	std::bitset<64> generator2(0b00100000111);
+	std::bitset<256> generator2(0b00100000111);
 	int DataInsert = antal_bit + 8 - 1;
 	int bitStrengSize = bitStreng.size(); //16
 	
@@ -140,12 +140,11 @@ std::vector<sf::Int16> Decoder::CRCmodtaget(int antal_bit, std::vector<sf::Int16
 		bitStreng.insert(bitStreng.begin(), 0);
 	}
 
-	std::cout << "størrelse på bitsteng før crc " << bitStreng.size() << std::endl;
 
-	for (size_t k = 0; k < bitStreng.size(); k += antal_bit + 8) //k=8    vecForCRC = 64
+	for (size_t k = 0; k < bitStreng.size(); k += antal_bit + 8) //k=8    vecForCRC = 256
 	{
 		 
-		std::bitset<64> bitMedPadding(0b0);
+		std::bitset<256> bitMedPadding(0b0);
 
 		for (int i = 0; i < (antal_bit + 8); i++)
 		{
@@ -159,12 +158,10 @@ std::vector<sf::Int16> Decoder::CRCmodtaget(int antal_bit, std::vector<sf::Int16
 			}
 		}
 		
-		std::cout << "Streng der er padding på der skal fjernes: ";
 		std::vector<int> temp;
 		for (size_t i = 0; i < antal_bit; i++)
 		{
 			temp.push_back(bitMedPadding[i+8]);
-			std::cout << temp[i];
 		}
 		std::cout << std::endl; 
 		
@@ -191,7 +188,6 @@ std::vector<sf::Int16> Decoder::CRCmodtaget(int antal_bit, std::vector<sf::Int16
 		if (bitMedPadding == false)
 		{
 			std::cout << "Data der blev sendt var det rigtige" << std::endl;
-			std::cout << "Sidste besked i bit: ";
 			for (size_t i = numPadding2; i < (temp.size() ) ; i++)
 			{
 				messageInBit.push_back(temp[i]);

@@ -22,8 +22,9 @@ public:
 	bool onProcessSamples(const sf::Int16* samples, std::size_t sampleCount);
 	void onStop();
 
-	void pause() { m_paused = true; };
-	void resume() { m_paused = false; m_decoder.getCharacter().clear(); };
+	void pause() { m_paused = true; std::cout << "Recording paused " << std::endl;
+	};
+	void resume() { m_paused = false; m_decoder.getCharacter().clear(); std::cout << "Recording resumed " << std::endl; };
 
 	void addGoertzelMatrixToVector(int nextDtmf);
 	void saveGoertzelMatrixToFile();

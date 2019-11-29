@@ -50,8 +50,8 @@ std::vector<sf::Int16> Encoder::StrToBit(sf::String input)
 			}
 		}
 	}
-
-	std::cout << "Besked skrevet i bit: ";
+	std::cout << std::endl; 
+	std::cout << "Besked skrevet i bit: " << std::endl;
 	for (size_t i = 0; i < m_binStreng.size(); i++)			//Tjek til at se der sker det rigtige 
 	{
 		std::cout << m_binStreng[i];
@@ -73,7 +73,7 @@ std::vector<sf::Int16> Encoder::CRC(std::vector<sf::Int16> bitStrengCRC)
 
 	m_numPadding = paddingCoeff * m_antalBit - indSize;
 
-	std::cout << "Antal nuller der puttes i som padding: " << m_numPadding << std::endl;
+	std::cout << "Antal nuller der puttes i som padding til CRC check: " << m_numPadding << std::endl;
 
 
 	for (int i = 0; i < m_numPadding; i++)
@@ -87,9 +87,9 @@ std::vector<sf::Int16> Encoder::CRC(std::vector<sf::Int16> bitStrengCRC)
 	for (size_t k = 0; k < bitStrengCRC.size(); k += m_antalBit) //k=8
 	{
 
-		std::bitset<64> generator(0b0000000100000111);  // CRC_8 check generator polynomie 
+		std::bitset<256> generator(0b0000000100000111);  // CRC_8 check generator polynomie 
 
-		std::bitset<64> data(0b0);						// Vektor til at lave udregninger på.
+		std::bitset<256> data(0b0);						// Vektor til at lave udregninger på.
 
 		for (int i = 0; i < m_antalBit; i++) //=8					// I dette loop indsættes data fra strengen ind i et bitset, så det senere kan manipuleres med. 
 		{												// Det er 8 da vi laver tjek på hver 8 bit. Samtidig lægges de 8 bit i en ny vektor. 
@@ -107,7 +107,6 @@ std::vector<sf::Int16> Encoder::CRC(std::vector<sf::Int16> bitStrengCRC)
 
 		}
 
-		std::cout << "Det data bliver lavet CRC - tjek på: " << data << std::endl;
 
 		for (int i = 0; i < m_antalBit; i++) //8
 		{
@@ -141,14 +140,8 @@ std::vector<sf::Int16> Encoder::CRC(std::vector<sf::Int16> bitStrengCRC)
 std::vector<sf::Int16> Encoder::ESC(std::vector<sf::Int16> bitStrengESC)
 {
 	std::vector<int> ESCknap = { 1,1,1,1,1,1,1,0 };
-	std::cout << "Binary streng der skal laves m_insertESC paa: ";
-  
-	for (size_t i = 0; i < bitStrengESC.size(); i++)
-	{
-		std::cout << bitStrengESC[i];
-	}
 
-	std::cout << std::endl << "Stoerrelse paa bitStrengESC: " << bitStrengESC.size() << std::endl;
+	std::cout << std::endl << "Stoerrelse paa bitStrengESC before : " << bitStrengESC.size() << std::endl;
 
 	//Stop and wait m_insertESC for encoder
 	for (size_t i = 0; i < bitStrengESC.size(); i += 8)
@@ -207,11 +200,7 @@ std::vector<sf::Int16> Encoder::ESC(std::vector<sf::Int16> bitStrengESC)
 
 	}
 
-	for (size_t i = 0; i < m_insertESC.size(); i++)
-	{
-		std::cout << m_insertESC[i];
-	}
-	std::cout << std::endl;
+	std::cout << std::endl << "Stoerrelse paa bitStrengESC after : " << m_insertESC.size() << std::endl;
 
 
 	return m_insertESC;
@@ -267,20 +256,22 @@ std::vector<std::vector<sf::Int16>> Encoder::pakker(std::vector<sf::Int16> bitSt
 		}
 
 		if (i == 0 && m_numPadding > 0)
-		{
-			std::cout << "m_numPadding: " << m_numPadding << std::endl; 
+		{ 
 			m_pakker[0].erase(m_pakker[0].begin(), m_pakker[0].begin() + m_numPadding);
 		}
 	}
+	std::cout << std::endl;
+	
 	for (size_t i = 0; i < m_pakker.size(); i++)
 	{
+		std::cout << "Datastrøm med CRC, nummer " << i << std::endl;
 		for (size_t j = 0; j < m_pakker[i].size(); j++)
 		{
 			std::cout << m_pakker[i][j];
 		}
-		std::cout << " ";
-
+		std::cout << std::endl;
 	}
+	std::cout << std::endl; 
 	return m_pakker;
 }
 
@@ -321,17 +312,20 @@ std::vector<std::vector<sf::Int16> > Encoder::header(std::vector<std::vector<sf:
 		}
 	}
 ///////////////////7
-
+	
 	for (size_t i = 0; i < headerVec.size(); i++)
 	{
+		std::cout << "Hele frame med flag og sekNr, nummer: " << i << std::endl;
 		for (size_t j = 0; j < headerVec[i].size(); j++)
 		{
 			std::cout << headerVec[i][j];
 		}
-		std::cout << " ";
 		m_pakkerMedHeader = headerVec;
+		std::cout << std::endl;
 	}
+	std::cout << std::endl;
 	return m_pakkerMedHeader;
+	 
 }
 
 std::vector<std::vector<sf::Int16>> Encoder::encoderMessage(std::string message)
