@@ -33,7 +33,7 @@ void Userinterface::setUI() {
 	sf::RectangleShape rectangleBesked(sf::Vector2f(100, 35));
 
 	sf::Font font;
-	font.loadFromFile("blue.ttf");
+	font.loadFromFile("ariblk.ttf");
 
 
 	sf::Text text;
