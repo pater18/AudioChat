@@ -159,13 +159,16 @@ std::vector<sf::Int16> Decoder::CRCmodtaget(int antal_bit, std::vector<sf::Int16
 			}
 		}
 		
-
+		std::cout << "Streng der er padding på der skal fjernes: ";
 		std::vector<int> temp;
 		for (size_t i = 0; i < antal_bit; i++)
 		{
 			temp.push_back(bitMedPadding[i+8]);
+			std::cout << temp[i];
 		}
+		std::cout << std::endl; 
 		
+
 		std::reverse(std::begin(temp), std::end(temp));
 
 		for (int i = 0; i < antal_bit; i++)
@@ -188,7 +191,8 @@ std::vector<sf::Int16> Decoder::CRCmodtaget(int antal_bit, std::vector<sf::Int16
 		if (bitMedPadding == false)
 		{
 			std::cout << "Data der blev sendt var det rigtige" << std::endl;
-			for (size_t i = 0; i < temp.size(); i++)
+			std::cout << "Sidste besked i bit: ";
+			for (size_t i = numPadding2; i < (temp.size() ) ; i++)
 			{
 				messageInBit.push_back(temp[i]);
 				m_CRCok = true;
