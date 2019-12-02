@@ -118,7 +118,7 @@ std::vector<sf::Int16> Decoder::CRCmodtaget(int antal_bit, std::vector<sf::Int16
 		
 	std::vector<sf::Int16> messageInBit; 
 
-	std::bitset<256> generator2(0b00100000111);
+	std::bitset<900> generator2(0b00100000111);
 	int DataInsert = antal_bit + 8 - 1;
 	int bitStrengSize = bitStreng.size(); //16
 	
@@ -141,10 +141,10 @@ std::vector<sf::Int16> Decoder::CRCmodtaget(int antal_bit, std::vector<sf::Int16
 	}
 
 
-	for (size_t k = 0; k < bitStreng.size(); k += antal_bit + 8) //k=8    vecForCRC = 256
+	for (size_t k = 0; k < bitStreng.size(); k += antal_bit + 8) //k=8    vecForCRC = 900
 	{
 		 
-		std::bitset<256> bitMedPadding(0b0);
+		std::bitset<900> bitMedPadding(0b0);
 
 		for (int i = 0; i < (antal_bit + 8); i++)
 		{

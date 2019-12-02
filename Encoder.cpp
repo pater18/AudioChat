@@ -87,9 +87,9 @@ std::vector<sf::Int16> Encoder::CRC(std::vector<sf::Int16> bitStrengCRC)
 	for (size_t k = 0; k < bitStrengCRC.size(); k += m_antalBit) //k=8
 	{
 
-		std::bitset<256> generator(0b0000000100000111);  // CRC_8 check generator polynomie 
+		std::bitset<900> generator(0b0000000100000111);  // CRC_8 check generator polynomie 
 
-		std::bitset<256> data(0b0);						// Vektor til at lave udregninger på.
+		std::bitset<900> data(0b0);						// Vektor til at lave udregninger på.
 
 		for (int i = 0; i < m_antalBit; i++) //=8					// I dette loop indsættes data fra strengen ind i et bitset, så det senere kan manipuleres med. 
 		{												// Det er 8 da vi laver tjek på hver 8 bit. Samtidig lægges de 8 bit i en ny vektor. 

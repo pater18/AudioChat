@@ -19,8 +19,7 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer, Cu
 	customSound afspilLyd;
 
 	size_t i = 0;
-	std::cout << _sendBuffer.size() << std::endl;
-
+	
 	while (i < _sendBuffer.size())
 	{
 
@@ -189,4 +188,9 @@ void Protokol::modtagetProtokol(bool &forventetSekNR, std::vector<sf::Int16> mod
 		customSound afspilLyd;
 		afspilLyd.playSound(bitToAmplitudes(g_sendeTid * 44100, ack));
 	}
+	else
+	{
+		modtageRecorder.resume();
+	}
+
 }

@@ -120,7 +120,7 @@ void Userinterface::setUI() {
 
 				textVector2.insert(textVector2.begin(), text2);
 
-				for (size_t i = 1; i < textVector2.size(); i++)
+				for (size_t i = 0; i < textVector2.size(); i++)
 				{
 					textVector2[i].move(0, -moveText);
 
