@@ -35,6 +35,7 @@ public:
 	void setCurDTMF(int curDTMF) { m_curDTMF = curDTMF; };
 
 	std::clock_t startClock;
+
 private:
 	bool m_paused = false;
 
@@ -44,7 +45,6 @@ private:
 	const int m_processingInterval = g_processInterval;
 
 	float sendingTime = g_sendeTid;
-
 
 	std::vector<std::vector <float> > m_goertzelDataMatrix;
 	std::vector< std::pair< int, std::vector< std::vector<float> >>> m_goertzelDataPairs;

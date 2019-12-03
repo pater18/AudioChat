@@ -33,8 +33,10 @@ int main()
 	
 
 
-	//Userinterface ui;
-	//ui.setUI();
+
+	Userinterface ui;
+	ui.setupUI();
+
 
 
 	return 0;
