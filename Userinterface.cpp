@@ -42,9 +42,9 @@ void Userinterface::send(sf::RenderWindow& window, sf::Event& event, CustomRecor
 
 				Encoder encoder;
 				Protokol protokolSend;
-				protokolSend.sendProtokol(encoder.encoderMessage(indtastedeBesked));
+				protokolSend.sendProtokol(encoder.encoderMessage(indtastedeBesked), recorder);
 
-				recorder.resume(g_samplingFreq);
+				recorder.resume();
 
 				moveTextFunc(sendTextVec, receiveTextVec, receiveText, sendTextVec, sendText);
 
@@ -63,9 +63,9 @@ void Userinterface::send(sf::RenderWindow& window, sf::Event& event, CustomRecor
 
 			Encoder encoder;
 			Protokol protokolSend;
-			protokolSend.sendProtokol(encoder.encoderMessage(indtastedeBesked));
+			protokolSend.sendProtokol(encoder.encoderMessage(indtastedeBesked), recorder);
 
-			recorder.resume(g_samplingFreq);
+			recorder.resume();
 
 			moveTextFunc(sendTextVec, receiveTextVec, receiveText, sendTextVec, sendText);
 
@@ -116,9 +116,9 @@ void Userinterface::receive(CustomRecorder& recorder)
 			std::cout << receiveMessage << std::endl;
 
 			Protokol modtagProtokol;
-			modtagProtokol.modtagetProtokol(forventetSekNR, recorder.getDecoder().getRenBitStreng());
+			modtagProtokol.modtagetProtokol(forventetSekNR, recorder.getDecoder().getRenBitStreng(), recorder);
 			recorder.getDecoder().setReceivedMessageToFalse();
-			recorder.resume(g_samplingFreq);
+			recorder.resume();
 
 		}
 
@@ -128,7 +128,7 @@ void Userinterface::receive(CustomRecorder& recorder)
 			std::cout << receiveMessage << " " << "sidste" << std::endl;
 
 			Protokol modtagProtokol;
-			modtagProtokol.modtagetProtokol(forventetSekNR, recorder.getDecoder().getRenBitStreng());
+			modtagProtokol.modtagetProtokol(forventetSekNR, recorder.getDecoder().getRenBitStreng(), recorder);
 
 			receiveText.setString(receiveMessage);
 
@@ -137,7 +137,7 @@ void Userinterface::receive(CustomRecorder& recorder)
 			std::cout << "Input if " << std::endl;
 			receiveMessage.clear();
 			indtastedeBesked.clear();
-			recorder.resume(g_samplingFreq);
+			recorder.resume();
 			std::cout << recorder.getDecoder().getReceivedMessage() << std::endl;
 			recorder.getDecoder().setReceivedMessageToFalse();
 		}
