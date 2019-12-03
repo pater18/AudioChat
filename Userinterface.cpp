@@ -80,19 +80,19 @@ void Userinterface::setUI()
 				Protokol modtagProtokol;
 				modtagProtokol.modtagetProtokol(forventetSekNR, recorder.getDecoder().getRenBitStreng(), recorder);
 
-				text2.setString(receive);
+				
 				widthOfReceive = text2.getLocalBounds().width;
 				text2.setPosition(1000 - widthOfReceive - 50, 710 - moveText);
-				
+				text2.setString(receive);
 
 
 				// move sendte tekst
-				for (size_t i = 0; i < textVector.size(); i++)
-				{
+				//for (size_t i = 0; i < textVector.size(); i++)
+				//{
 
-					textVector[i].move(0, -moveText);
+				//	textVector[i].move(0, -moveText);
 
-				}
+				//}
 
 				textVector2.insert(textVector2.begin(), text2);
 
@@ -101,9 +101,10 @@ void Userinterface::setUI()
 					textVector2[i].move(0, -moveText);
 
 				}
+
 				std::cout << "Input if " << std::endl;
 				receive.clear();
-				indtastedeBesked.clear();
+				//indtastedeBesked.clear();
 				recorder.resume();;
 				std::cout << recorder.getDecoder().getReceivedMessage() << std::endl;
 				
@@ -152,10 +153,10 @@ void Userinterface::setUI()
 
 					recorder.resume();;
 
-					receive.clear();
+					//receive.clear();
 					
 					// move sendte tekst
-					widthOfReceive = text2.getLocalBounds().width;
+					//widthOfReceive = text2.getLocalBounds().width;
 					//text2.setPosition(1000 - widthOfReceive - 50, 710 - moveText);
 
 					textVector.insert(textVector.begin(), text);
@@ -165,13 +166,13 @@ void Userinterface::setUI()
 
 					}
 
-					for (size_t i = 0; i < textVector2.size(); i++)
-					{
-						textVector2[i].move(0, -moveText);
+					//for (size_t i = 0; i < textVector2.size(); i++)
+					//{
+					//	textVector2[i].move(0, -moveText);
 
-					}
+					//}
 
-					receive.clear();
+					//receive.clear();
 					indtastedeBesked.clear();
 
 
