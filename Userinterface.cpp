@@ -48,7 +48,6 @@ void Userinterface::setUI() {
 	text2.setCharacterSize(20);
 	text2.setFillColor(sf::Color::Black);
 
-
 	sf::Text send;
 	send.setFont(font);
 	send.setString("Send");
@@ -108,6 +107,7 @@ void Userinterface::setUI() {
 				text2.setString(receive);
 				widthOfReceive = text2.getLocalBounds().width;
 				text2.setPosition(1000 - widthOfReceive - 50, 710 - moveText);
+				
 
 
 				// move sendte tekst
@@ -120,7 +120,7 @@ void Userinterface::setUI() {
 
 				textVector2.insert(textVector2.begin(), text2);
 
-				for (size_t i = 0; i < textVector2.size(); i++)
+				for (size_t i = 1; i < textVector2.size(); i++)
 				{
 					textVector2[i].move(0, -moveText);
 
@@ -191,7 +191,7 @@ void Userinterface::setUI() {
 					
 					// move sendte tekst
 					widthOfReceive = text2.getLocalBounds().width;
-					text2.setPosition(1000 - widthOfReceive - 50, 710 - moveText);
+					//text2.setPosition(1000 - widthOfReceive - 50, 710 - moveText);
 
 					textVector.insert(textVector.begin(), text);
 					for (size_t i = 0; i < textVector.size(); i++)
