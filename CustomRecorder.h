@@ -4,6 +4,7 @@
 #include "Decoder.h"
 #include "Timer.h"
 
+
 #include <thread>
 #include <chrono>
 #include <cstdio>
@@ -21,25 +22,34 @@ public:
 	bool onProcessSamples(const sf::Int16* samples, std::size_t sampleCount);
 	void onStop();
 
+	void pause() { m_paused = true; std::cout << "Recording paused " << std::endl;
+	};
+	void resume() { m_paused = false; m_decoder.getCharacter().clear(); std::cout << "Recording resumed " << std::endl; };
+
+	void addGoertzelMatrixToVector(int nextDtmf);
 	void saveGoertzelMatrixToFile();
+	void saveGoertzelMatrixToSingleFile();
 	int syncDTMF();
 
 	Decoder& getDecoder() { return m_decoder; };
 	void setCurDTMF(int curDTMF) { m_curDTMF = curDTMF; };
 
 	std::clock_t startClock;
+
 private:
+	bool m_paused = false;
+
 	sf::Int16 m_samples;
 	int m_processingCycles = 0;
 
-	const int m_processingInterval = 30;
-	float sendingTime = 0.2;
+	const int m_processingInterval = g_processInterval;
 
-
-
+	float sendingTime = g_sendeTid;
 
 	std::vector<std::vector <float> > m_goertzelDataMatrix;
+	std::vector< std::pair< int, std::vector< std::vector<float> >>> m_goertzelDataPairs;
 	bool m_startSavingGoertzel = false;
+	int m_dtmfForSavingGoertzel = -1;
 
 	int m_lastDTMF = -1, m_curDTMF = -1;
 	double duration;

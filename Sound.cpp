@@ -2,8 +2,6 @@
 #include <math.h>
 #include "Encoder.h"
 
-
-
 customSound::customSound()
 {
 }
@@ -30,28 +28,54 @@ short customSound::Sinewave(double time, double freq1, double freq2, double amp)
 }
 
 
-  
-
-
-std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecFraProt)
+std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int16> vecFraProt)
 {
 
-	
+	std::vector<sf::Int16> amplitudes;
 
 	std::vector <std::vector<int>> freq{ {697, 1209},{697, 1336},{697, 1477},{697, 1633},{ 770, 1209},{ 770, 1336},{ 770, 1477},{ 770, 1633},{852, 1209},{852, 1336},{852, 1477},{852, 1633}, {941, 1209},{941, 1336},{941, 1477},{941, 1633} };
 
 	int freq1, freq2;
 
+	std::cout << "Tonerne: " << std::endl;
+
 	for (int i = 0; i < vecFraProt.size(); i += 4) // 0, 4, 8
 	{
+
+		double multipleEnd = 1, multipleStart = 0;
+		double faktor = tid * 0.02;
+		faktor = multipleEnd / faktor;
+
+		
+
 		if ((vecFraProt[i] == 0) && (vecFraProt[i + 1] == 0) && (vecFraProt[i + 2] == 0) && (vecFraProt[i + 3] == 0))			//Bit 0000 = 0
 		{
 			freq1 = 697;
 			freq2 = 1209;
+
+			std::cout << "0" << std::endl;
+
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+
+			/*	if (i < (tid - (tid * 0.98)))
+				{
+					amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
+					multipleStart += faktor;
+				}
+				else if (i < (tid - (tid * 0.02)) && i >(tid - (tid * 0.98)))
+				{
+					amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				}
+				else
+				{
+					amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+					multipleEnd -= faktor;
+				}*/
 			}
+			multipleEnd = 1;
+			multipleStart = 0;
 
 		}
 
@@ -59,10 +83,28 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 		{
 			freq1 = 697;
 			freq2 = 1336;
+			std::cout << "1" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+
+				/*if (i < (tid - (tid * 0.98)))
+				{
+					amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
+					multipleStart += faktor;
+				}
+				else if (i < (tid - (tid * 0.02)) && i >(tid - (tid * 0.98)))
+				{
+					amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				}
+				else
+				{
+					amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+					multipleEnd -= faktor;
+				}*/
 			}
+			multipleEnd = 1;
+			multipleStart = 0;
 
 		}
     
@@ -70,146 +112,413 @@ std::vector<sf::Int16> customSound::message(int tid, std::vector<sf::Int16> vecF
 		{
 			freq1 = 697;
 			freq2 = 1477;
+			std::cout << "2" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+
+			/*	if (i < (tid - (tid * 0.98)))
+				{
+					amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
+					multipleStart += faktor;
+				}
+				else if (i < (tid - (tid * 0.02)) && i >(tid - (tid * 0.98)))
+				{
+					amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				}
+				else
+				{
+					amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+					multipleEnd -= faktor;
+				}*/
 			}
+			multipleEnd = 1;
+			multipleStart = 0;
 		}
 
 		if ((vecFraProt[i] == 0) && (vecFraProt[i + 1] == 0) && (vecFraProt[i + 2] == 1) && (vecFraProt[i + 3] == 1))			//Bit 0011 = 3
 		{
 			freq1 = 697;
 			freq2 = 1633;
+			std::cout << "3" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+
+			/*	if (i < (tid - (tid * 0.98)))
+				{
+					amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
+					multipleStart += faktor;
+				}
+				else if (i < (tid - (tid * 0.02)) && i >(tid - (tid * 0.98)))
+				{
+					amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				}
+				else
+				{
+					amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+					multipleEnd -= faktor;
+				}*/
 			}
+			multipleEnd = 1;
+			multipleStart = 0;
 		}
 
 		if ((vecFraProt[i] == 0) && (vecFraProt[i + 1] == 1) && (vecFraProt[i + 2] == 0) && (vecFraProt[i + 3] == 0))			//Bit 0100 = 4
 		{
 			freq1 = 770;
 			freq2 = 1209;
+			std::cout << "4" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+
+				/*if (i < (tid - (tid * 0.98)))
+				{
+					amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
+					multipleStart += faktor;
+				}
+				else if (i < (tid - (tid * 0.02)) && i >(tid - (tid * 0.98)))
+				{
+					amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				}
+				else
+				{
+					amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+					multipleEnd -= faktor;
+				}*/
 			}
+			multipleEnd = 1;
+			multipleStart = 0;
 		}
     
 		if ((vecFraProt[i] == 0) && (vecFraProt[i + 1] == 1) && (vecFraProt[i + 2] == 0) && (vecFraProt[i + 3] == 1))			//Bit 0101 = 5
 		{
 			freq1 = 770;
 			freq2 = 1336;
+			std::cout << "5" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+
+				//if (i < (tid - (tid * 0.98)))
+				//{
+				//	amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
+				//	multipleStart += faktor;
+				//}
+				//else if (i < (tid - (tid * 0.02)) && i >(tid - (tid * 0.98)))
+				//{
+				//	amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				//}
+				//else
+				//{
+				//	amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+				//	multipleEnd -= faktor;
+				//}
 			}
+			multipleEnd = 1;
+			multipleStart = 0;
 		}
 
 		if ((vecFraProt[i] == 0) && (vecFraProt[i + 1] == 1) && (vecFraProt[i + 2] == 1) && (vecFraProt[i + 3] == 0))			//Bit 0110 = 6
 		{
 			freq1 = 770;
 			freq2 = 1477;
+			std::cout << "6" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+
+				//if (i < (tid - (tid * 0.98)))
+				//{
+				//	amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
+				//	multipleStart += faktor;
+				//}
+				//else if (i < (tid - (tid * 0.02)) && i >(tid - (tid * 0.98)))
+				//{
+				//	amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				//}
+				//else
+				//{
+				//	amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+				//	multipleEnd -= faktor;
+				//}
 			}
+			multipleEnd = 1;
+			multipleStart = 0;
 		}
 
 		if ((vecFraProt[i] == 0) && (vecFraProt[i + 1] == 1) && (vecFraProt[i + 2] == 1) && (vecFraProt[i + 3] == 1))			//Bit = 7
 		{
 			freq1 = 770;
 			freq2 = 1633;
+			std::cout << "7" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+
+				//if (i < (tid - (tid * 0.98)))
+				//{
+				//	amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
+				//	multipleStart += faktor;
+				//}
+				//else if (i < (tid - (tid * 0.02)) && i >(tid - (tid * 0.98)))
+				//{
+				//	amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				//}
+				//else
+				//{
+				//	amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+				//	multipleEnd -= faktor;
+				//}
 			}
+			multipleEnd = 1;
+			multipleStart = 0;
 		}
 
 		if ((vecFraProt[i] == 1) && (vecFraProt[i + 1] == 0) && (vecFraProt[i + 2] == 0) && (vecFraProt[i + 3] == 0))			//Bit 1000 = 8
 		{
 			freq1 = 852;
 			freq2 = 1209;
+			std::cout << "8" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+
+				/*if (i < (tid - (tid * 0.98)))
+				{
+					amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
+					multipleStart += faktor;
+				}
+				else if (i < (tid - (tid * 0.02)) && i >(tid - (tid * 0.98)))
+				{
+					amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				}
+				else
+				{
+					amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+					multipleEnd -= faktor;
+				}*/
 			}
+			multipleEnd = 1;
+			multipleStart = 0;
 		}
 
 		if ((vecFraProt[i] == 1) && (vecFraProt[i + 1] == 0) && (vecFraProt[i + 2] == 0) && (vecFraProt[i + 3] == 1))			//Bit = 9
 		{
 			freq1 = 852;
 			freq2 = 1336;
+			std::cout << "9" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+
+				/*if (i < (tid - (tid * 0.98)))
+				{
+					amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
+					multipleStart += faktor;
+				}
+				else if (i < (tid - (tid * 0.02)) && i >(tid - (tid * 0.98)))
+				{
+					amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				}
+				else
+				{
+					amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+					multipleEnd -= faktor;
+				}*/
 			}
+			multipleEnd = 1;
+			multipleStart = 0;
 		}
 
 		if ((vecFraProt[i] == 1) && (vecFraProt[i + 1] == 0) && (vecFraProt[i + 2] == 1) && (vecFraProt[i + 3] == 0))			//Bit = 10
 		{
 			freq1 = 852;
 			freq2 = 1477;
+			std::cout << "10" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+
+				/*if (i < (tid - (tid * 0.98)))
+				{
+					amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
+					multipleStart += faktor;
+				}
+				else if (i < (tid - (tid * 0.02)) && i >(tid - (tid * 0.98)))
+				{
+					amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				}
+				else
+				{
+					amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+					multipleEnd -= faktor;
+				}*/
 			}
+			multipleEnd = 1;
+			multipleStart = 0;
 		}
 
 		if ((vecFraProt[i] == 1) && vecFraProt[i + 1] == 0 && (vecFraProt[i + 2] == 1) && (vecFraProt[i + 3] == 1))			//Bit = 11
 		{
 			freq1 = 852;
 			freq2 = 1633;
+			std::cout << "11" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+
+				/*if (i < (tid - (tid * 0.98)))
+				{
+					amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
+					multipleStart += faktor;
+				}
+				else if (i < (tid - (tid * 0.02)) && i >(tid - (tid * 0.98)))
+				{
+					amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				}
+				else
+				{
+					amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+					multipleEnd -= faktor;
+				}*/
 			}
+			multipleEnd = 1;
+			multipleStart = 0;
 		}
     
 		if ((vecFraProt[i] == 1) && (vecFraProt[i + 1] == 1) && (vecFraProt[i + 2] == 0) && (vecFraProt[i + 3] == 0))			//Bit = 12
 		{
 			freq1 = 941;
 			freq2 = 1209;
+			std::cout << "12" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+
+				/*if (i < (tid - (tid * 0.98)))
+				{
+					amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
+					multipleStart += faktor;
+				}
+				else if (i < (tid - (tid * 0.02)) && i >(tid - (tid * 0.98)))
+				{
+					amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				}
+				else
+				{
+					amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+					multipleEnd -= faktor;
+				}*/
 			}
+			multipleEnd = 1;
+			multipleStart = 0;
 		}
 
 		if ((vecFraProt[i] == 1) && (vecFraProt[i + 1] == 1) && (vecFraProt[i + 2] == 0) && (vecFraProt[i + 3] == 1))			//Bit = 13
 		{
 			freq1 = 941;
 			freq2 = 1336;
+			std::cout << "13" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+
+				/*if (i < (tid - (tid * 0.98)))
+				{
+					amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
+					multipleStart += faktor;
+				}
+				else if (i < (tid - (tid * 0.02)) && i >(tid - (tid * 0.98)))
+				{
+					amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				}
+				else
+				{
+					amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+					multipleEnd -= faktor;
+				}*/
 			}
+			multipleEnd = 1;
+			multipleStart = 0;
 		}
 
 		if ((vecFraProt[i] == 1) && (vecFraProt[i + 1] == 1) && (vecFraProt[i + 2] == 1) && (vecFraProt[i + 3] == 0))			//Bit = 14
 		{
 			freq1 = 941;
 			freq2 = 1477;
+			std::cout << "14" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+
+				/*if (i < (tid - (tid * 0.98)))
+				{
+					amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
+					multipleStart += faktor;
+				}
+				else if (i < (tid - (tid * 0.02)) && i >(tid - (tid * 0.98)))
+				{
+					amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				}
+				else
+				{
+					amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+					multipleEnd -= faktor;
+				}*/
 			}
+			multipleEnd = 1;
+			multipleStart = 0;
 		}
 
 		if ((vecFraProt[i] == 1) && (vecFraProt[i + 1] == 1) && (vecFraProt[i + 2] == 1) && (vecFraProt[i + 3] == 1))			//Bit = 15
 		{
 			freq1 = 941;
 			freq2 = 1633;
+			std::cout << "15" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
-				_customSound.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+
+				/*if (i < (tid - (tid * 0.98)))
+				{
+					amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleStart);
+					multipleStart += faktor;
+				}
+				else if (i < (tid - (tid * 0.02)) && i >(tid - (tid * 0.98)))
+				{
+					amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
+				}
+				else
+				{
+					amplitudes.push_back((customSound::Sinewave(i, freq1, freq2, 0.5)) * multipleEnd);
+					multipleEnd -= faktor;
+				}*/
 			}
+			multipleEnd = 1;
+			multipleStart = 0;
 		}
 
 	}
 
-	return _customSound;
+	return amplitudes;
 
+}
+
+void customSound::playSound(std::vector<sf::Int16> vectorOfAmplitudes)
+{
+	sf::SoundBuffer buffer;
+	sf::Sound sound;
+	buffer.loadFromSamples(&vectorOfAmplitudes[0], vectorOfAmplitudes.size(), 1, 44100);
+	sound.setBuffer(buffer);
+	sf::sleep(sf::seconds(0.2));
+	sound.play();
+	while (sound.getStatus() != 0)
+	{
+	}
+	sf::sleep(sf::milliseconds(200));
+	
 }
 
 std::vector<sf::Int16> customSound::testAfLyd(int tid, std::vector<sf::Int16> &decimaler)

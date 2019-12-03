@@ -2,6 +2,7 @@
 
 #include <SFML/Audio.hpp>
 #include "Timer.h"
+#include "Global.h"
 
 #include <iostream>
 #include <vector>
@@ -37,6 +38,6 @@ private:
 	//std::vector<int> sendToDecoder;
 
 
-	const double threshHold = 1200, threshHoldMultiple = 1.0;
+	const double threshHold = g_threshHold, threshHoldMultiple = g_threshHoldMultible;
 
 };

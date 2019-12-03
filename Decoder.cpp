@@ -11,11 +11,22 @@ Decoder::Decoder()
 
 void Decoder::setDTMFTone(int DTMF)
 {
+	double durationSinceLastDTMF;
+	durationSinceLastDTMF = (std::clock() - messageTimeOut) / (double)CLOCKS_PER_SEC;
+	if (durationSinceLastDTMF > m_timeOutDuration)
+	{
+		m_charVect.clear();
+		m_character.clear();
+		std::cout << "CLEAR" << std::endl;
+		m_listening = true;
+	}
+	messageTimeOut = std::clock();
+
 	//m_vecAck.push_back(DTMF);
 	if (m_character.size() == 2)
 		m_character.clear();
 	m_character.push_back(DTMF);
- 
+
 	std::cout << DTMF << " ";
 	if (m_character.size() == 2)
 		std::cout << std::endl;
@@ -29,8 +40,8 @@ void Decoder::setDTMFTone(int DTMF)
 	//	}
 	//	std::cout << std::endl;
 	//}
-	
-	
+
+
 	if (m_character.size() == 2)
 	{
 		if (m_listening)
@@ -38,6 +49,7 @@ void Decoder::setDTMFTone(int DTMF)
 			m_receivedMessage = false;
 			if (m_character == flag)
 			{
+				m_charVect.clear();
 				std::cout << "START FLAG" << std::endl;
 				m_listening = false;
 			}
@@ -56,13 +68,8 @@ void Decoder::setDTMFTone(int DTMF)
 		{
 			std::cout << "SLUT FLAG" << std::endl;
 			m_listening = true;
-			intToBit();
-			
-
-			CRC(32);
-			bitToString();
-			m_charVect.clear();
 			m_receivedMessage = true;
+			m_character.clear();
 		}
 		else
 		{
@@ -71,161 +78,153 @@ void Decoder::setDTMFTone(int DTMF)
 		}
 
 	}
-	
+
 }
 
-std::vector<sf::Int16> Decoder::intToBit()
+std::vector<sf::Int16> Decoder::intToBit(std::vector<int> DTMFtones)
 {
-	if (m_charVect.size() < 7)
+
+	std::vector<sf::Int16> vecForCRC;
+
+	for (size_t i = 0; i < DTMFtones.size(); i++)
 	{
-		for (size_t i = 0; i < m_charVect.size(); i++)
-		{
-			std::bitset<4> temp(m_charVect[i]);
-			std::cout << temp << std::endl;
-			vecForACK.push_back(temp[3]);
-			vecForACK.push_back(temp[2]);
-			vecForACK.push_back(temp[1]);
-			vecForACK.push_back(temp[0]);
-		}
-  }
-	else
+		std::bitset<4> temp(DTMFtones[i]);
+		std::cout << temp << std::endl;		//----------------------------------------------------------
+		vecForCRC.push_back(temp[3]);
+		vecForCRC.push_back(temp[2]);
+		vecForCRC.push_back(temp[1]);
+		vecForCRC.push_back(temp[0]);
+	}
+
+	/*for (size_t i = 0; i < vecForCRC.size(); i++)
 	{
-		for (size_t i = 0; i < m_charVect.size(); i++)
-		{
-			std::bitset<4> temp(m_charVect[i]);
-			std::cout << temp << std::endl;
-			vecForCRC.push_back(temp[3]);
-			vecForCRC.push_back(temp[2]);
-			vecForCRC.push_back(temp[1]);
-			vecForCRC.push_back(temp[0]);
-		}
+		std::cout << vecForCRC[i];
+	}
 
-		for (size_t i = 0; i < vecForCRC.size(); i++)
-		{
-			std::cout << vecForCRC[i];
-		}
+	std::cout << std::endl;
+	std::cout << vecForCRC.size() << std::endl;*/
 
-		std::cout << std::endl;
-		std::cout << vecForCRC.size() << std::endl;
-		
-		m_vecAck = vecForCRC;
+	m_renBitStreng = vecForCRC;
 
-    return vecForCRC;
-  }
- 
+	vecForCRC.erase(vecForCRC.begin(), vecForCRC.begin() + 8);		// For at slette sekvensnummer, så der ikke bliver lavet crc tjek på det også 
+
+	return vecForCRC;
 }
 
 
-std::vector<int> Decoder::CRC(int antal_bit)
+
+std::vector<sf::Int16> Decoder::CRCmodtaget(int antal_bit, std::vector<sf::Int16> bitStreng)
 {
-		
 
+	std::vector<sf::Int16> messageInBit;
 
-	std::bitset<64> generator2(0b00100000111);
+	std::bitset<900> generator2(0b00100000111);
 	int DataInsert = antal_bit + 8 - 1;
-	int indSize2 = vecForCRC.size();
-	std::cout << indSize2 << std::endl;
+	int bitStrengSize = bitStreng.size(); //16
 
 	int paddingCoeff2 = 0;
-	int tjek = indSize2 % (antal_bit + 8);
+	int tjek = bitStrengSize % (antal_bit + 8); // 16
 
 
 	while (tjek != 0)
 	{
-		indSize2 += 8;
-		tjek = indSize2 % (antal_bit + 8);
-		paddingCoeff2++;						//1  2  
+		bitStrengSize += 8;						//24 32 40
+		tjek = bitStrengSize % (antal_bit + 8);
+		paddingCoeff2++;						//1 2 3
 	}
 
-	int numPadding2 = (paddingCoeff2) * 8;	
-
-	std::cout << "Antal nuller der puttes i som padding2: " << numPadding2 << std::endl;
-
+	int numPadding2 = (paddingCoeff2) * 8;	//24
 
 	for (int i = 0; i < numPadding2; i++)
 	{
-		vecForCRC.insert(vecForCRC.begin(), 0);
+		bitStreng.insert(bitStreng.begin(), 0);
 	}
 
-	int fejl = 0; 
 
-	for (size_t k = 0; k < vecForCRC.size(); k += antal_bit + 8) //k=8    vecForCRC = 64
+	for (size_t k = 0; k < bitStreng.size(); k += antal_bit + 8) //k=8    vecForCRC = 900
 	{
-		 
-		std::bitset<64> data2(0b0);
+
+		std::bitset<900> bitMedPadding(0b0);
 
 		for (int i = 0; i < (antal_bit + 8); i++)
 		{
-			if (vecForCRC[i + k] == 1)
+			if (bitStreng[i + k] == 1)
 			{
-				data2.set((antal_bit + 8) - 1 - i, 1);
+				bitMedPadding.set((antal_bit + 8) - 1 - i, 1);
 			}
 			else
 			{
-				data2.set((antal_bit + 8) - 1 - i, 0);
+				bitMedPadding.set((antal_bit + 8) - 1 - i, 0);
 			}
 		}
-
-		std::cout << "Data2 start: ";
-		std::cout << data2;
-		std::cout << std::endl;
-		
 
 		std::vector<int> temp;
 		for (size_t i = 0; i < antal_bit; i++)
 		{
-			temp.push_back(data2[i+8]);
+			temp.push_back(bitMedPadding[i + 8]);
 		}
+		std::cout << std::endl;
+
+
 		std::reverse(std::begin(temp), std::end(temp));
 
 		for (int i = 0; i < antal_bit; i++)
 		{
-			if (data2[DataInsert - i] == 1)
+			if (bitMedPadding[DataInsert - i] == 1)
 			{
-				data2[DataInsert - i] = data2[DataInsert - i] xor generator2[8];
-				data2[DataInsert - 1 - i] = data2[DataInsert - 1 - i] xor generator2[7];
-				data2[DataInsert - 2 - i] = data2[DataInsert - 2 - i] xor generator2[6];
-				data2[DataInsert - 3 - i] = data2[DataInsert - 3 - i] xor generator2[5];
-				data2[DataInsert - 4 - i] = data2[DataInsert - 4 - i] xor generator2[4];
-				data2[DataInsert - 5 - i] = data2[DataInsert - 5 - i] xor generator2[3];
-				data2[DataInsert - 6 - i] = data2[DataInsert - 6 - i] xor generator2[2];
-				data2[DataInsert - 7 - i] = data2[DataInsert - 7 - i] xor generator2[1];
-				data2[DataInsert - 8 - i] = data2[DataInsert - 8 - i] xor generator2[0];
+				bitMedPadding[DataInsert - i] = bitMedPadding[DataInsert - i] xor generator2[8];
+				bitMedPadding[DataInsert - 1 - i] = bitMedPadding[DataInsert - 1 - i] xor generator2[7];
+				bitMedPadding[DataInsert - 2 - i] = bitMedPadding[DataInsert - 2 - i] xor generator2[6];
+				bitMedPadding[DataInsert - 3 - i] = bitMedPadding[DataInsert - 3 - i] xor generator2[5];
+				bitMedPadding[DataInsert - 4 - i] = bitMedPadding[DataInsert - 4 - i] xor generator2[4];
+				bitMedPadding[DataInsert - 5 - i] = bitMedPadding[DataInsert - 5 - i] xor generator2[3];
+				bitMedPadding[DataInsert - 6 - i] = bitMedPadding[DataInsert - 6 - i] xor generator2[2];
+				bitMedPadding[DataInsert - 7 - i] = bitMedPadding[DataInsert - 7 - i] xor generator2[1];
+				bitMedPadding[DataInsert - 8 - i] = bitMedPadding[DataInsert - 8 - i] xor generator2[0];
 			}
 		}
 
 
-		if (data2 == false)
+		if (bitMedPadding == false)
 		{
 			std::cout << "Data der blev sendt var det rigtige" << std::endl;
-			for (size_t i = 0; i < temp.size(); i++)
+			for (size_t i = numPadding2; i < (temp.size()); i++)
 			{
-				_CRCok.push_back(temp[i]);
+				messageInBit.push_back(temp[i]);
+				m_CRCok = true;
 			}
-			fejl++;
+
 		}
 		else
 		{
 			std::cout << "Der er fejl i beregningen til CRC tjek." << std::endl;
-			fejl++; 
+			m_CRCok = false;
 		}
-			
-		 
+
+
 	}
-	vecForCRC.clear();
-	m_charVect.clear();
-	return _CRCok;
+
+	return messageInBit;
+}
+
+std::string Decoder::decodeMessage()
+{
+	auto bitstring = intToBit(m_charVect);
+	auto CRCModtaget = CRCmodtaget(g_antalbit, bitstring);
+	auto String = bitToString(CRCModtaget);
+	return String;
 }
 
 
-std::string Decoder::bitToString()
+std::string Decoder::bitToString(std::vector<sf::Int16> messageInBit)
 {
-	for (size_t u = 0; u < _CRCok.size(); u += 8)
+	std::string message;
+	for (size_t u = 0; u < messageInBit.size(); u += 8)
 	{
 		std::bitset<8> temp;
 		for (size_t i = 0; i < 8; i++)
 		{
-			if (_CRCok[i + u] == 1)
+			if (messageInBit[i + u] == 1)
 				temp.set(7 - i, 1);
 			else
 				temp.set(7 - i, 0);
@@ -233,12 +232,10 @@ std::string Decoder::bitToString()
 
 		int tempi = temp.to_ulong();
 		char tempc = (char)tempi;
-		besked.push_back(tempc);
+		message.push_back(tempc);
 
 	}
-	
-	_CRCok.clear();
-	return besked;
+	return message;
 }
 
 
