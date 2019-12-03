@@ -1,47 +1,28 @@
 #include "Userinterface.h"
 
 
-
-//void Userinterface::makeSoundAck(std::vector<sf::Int16> _vecForAck) {
-//	customSound koder;
-//	koder.setBit(g_antalbit);
-//	koder.playSound(koder.bitToAmplitudes(44100 * g_sendeTid, _vecForAck));
-//}
-
-
-void Userinterface::setUI() {
-
-	sf::RenderWindow window(sf::VideoMode(1000, 800), "SFML works!");
+void Userinterface::setUI() 
+{
 
 	std::vector<sf::Text> textVector;
 	std::vector<sf::Text> textVector2;
-	std::vector<sf::RectangleShape> rectangleVec;
-	std::vector<sf::RectangleShape> rectangleVec2;
-	sf::Vector2f xyvec;
-
-	CustomRecorder recorder;
 
 	sf::RectangleShape rectangle(sf::Vector2f(750, 75));
 	rectangle.setFillColor(sf::Color(128, 128, 128));
 	rectangle.setPosition(50, 700);
 
-
 	sf::RectangleShape rectangleSend(sf::Vector2f(100, 75));
 	rectangleSend.setFillColor(sf::Color(128, 128, 128));
 	rectangleSend.setPosition(850, 700);
 
-	sf::RectangleShape rectangleBesked(sf::Vector2f(100, 35));
-
 	sf::Font font;
 	font.loadFromFile("ariblk.ttf");
-
 
 	sf::Text text;
 	text.setFont(font);
 	text.setCharacterSize(20);
 	text.setFillColor(sf::Color::Black);
 	text.setPosition(60, 710);
-
 
 	sf::Text text2;
 	text2.setFont(font);
@@ -55,20 +36,15 @@ void Userinterface::setUI() {
 	send.setFillColor(sf::Color::Black);
 	send.setPosition(880, 725);
 
-	sf::Text newline;
-	newline.setFont(font);
-	newline.setCharacterSize(24);
-	newline.setString("\n");
+	sf::RenderWindow window(sf::VideoMode(1000, 800), "SFML works!");
 
 	std::string indtastedeBesked;
-
-	recorder.start(g_samplingFreq);
-
 	bool forventetSekNR = 0;
 
+	CustomRecorder recorder;
+	recorder.start(g_samplingFreq);
+
 	while (window.isOpen())
-
-
 	{
 		if (recorder.getDecoder().getReceivedMessage())
 		{
@@ -134,14 +110,6 @@ void Userinterface::setUI() {
 			}
 		}
 
-///////////////////////////////////////////
-
-	//		sf::sleep(sf::milliseconds(1000));
-			
-
-
-
-
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
@@ -170,9 +138,6 @@ void Userinterface::setUI() {
 					}
 					break;
 				}
-
-			
-
 
 			case sf::Event::KeyPressed:
 				if (event.key.code == sf::Keyboard::Enter)
@@ -231,19 +196,6 @@ void Userinterface::setUI() {
 					if (event.text.unicode < 128 && (event.text.unicode != 13) && (event.text.unicode != 8))
 						indtastedeBesked += (char)event.text.unicode;
 
-					widthOfText = text.getLocalBounds().width + 50;
-					sf::Vector2f vector;
-					vector = rectangle.getPosition();
-					float xRectangle = vector.x;
-					float widthRect = xRectangle + rectangle.getSize().x;
-
-					if (widthOfText + 40 >= widthRect)
-					{
-						indtastedeBesked += "\n";
-						widthOfText = 50;
-
-					}
-
 					text.setString(indtastedeBesked);
 
 
@@ -256,16 +208,10 @@ void Userinterface::setUI() {
 		window.clear(sf::Color::White);
 		window.draw(rectangle);
 		window.draw(rectangleSend);
-		window.draw(rectangleBesked);
-
-		for (auto obj : rectangleVec)
-		{
-			window.draw(obj);
-		}
-		//
 
 		window.draw(text);
 		window.draw(text2);
+		window.draw(send);
 
 		for (auto obj : textVector)
 		{
@@ -277,7 +223,6 @@ void Userinterface::setUI() {
 			window.draw(obj);
 		}
 
-		window.draw(send);
 		window.display();
 	}
 
