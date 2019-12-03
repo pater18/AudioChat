@@ -18,24 +18,30 @@ void Decoder::setDTMFTone(int DTMF)
 		m_charVect.clear();
 		m_character.clear();
 		std::cout << "CLEAR" << std::endl;
-		m_listening = true; 
+		m_listening = true;
 	}
 	messageTimeOut = std::clock();
 
 	//m_vecAck.push_back(DTMF);
-
-	messageTimeOut = std::clock();
-
 	if (m_character.size() == 2)
 		m_character.clear();
-
 	m_character.push_back(DTMF);
+
 	std::cout << DTMF << " ";
 	if (m_character.size() == 2)
 		std::cout << std::endl;
 
+	////Print hver karakter
+	//if (m_character.size() == 1)
+	//{
+	//	for (std::size_t i = 0; i < m_character.size(); i++)
+	//	{
+	//		std::cout << m_character[i] << " ";
+	//	}
+	//	std::cout << std::endl;
+	//}
 
-	
+
 	if (m_character.size() == 2)
 	{
 		if (m_listening)
@@ -72,7 +78,7 @@ void Decoder::setDTMFTone(int DTMF)
 		}
 
 	}
-	
+
 }
 
 std::vector<sf::Int16> Decoder::intToBit(std::vector<int> DTMFtones)
@@ -97,25 +103,25 @@ std::vector<sf::Int16> Decoder::intToBit(std::vector<int> DTMFtones)
 
 	std::cout << std::endl;
 	std::cout << vecForCRC.size() << std::endl;*/
-		
+
 	m_renBitStreng = vecForCRC;
 
 	vecForCRC.erase(vecForCRC.begin(), vecForCRC.begin() + 8);		// For at slette sekvensnummer, så der ikke bliver lavet crc tjek på det også 
 
-    return vecForCRC;
-  }
- 
+	return vecForCRC;
+}
+
 
 
 std::vector<sf::Int16> Decoder::CRCmodtaget(int antal_bit, std::vector<sf::Int16> bitStreng)
 {
-		
-	std::vector<sf::Int16> messageInBit; 
+
+	std::vector<sf::Int16> messageInBit;
 
 	std::bitset<900> generator2(0b00100000111);
 	int DataInsert = antal_bit + 8 - 1;
 	int bitStrengSize = bitStreng.size(); //16
-	
+
 	int paddingCoeff2 = 0;
 	int tjek = bitStrengSize % (antal_bit + 8); // 16
 
@@ -137,7 +143,7 @@ std::vector<sf::Int16> Decoder::CRCmodtaget(int antal_bit, std::vector<sf::Int16
 
 	for (size_t k = 0; k < bitStreng.size(); k += antal_bit + 8) //k=8    vecForCRC = 900
 	{
-		 
+
 		std::bitset<900> bitMedPadding(0b0);
 
 		for (int i = 0; i < (antal_bit + 8); i++)
@@ -151,14 +157,14 @@ std::vector<sf::Int16> Decoder::CRCmodtaget(int antal_bit, std::vector<sf::Int16
 				bitMedPadding.set((antal_bit + 8) - 1 - i, 0);
 			}
 		}
-		
+
 		std::vector<int> temp;
 		for (size_t i = 0; i < antal_bit; i++)
 		{
-			temp.push_back(bitMedPadding[i+8]);
+			temp.push_back(bitMedPadding[i + 8]);
 		}
-		std::cout << std::endl; 
-		
+		std::cout << std::endl;
+
 
 		std::reverse(std::begin(temp), std::end(temp));
 
@@ -182,22 +188,22 @@ std::vector<sf::Int16> Decoder::CRCmodtaget(int antal_bit, std::vector<sf::Int16
 		if (bitMedPadding == false)
 		{
 			std::cout << "Data der blev sendt var det rigtige" << std::endl;
-			for (size_t i = numPadding2; i < (temp.size() ) ; i++)
+			for (size_t i = numPadding2; i < (temp.size()); i++)
 			{
 				messageInBit.push_back(temp[i]);
 				m_CRCok = true;
 			}
-			
+
 		}
 		else
 		{
 			std::cout << "Der er fejl i beregningen til CRC tjek." << std::endl;
-			m_CRCok = false; 
+			m_CRCok = false;
 		}
-			
-		 
+
+
 	}
-	
+
 	return messageInBit;
 }
 
