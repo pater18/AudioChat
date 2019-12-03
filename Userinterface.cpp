@@ -81,9 +81,10 @@ void Userinterface::setUI()
 				modtagProtokol.modtagetProtokol(forventetSekNR, recorder.getDecoder().getRenBitStreng(), recorder);
 
 				
+
+				text2.setString(receive);
 				widthOfReceive = text2.getLocalBounds().width;
 				text2.setPosition(1000 - widthOfReceive - 50, 710 - moveText);
-				text2.setString(receive);
 
 
 				// move sendte tekst
