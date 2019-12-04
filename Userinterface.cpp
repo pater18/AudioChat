@@ -36,7 +36,7 @@ void Userinterface::setUI()
 	send.setFillColor(sf::Color::Black);
 	send.setPosition(880, 725);
 
-	sf::RenderWindow window(sf::VideoMode(1000, 800), "SFML works!");
+	sf::RenderWindow window(sf::VideoMode(1000, 800), "Audio Chat");
 
 	std::string indtastedeBesked;
 	bool forventetSekNR = 0;

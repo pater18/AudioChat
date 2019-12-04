@@ -23,9 +23,9 @@
 
 int main()
 {
-	/*CustomRecorder recorder;
+/*	CustomRecorder recorder;
 	recorder.start(g_samplingFreq);
-	sf::sleep(sf::seconds(g_sendeTid * 16 + 3));
+	sf::sleep(sf::seconds(g_sendeTid * 16 + 1));
 	recorder.stop();*/	
 	/*customSound test;
 	std::vector<sf::Int16> lyde{ 0,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,15 };
