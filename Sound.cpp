@@ -1,6 +1,7 @@
 #include "Sound.h"
 #include <math.h>
 #include "Encoder.h"
+#include "Timer.h"
 
 customSound::customSound()
 {
@@ -37,7 +38,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 
 	int freq1, freq2;
 
-	std::cout << "Tonerne: " << std::endl;
+	// << "Tonerne: " << std::endl;
 
 	for (int i = 0; i < vecFraProt.size(); i += 4) // 0, 4, 8
 	{
@@ -53,7 +54,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 			freq1 = 697;
 			freq2 = 1209;
 
-			std::cout << "0" << std::endl;
+			// << "0" << std::endl;
 
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
@@ -83,7 +84,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 		{
 			freq1 = 697;
 			freq2 = 1336;
-			std::cout << "1" << std::endl;
+			// << "1" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
 				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
@@ -112,7 +113,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 		{
 			freq1 = 697;
 			freq2 = 1477;
-			std::cout << "2" << std::endl;
+			// << "2" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
 				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
@@ -140,7 +141,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 		{
 			freq1 = 697;
 			freq2 = 1633;
-			std::cout << "3" << std::endl;
+			// << "3" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
 				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
@@ -168,7 +169,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 		{
 			freq1 = 770;
 			freq2 = 1209;
-			std::cout << "4" << std::endl;
+			// << "4" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
 				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
@@ -196,7 +197,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 		{
 			freq1 = 770;
 			freq2 = 1336;
-			std::cout << "5" << std::endl;
+			// << "5" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
 				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
@@ -224,7 +225,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 		{
 			freq1 = 770;
 			freq2 = 1477;
-			std::cout << "6" << std::endl;
+			// << "6" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
 				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
@@ -252,7 +253,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 		{
 			freq1 = 770;
 			freq2 = 1633;
-			std::cout << "7" << std::endl;
+			// << "7" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
 				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
@@ -280,7 +281,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 		{
 			freq1 = 852;
 			freq2 = 1209;
-			std::cout << "8" << std::endl;
+			// << "8" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
 				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
@@ -308,7 +309,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 		{
 			freq1 = 852;
 			freq2 = 1336;
-			std::cout << "9" << std::endl;
+			// << "9" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
 				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
@@ -336,7 +337,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 		{
 			freq1 = 852;
 			freq2 = 1477;
-			std::cout << "10" << std::endl;
+			// << "10" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
 				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
@@ -364,7 +365,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 		{
 			freq1 = 852;
 			freq2 = 1633;
-			std::cout << "11" << std::endl;
+			// << "11" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
 				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
@@ -392,7 +393,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 		{
 			freq1 = 941;
 			freq2 = 1209;
-			std::cout << "12" << std::endl;
+			// << "12" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
 				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
@@ -420,7 +421,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 		{
 			freq1 = 941;
 			freq2 = 1336;
-			std::cout << "13" << std::endl;
+			// << "13" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
 				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
@@ -448,7 +449,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 		{
 			freq1 = 941;
 			freq2 = 1477;
-			std::cout << "14" << std::endl;
+			// << "14" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
 				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
@@ -476,7 +477,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 		{
 			freq1 = 941;
 			freq2 = 1633;
-			std::cout << "15" << std::endl;
+			// << "15" << std::endl;
 			for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 			{
 				amplitudes.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
@@ -508,6 +509,7 @@ std::vector<sf::Int16> customSound::bitToAmplitudes(int tid, std::vector<sf::Int
 
 void customSound::playSound(std::vector<sf::Int16> vectorOfAmplitudes)
 {
+	
 	sf::SoundBuffer buffer;
 	sf::Sound sound;
 	buffer.loadFromSamples(&vectorOfAmplitudes[0], vectorOfAmplitudes.size(), 1, 44100);
@@ -536,7 +538,7 @@ std::vector<sf::Int16> customSound::testAfLyd(int tid, std::vector<sf::Int16> &d
 	{
 
 		freq1 = freq[ decimaler[i] ] [0];
-		freq2 = freq[ decimaler[i] ] [1];
+		freq2 = freq[ decimaler[i] ]	[1];
 		for (int i = 0; i < tid; i++)			// 44100 giver lyden i 1 sekund
 		{
 			lyde.push_back(customSound::Sinewave(i, freq1, freq2, 0.5));
@@ -545,7 +547,7 @@ std::vector<sf::Int16> customSound::testAfLyd(int tid, std::vector<sf::Int16> &d
 
 
 	return lyde;
-	std::cout << lyde.size() << std::endl;
+	// << lyde.size() << std::endl;
 	
 
 

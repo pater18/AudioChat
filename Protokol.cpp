@@ -19,7 +19,8 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer, Cu
 	customSound afspilLyd;
 
 	size_t i = 0;
-	
+	Timer test("sendtimer");
+
 	while (i < _sendBuffer.size())
 	{
 
