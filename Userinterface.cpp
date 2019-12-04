@@ -16,7 +16,7 @@ void Userinterface::setUI()
 	rectangleSend.setPosition(850, 700);
 
 	sf::Font font;
-	font.loadFromFile("ariblk.ttf");
+	font.loadFromFile("blue.ttf");
 
 	sf::Text text;
 	text.setFont(font);

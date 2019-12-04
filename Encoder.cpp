@@ -137,70 +137,74 @@ std::vector<sf::Int16> Encoder::CRC(std::vector<sf::Int16> bitStrengCRC)
 	return m_CRCstreng;
 }
 
-std::vector<sf::Int16> Encoder::ESC(std::vector<sf::Int16> bitStrengESC)
+std::vector<std::vector<sf::Int16> > Encoder::ESC(std::vector<std::vector<sf::Int16> > bitStrengESC)
 {
 	std::vector<int> ESCknap = { 1,1,1,1,1,1,1,0 };
+	m_insertESC.resize(bitStrengESC.size());
 
 	std::cout << std::endl << "Stoerrelse paa bitStrengESC before : " << bitStrengESC.size() << std::endl;
 
 	//Stop and wait m_insertESC for encoder
-	for (size_t i = 0; i < bitStrengESC.size(); i += 8)
+	for (size_t j = 0; j < bitStrengESC.size(); j++)
 	{
-		if ((bitStrengESC[i] == 1) && (bitStrengESC[i + 1] == 1) && (bitStrengESC[i + 2] == 1) && (bitStrengESC[i + 3] == 1) && (bitStrengESC[i + 4] == 0) && (bitStrengESC[i + 5] == 0) && (bitStrengESC[i + 6] == 0) && (bitStrengESC[i + 7] == 0))
+		for (size_t i = 0; i < bitStrengESC[j].size(); i += 8)
 		{
-			//std::cout << "flag fundet";
-			m_insertESC.push_back(1);
-			m_insertESC.push_back(1);
-			m_insertESC.push_back(1);
-			m_insertESC.push_back(1);
-			m_insertESC.push_back(1);
-			m_insertESC.push_back(1);
-			m_insertESC.push_back(1);
-			m_insertESC.push_back(0);
-			m_insertESC.push_back(bitStrengESC[i]);
-			m_insertESC.push_back(bitStrengESC[i + 1]);
-			m_insertESC.push_back(bitStrengESC[i + 2]);
-			m_insertESC.push_back(bitStrengESC[i + 3]);
-			m_insertESC.push_back(bitStrengESC[i + 4]);
-			m_insertESC.push_back(bitStrengESC[i + 5]);
-			m_insertESC.push_back(bitStrengESC[i + 6]);
-			m_insertESC.push_back(bitStrengESC[i + 7]);
-		}
-		else if ((bitStrengESC[i] == 1) && (bitStrengESC[i + 1] == 1) && (bitStrengESC[i + 2] == 1) && (bitStrengESC[i + 3] == 1) && (bitStrengESC[i + 4] == 1) && (bitStrengESC[i + 5] == 1) && (bitStrengESC[i + 6] == 1) && (bitStrengESC[i + 7] == 0))
-		{
-			//std::cout << "ESC char fundet";
-			m_insertESC.push_back(1);
-			m_insertESC.push_back(1);
-			m_insertESC.push_back(1);
-			m_insertESC.push_back(1);
-			m_insertESC.push_back(1);
-			m_insertESC.push_back(1);
-			m_insertESC.push_back(1);
-			m_insertESC.push_back(0);
-			m_insertESC.push_back(bitStrengESC[i]);
-			m_insertESC.push_back(bitStrengESC[i + 1]);
-			m_insertESC.push_back(bitStrengESC[i + 2]);
-			m_insertESC.push_back(bitStrengESC[i + 3]);
-			m_insertESC.push_back(bitStrengESC[i + 4]);
-			m_insertESC.push_back(bitStrengESC[i + 5]);
-			m_insertESC.push_back(bitStrengESC[i + 6]);
-			m_insertESC.push_back(bitStrengESC[i + 7]);
-		}
-		else
-		{
-			m_insertESC.push_back(bitStrengESC[i]);
-			m_insertESC.push_back(bitStrengESC[i + 1]);
-			m_insertESC.push_back(bitStrengESC[i + 2]);
-			m_insertESC.push_back(bitStrengESC[i + 3]);
-			m_insertESC.push_back(bitStrengESC[i + 4]);
-			m_insertESC.push_back(bitStrengESC[i + 5]);
-			m_insertESC.push_back(bitStrengESC[i + 6]);
-			m_insertESC.push_back(bitStrengESC[i + 7]);
-		}
+			if ((bitStrengESC[j][i] == 1) && (bitStrengESC[j][i + 1] == 1) && (bitStrengESC[j][i + 2] == 1) && (bitStrengESC[j][i + 3] == 1) && (bitStrengESC[j][i + 4] == 0) && (bitStrengESC[j][i + 5] == 0) && (bitStrengESC[j][i + 6] == 0) && (bitStrengESC[j][i + 7] == 0))
+			{
+				//std::cout << "flag fundet";
+				m_insertESC[j].push_back(1);
+				m_insertESC[j].push_back(1);
+				m_insertESC[j].push_back(1);
+				m_insertESC[j].push_back(1);
+				m_insertESC[j].push_back(1);
+				m_insertESC[j].push_back(1);
+				m_insertESC[j].push_back(1);
+				m_insertESC[j].push_back(0);
+				m_insertESC[j].push_back(bitStrengESC[j][i]);
+				m_insertESC[j].push_back(bitStrengESC[j][i + 1]);
+				m_insertESC[j].push_back(bitStrengESC[j][i + 2]);
+				m_insertESC[j].push_back(bitStrengESC[j][i + 3]);
+				m_insertESC[j].push_back(bitStrengESC[j][i + 4]);
+				m_insertESC[j].push_back(bitStrengESC[j][i + 5]);
+				m_insertESC[j].push_back(bitStrengESC[j][i + 6]);
+				m_insertESC[j].push_back(bitStrengESC[j][i + 7]);
+			}
+			else if ((bitStrengESC[j][i] == 1) && (bitStrengESC[j][i + 1] == 1) && (bitStrengESC[j][i + 2] == 1) && (bitStrengESC[j][i + 3] == 1) && (bitStrengESC[j][i + 4] == 1) && (bitStrengESC[j][i + 5] == 1) && (bitStrengESC[j][i + 6] == 1) && (bitStrengESC[j][i + 7] == 0))
+			{
+				//std::cout << "ESC char fundet";
+				m_insertESC[j].push_back(1);
+				m_insertESC[j].push_back(1);
+				m_insertESC[j].push_back(1);
+				m_insertESC[j].push_back(1);
+				m_insertESC[j].push_back(1);
+				m_insertESC[j].push_back(1);
+				m_insertESC[j].push_back(1);
+				m_insertESC[j].push_back(0);
+				m_insertESC[j].push_back(bitStrengESC[j][i]);
+				m_insertESC[j].push_back(bitStrengESC[j][i + 1]);
+				m_insertESC[j].push_back(bitStrengESC[j][i + 2]);
+				m_insertESC[j].push_back(bitStrengESC[j][i + 3]);
+				m_insertESC[j].push_back(bitStrengESC[j][i + 4]);
+				m_insertESC[j].push_back(bitStrengESC[j][i + 5]);
+				m_insertESC[j].push_back(bitStrengESC[j][i + 6]);
+				m_insertESC[j].push_back(bitStrengESC[j][i + 7]);
+			}
+			else
+			{
+				m_insertESC[j].push_back(bitStrengESC[j][i]);
+				m_insertESC[j].push_back(bitStrengESC[j][i + 1]);
+				m_insertESC[j].push_back(bitStrengESC[j][i + 2]);
+				m_insertESC[j].push_back(bitStrengESC[j][i + 3]);
+				m_insertESC[j].push_back(bitStrengESC[j][i + 4]);
+				m_insertESC[j].push_back(bitStrengESC[j][i + 5]);
+				m_insertESC[j].push_back(bitStrengESC[j][i + 6]);
+				m_insertESC[j].push_back(bitStrengESC[j][i + 7]);
+			}
 
+		}
 	}
 
-	std::cout << std::endl << "Stoerrelse paa bitStrengESC after : " << m_insertESC.size() << std::endl;
+	std::cout << std::endl << "Stoerrelse paa bitstrengESC after : " << m_insertESC.size() << std::endl;
 
 
 	return m_insertESC;
@@ -333,9 +337,9 @@ std::vector<std::vector<sf::Int16>> Encoder::encoderMessage(std::string message)
 	setBit(g_antalbit);
 	auto bitstring = StrToBit(message);
 	auto CRCbitString = CRC(bitstring);
-	auto EscBitString = ESC(CRCbitString);
-	auto pakkeBitString = pakker(EscBitString);
-	auto headerBitString = header(pakkeBitString);
+	auto pakkeBitString = pakker(CRCbitString);
+	auto EscBitString = ESC(pakkeBitString);
+	auto headerBitString = header(EscBitString);
 
 	return headerBitString;
 }
