@@ -20,7 +20,7 @@ public:
 	void makeSound();
 	void makeSoundAck(std::vector<sf::Int16> _vecForAck);
 	void initUI();
-	void setUI();
+	void setupUI();
 
 private:
 	double widthOfText = 0;
@@ -28,6 +28,8 @@ private:
 
 	double widthOfReceive;
 	std::string receive;
+	std::string indtastedeBesked;
+	bool forventetSekNR = 0;
 	
 };
 

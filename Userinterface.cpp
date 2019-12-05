@@ -1,7 +1,7 @@
 #include "Userinterface.h"
 
 
-void Userinterface::setUI() 
+void Userinterface::setupUI() 
 {
 
 	std::vector<sf::Text> textVector;
@@ -38,8 +38,6 @@ void Userinterface::setUI()
 
 	sf::RenderWindow window(sf::VideoMode(1000, 800), "Audio Chat");
 
-	std::string indtastedeBesked;
-	bool forventetSekNR = 0;
 
 	CustomRecorder recorder;
 	recorder.start(g_samplingFreq);
