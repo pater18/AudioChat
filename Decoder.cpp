@@ -58,11 +58,14 @@ void Decoder::setDTMFTone(int DTMF)
 		{
 			m_charVect.push_back(m_character[0]);
 			m_charVect.push_back(m_character[1]);
-			m_lastEsc == false;
+			m_lastEsc = false;
+			std::cout << "Last esc bliver sat til false " << m_lastEsc << std::endl;
+			m_character.clear();
 		}
 		else if (m_character == escChar)
 		{
 			m_lastEsc = true;
+			std::cout << "Last esc er true" << std::endl; 
 		}
 		else if (m_character == flag)
 		{

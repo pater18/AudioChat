@@ -84,7 +84,6 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer, Cu
 std::vector<sf::Int16>  Protokol::getSekNR(std::vector<sf::Int16> _sekNR)
 {
 	std::vector<sf::Int16> returnSekNR;
-	std::cout <<"SekNR size" << _sekNR.size() << std::endl;
 	for (int i = 0; i < 8; i++) {
 		returnSekNR.push_back(_sekNR[i]);
 	}
@@ -113,7 +112,6 @@ void Protokol::modtagetProtokol(bool &forventetSekNR, std::vector<sf::Int16> mod
 		std::vector<sf::Int16> sekNR0 = { 0,0,0,0,0,0,0,0 };
 		std::vector<sf::Int16> sekNR1 = { 0,0,0,0,0,0,0,1 };
 		std::vector<sf::Int16> sekNR11 = { 0,0,0,0,0,0,1,1 };
-		std::cout << "modtage size" << modtaget.size() << std::endl;
 		if (forventetSekNR == modtaget[7] || modtaget[6] == 1)
 		{
 			//modtageRecorder.stop();

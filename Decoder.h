@@ -39,8 +39,8 @@ private:
 	double m_timeOutDuration = g_sendeTid * 2; 
 
 	std::vector<sf::Int16> m_renBitStreng;
-	std::vector<int> vecForACK;
-	std::vector<sf::Int16> m_vecAck; 
+	/*std::vector<int> vecForACK;
+	std::vector<sf::Int16> m_vecAck;  */
 	
 };
 
