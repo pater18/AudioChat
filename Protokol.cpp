@@ -37,12 +37,12 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer, Cu
 			{
 				protokolRecorder.getDecoder().intToBit(protokolRecorder.getDecoder().getCharVect());
 
-				std::cout << "Den er lige over recorder.stop()" << std::endl;
+				
 				protokolRecorder.pause();
 
 				if (getSekNR(protokolRecorder.getDecoder().getRenBitStreng()) == getSekNRSend(_sendBuffer[i]))
 				{
-					std::cout << "Den er inde i if sætning" << std::endl;
+					
 					protokolRecorder.pause();
 					afspilLyd.playSound(afspilLyd.bitToAmplitudes(g_sendeTid * 44100, _sendBuffer[i]));
 
@@ -60,7 +60,6 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer, Cu
 				////////////////
 				else
 				{
-					std::cout << "Den er inde i else " << std::endl;
 					i++;
 					pakkeIkkeSendt = false;
 

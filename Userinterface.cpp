@@ -61,8 +61,6 @@ void Userinterface::setUI()
 			{
 				if (forventetSekNR == sekNr)
 				receive += besked;
-				std::cout << "Hvad den enkelte pakke er i en streng: " << besked << std::endl;
-				std::cout << receive << std::endl;
 
 				Protokol modtagProtokol;
 				modtagProtokol.modtagetProtokol(forventetSekNR, recorder.getDecoder().getRenBitStreng(),recorder);
@@ -74,8 +72,6 @@ void Userinterface::setUI()
 			else if (lastMessage == 1 && sekNr == 1)
 			{
 				receive += besked;
-				std::cout << "Hvad den enkelte pakke er i en streng: " << besked << std::endl;
-				std::cout << receive << " " << "sidste" << std::endl;
 
 				Protokol modtagProtokol;
 				modtagProtokol.modtagetProtokol(forventetSekNR, recorder.getDecoder().getRenBitStreng(), recorder);
@@ -104,7 +100,6 @@ void Userinterface::setUI()
 
 				}
 
-				std::cout << "Input if " << std::endl;
 				receive.clear();
 				//indtastedeBesked.clear();
 				recorder.resume();;

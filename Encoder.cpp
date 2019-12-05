@@ -142,7 +142,7 @@ std::vector<std::vector<sf::Int16> > Encoder::ESC(std::vector<std::vector<sf::In
 	std::vector<int> ESCknap = { 1,1,1,1,1,1,1,0 };
 	m_insertESC.resize(bitStrengESC.size());
 
-	std::cout << std::endl << "Stoerrelse paa bitStrengESC before : " << bitStrengESC.size() << std::endl;
+	std::cout << std::endl << "Stoerrelse paa bitStrengESC before : " << bitStrengESC.size();
 
 	//Stop and wait m_insertESC for encoder
 	for (size_t j = 0; j < bitStrengESC.size(); j++)
@@ -204,7 +204,7 @@ std::vector<std::vector<sf::Int16> > Encoder::ESC(std::vector<std::vector<sf::In
 		}
 	}
 
-	std::cout << std::endl << "Stoerrelse paa bitstrengESC after : " << m_insertESC.size() << std::endl;
+	std::cout << std::endl << "Stoerrelse paa bitstrengESC after : " << m_insertESC.size() << std::endl << std::endl;
 
 
 	return m_insertESC;

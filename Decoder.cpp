@@ -59,13 +59,11 @@ void Decoder::setDTMFTone(int DTMF)
 			m_charVect.push_back(m_character[0]);
 			m_charVect.push_back(m_character[1]);
 			m_lastEsc = false;
-			std::cout << "Last esc bliver sat til false " << m_lastEsc << std::endl;
 			m_character.clear();
 		}
 		else if (m_character == escChar)
 		{
 			m_lastEsc = true;
-			std::cout << "Last esc er true" << std::endl; 
 		}
 		else if (m_character == flag)
 		{
@@ -92,7 +90,7 @@ std::vector<sf::Int16> Decoder::intToBit(std::vector<int> DTMFtones)
 	for (size_t i = 0; i < DTMFtones.size(); i++)
 	{
 		std::bitset<4> temp(DTMFtones[i]);
-		std::cout << temp << std::endl;		//----------------------------------------------------------
+		//std::cout << temp << std::endl;		//----------------------------------------------------------
 		vecForCRC.push_back(temp[3]);
 		vecForCRC.push_back(temp[2]);
 		vecForCRC.push_back(temp[1]);
