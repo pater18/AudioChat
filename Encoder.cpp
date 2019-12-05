@@ -87,7 +87,7 @@ std::vector<sf::Int16> Encoder::CRC(std::vector<sf::Int16> bitStrengCRC)
 	for (size_t k = 0; k < bitStrengCRC.size(); k += m_antalBit) //k=8
 	{
 
-		std::bitset<900> generator(0b0000000100000111);  // CRC_8 check generator polynomie 
+		std::bitset<900> generator(0b0000000110100111);  // CRC_8 check generator polynomie 
 
 		std::bitset<900> data(0b0);						// Vektor til at lave udregninger på.
 
@@ -281,7 +281,7 @@ std::vector<std::vector<sf::Int16>> Encoder::pakker(std::vector<sf::Int16> bitSt
 	
 	for (size_t i = 0; i < m_pakker.size(); i++)
 	{
-		std::cout << "Datastrøm med CRC, nummer " << i << std::endl;
+		std::cout << "Datastroem med CRC, nummer " << i << std::endl;
 		for (size_t j = 0; j < m_pakker[i].size(); j++)
 		{
 			std::cout << m_pakker[i][j];

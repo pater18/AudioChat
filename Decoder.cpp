@@ -119,7 +119,7 @@ std::vector<sf::Int16> Decoder::CRCmodtaget(int antal_bit, std::vector<sf::Int16
 		
 	std::vector<sf::Int16> messageInBit; 
 
-	std::bitset<900> generator2(0b00100000111);
+	std::bitset<900> generator2(0b00110100111);
 	int DataInsert = antal_bit + 8 - 1;
 	int bitStrengSize = bitStreng.size(); //16
 	
@@ -188,7 +188,7 @@ std::vector<sf::Int16> Decoder::CRCmodtaget(int antal_bit, std::vector<sf::Int16
 
 		if (bitMedPadding == false)
 		{
-			std::cout << "Data der blev sendt var det rigtige" << std::endl;
+			std::cout << "CRC tjek er korrekt" << std::endl;
 			for (size_t i = numPadding2; i < (temp.size() ) ; i++)
 			{
 				messageInBit.push_back(temp[i]);
