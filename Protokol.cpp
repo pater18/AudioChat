@@ -14,6 +14,8 @@ Protokol::Protokol()
 {
 }
 
+int pakkerTabt;
+int antalPakkerSendt;
 void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer, CustomRecorder& protokolRecorder)
 {
 	customSound afspilLyd;
@@ -25,7 +27,7 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer, Cu
 	{
 
 		afspilLyd.playSound(afspilLyd.bitToAmplitudes(g_sendeTid * 44100, _sendBuffer[i]));
-
+		antalPakkerSendt++;
 		startClockProt = std::clock();
 		protokolRecorder.resume();
 
@@ -53,6 +55,8 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer, Cu
 				else if (protokolRecorder.getDecoder().getRenBitStreng()[6] == 1)
 				{
 					std::cout << "Ack for sidste besked modtaget" << std::endl;
+					std::cout << "Antal pakker sendt: " << antalPakkerSendt << std::endl;
+					std::cout << "Antal pakker tabt: " << pakkerTabt << std::endl;
 						i++;
 						pakkeIkkeSendt = false;
 						protokolRecorder.getDecoder().setReceivedMessageToFalse();
@@ -69,6 +73,7 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer, Cu
 			duration = (std::clock() - startClockProt) / (double)CLOCKS_PER_SEC;
 			if (duration > g_sendeTid * 6 + 0.5)
 			{
+				pakkerTabt++;
 				protokolRecorder.pause();
 				afspilLyd.playSound(afspilLyd.bitToAmplitudes(g_sendeTid * 44100, _sendBuffer[i]));
 				startClockProt = std::clock();

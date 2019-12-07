@@ -15,4 +15,3 @@ extern double g_threshHoldMultible;
 //Userinterface.h
 
 
-
