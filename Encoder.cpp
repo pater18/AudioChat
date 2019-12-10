@@ -281,7 +281,7 @@ std::vector<std::vector<sf::Int16>> Encoder::pakker(std::vector<sf::Int16> bitSt
 	
 	for (size_t i = 0; i < m_pakker.size(); i++)
 	{
-		std::cout << "Datastroem med CRC, nummer " << i << std::endl;
+		std::cout << "Datastroem med CRC, frame " << i << std::endl;
 		for (size_t j = 0; j < m_pakker[i].size(); j++)
 		{
 			std::cout << m_pakker[i][j];
@@ -332,7 +332,7 @@ std::vector<std::vector<sf::Int16> > Encoder::header(std::vector<std::vector<sf:
 	
 	for (size_t i = 0; i < headerVec.size(); i++)
 	{
-		std::cout << "Hele frame med flag og sekNr, nummer: " << i << std::endl;
+		std::cout << "Hele frame med flag og sekNr, frame: " << i << std::endl;
 		for (size_t j = 0; j < headerVec[i].size(); j++)
 		{
 			std::cout << headerVec[i][j];

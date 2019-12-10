@@ -6,7 +6,7 @@ float g_sendeTid = 0.09;
 int g_samplingFreq = 8000;
 
 //Encoder.h
-int g_antalbit = 240;
+int g_antalbit = 256;
 
 //SoundChunk.h
 double g_threshHold = 200;

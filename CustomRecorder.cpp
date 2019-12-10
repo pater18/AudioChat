@@ -58,7 +58,7 @@ bool CustomRecorder::onProcessSamples(const sf::Int16* samples, std::size_t samp
 void CustomRecorder::onStop()
 {
 	//saveGoertzelMatrixToFile();
-	saveGoertzelMatrixToSingleFile();
+	//saveGoertzelMatrixToSingleFile();
 	std::cout << std::endl << "Recording stopped" << std::endl;
 }
 

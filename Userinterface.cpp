@@ -143,10 +143,6 @@ void Userinterface::setUI()
 
 					recorder.pause();
 
-					indtastedeBesked = "I Paris-aftalen fra 2015 blev det aftalt at holde de globale temperaturstigninger under to grader - i forhold til for industrialiseringen tog fart i 1800-tallet - og strabe efter 1,5 grader. Som det ser ud nu, gar udviklingen mod, at temperaturen vil vare steget tre grader i 2100. I Paris-aftalen fra 2015 blev det aftalt at holde de globale temperaturstigninger under to grader - i forhold til for industrialiseringen tog fart i 1800-tallet - og strabe efter 1,5 grader. Som det ser ud nu, gar udviklingen mod, at temperaturen vil vare steget tre grader i 2100. I Paris-aftalen fra 2015 blev det aftalt at holde de globale temperaturstigninger under to grader - i forhold til for industrialiseringen tog fart i 1800-tallet - og strabe efter 1,5 grader. Som det ser ud nu, gar udviklingen mod, at temperaturen vil vare steget tre grader i 2100. I Paris-aftalen fra 2015 blev det aftalt at holde de globale temperaturstigninger under to grader - i forhold til for industrialiseringen tog fart i 1800-tallet - og strabe efter 1,5 grader. Som det ser ud nu, gar udviklingen mod, at temperaturen vil vare steget tre grader i 2100. I Paris-aftalen fra 2015 blev det aftalt at holde de globale temperaturstigninger under to grader - i forhold til for industrialiseringen tog fart i 1800-tallet - og strabe efter 1,5 grader. Som det ser ud nu, gar udviklingen mod, at temperaturen vil vare steget tre grader i 2100. I Paris-aftalen fra 2015 blev det aftalt at holde de globale temperaturstigninger under toI Paris-aftalen fra 2015 blev det aftalt at holde de globale temperaturstigninger under to grader - i forhold til for industrialiseringen tog fart i 1800-tallet - og strabe efter 1,5 grader. Som det ser ud nu, gar udviklingen mod, at temperaturen vil vare steget tre grader i 2100. I Paris-aftalen fra 2015 blev det aftalt at holde de globale temperaturstigninger under to grader - i forhold til for industrialiseringen tog fart i 1800-tallet - og strabe efter 1,5 grader. Som det ser ud nu, gar udviklingen mod, at temperaturen vil vare steget tre grader i 2100. I Paris-aftalen fra 2015 blev det aftalt at holde de globale temperaturstigninger under to grader - i forhold til for industrialiseringen tog fart i 1800-tallet - og strabe efter 1,5 grader. Som det ser ud nu, gar udviklingen mod, at temperaturen vil vare steget tre grader i 2100. I Paris-aftalen fra 2015 blev det aftalt at holde de globale temperaturstigninger under to grader - i forhold til for industrialiseringen tog fart i 1800-tallet - og strabe efter 1,5 grader. Som det ser ud nu, gar udviklingen mod, at temperaturen vil vare steget tre grader i 2100. I Paris-aftalen fra 2015 blev det aftalt at holde de globale temperaturstigninger under to grader - i forhold til for industrialiseringen tog fart i 1800-tallet - og strabe efter 1,5 grader. Som det ser ud nu, gar udviklingen mod, at temperaturen vil vare steget tre grader i 2100. I Paris-aftalen fra 2015 blev det aftalt at holde de globale temperaturstigninger under to";
-
-					text.setString(indtastedeBesked);
-
 					Encoder encoder;
 					Protokol protokolSend;
 					protokolSend.sendProtokol(encoder.encoderMessage(indtastedeBesked), recorder);
@@ -196,10 +192,10 @@ void Userinterface::setUI()
 				if (event.type == sf::Event::TextEntered)
 				{
 					if (event.text.unicode < 128 && (event.text.unicode != 13) && (event.text.unicode != 8))
-						//indtastedeBesked += (char)event.text.unicode;
+						indtastedeBesked += (char)event.text.unicode;
 
 
-					//text.setString(indtastedeBesked);
+					text.setString(indtastedeBesked);
 
 
 					break;

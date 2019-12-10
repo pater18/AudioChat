@@ -66,6 +66,7 @@ void Protokol::sendProtokol(std::vector<std::vector<sf::Int16> > _sendBuffer, Cu
 				{
 					i++;
 					pakkeIkkeSendt = false;
+					std::cout << "Mangler " << _sendBuffer.size() - i << " pakker" << std::endl; 
 
 				}
 			}
