@@ -34,7 +34,22 @@ int main()
 
 
 	Userinterface ui;
-	ui.setUI();
+	//ui.setUI();
+	sf::Font font;
+	font.loadFromFile("ariblk.ttf");
+
+	//ui.rectangle();
+	//ui.text(font);
+	ui.setupUI(font);
+	sf::RenderWindow window(sf::VideoMode(1000, 800), "Audio Chat");
+	
+
+	while (window.isOpen())
+	{
+		window.draw(ui.getRectangle());
+		window.draw(ui.getText());
+		window.display();
+	}
 
 
 	return 0;
