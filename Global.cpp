@@ -2,7 +2,7 @@
 
 //CustomRecorder.h:
 int g_processInterval = 30;
-float g_sendeTid = 0.09;
+float g_sendeTid = 0.5;
 int g_samplingFreq = 8000;
 
 //Encoder.h

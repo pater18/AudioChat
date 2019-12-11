@@ -5,7 +5,7 @@
 void SoundChunk::hanningWindow()
 {
 	for (std::size_t i = 0; i < m_sampleCount; i++)
-		m_samples[i] = m_samples[i] * ( 0.5 * (1 - std::cos((2 * PI * i) / (m_sampleCount - 1)))) + 0.5;
+		m_samples[i] = m_samples[i] * ( 0.46 * (1 - std::cos((2 * PI * i) / (m_sampleCount - 1)))) + 0.54;
 }
 
 std::vector<float> SoundChunk::goertzelAlgorithm(int samplingFreq)
